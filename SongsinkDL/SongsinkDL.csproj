@@ -23,7 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SongsinkUI\WebAngUI.csproj" />
     <ProjectReference Include="..\SongsinkModel\SIModel.csproj" />
   </ItemGroup>
 
