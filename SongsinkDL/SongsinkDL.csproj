@@ -8,4 +8,9 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.8" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SongsinkUI\WebAngUI.csproj" />
+    <ProjectReference Include="..\SongsinkModel\SIModel.csproj" />
+  </ItemGroup>
+
 </Project>
