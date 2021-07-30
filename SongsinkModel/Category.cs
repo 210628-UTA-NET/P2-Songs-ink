@@ -13,7 +13,10 @@ namespace SIModel
 		public Category ()
 		{
 		}
-
+		/// <summary>
+		/// Primary key for 
+		/// </summary>
+		/// <value></value>
 		public int Id { get; set; }
 		public string CategoryName 
 		{ 
