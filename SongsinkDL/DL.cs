@@ -1,16 +1,18 @@
+﻿using SIModel;
 using System;
 using System.Collections.Generic;
-using SIModel;
-using SongsinkDL;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace SongsinkBL
+namespace SongsinkDL
 {
-    public class BL : IBL
+    class DL : IDL
     {
-        private readonly IDL _repo;
-        public BL(IDL p_repo)
+        private SIDbContext _context;
+        public DL(SIDbContext p_context)
         {
-            _repo = p_repo;
+            _context = p_context;
         }
         public List<Category> GetAllCategories()
         {
