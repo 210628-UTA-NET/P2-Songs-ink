@@ -9,6 +9,7 @@ namespace SIModel
 		private int _id;
 		private string _wordName;
 		private int _categoryId;
+		private Category _category;
 
 		public Word()
 		{
@@ -31,5 +32,7 @@ namespace SIModel
 			}
 		}
 		public int CategoryId { get; set; }
+		public Category Category {get => _category; set => _category = value; }
+
 	}
 }
