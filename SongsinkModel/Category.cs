@@ -33,5 +33,7 @@ namespace SIModel
 				_categoryName = value;
 			}
 		}
-	}
+
+        public List<Word> Words { get => _words; set => _words = value; }
+    }
 }
