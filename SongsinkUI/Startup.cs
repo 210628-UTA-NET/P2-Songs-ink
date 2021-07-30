@@ -21,7 +21,7 @@ namespace WebAngUI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<SIDbContext>(options => options.UsieNpgsql(Configuration.GetConnectionString("Reference2DB")));
+            services.AddDbContext<SIDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("Reference2DB")));
             services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
