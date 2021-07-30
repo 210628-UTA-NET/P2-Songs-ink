@@ -1,9 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using Models;
-using Npgsql.EntityFrameworkCore.PostgreSQL;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace DL
+namespace SongsinkDL
 {
     public class SIDbContext : DbContext
     {
