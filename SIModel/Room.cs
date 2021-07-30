@@ -1,0 +1,19 @@
+using System;
+
+namespace SIModel
+{
+	public class Room
+	{
+        private int _id;
+        private string _password;
+        private bool _public;
+		public Room()
+		{
+		}
+
+        public int Id { get => _id; set => _id = value; }
+        public string Password { get => _password; set => _password = value; }
+        public bool Public { get => _public; set => _public = value; }
+    }
+
+}
