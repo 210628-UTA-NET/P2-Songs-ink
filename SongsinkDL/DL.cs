@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SongsinkDL
 {
-    class DL : IDL
+    public class DL : IDL
     {
         private SIDbContext _context;
         public DL(SIDbContext p_context)

@@ -1,8 +1,11 @@
 {
   "ExpandedNodes": [
     "",
-    "\\SIModel"
+    "\\SIModel",
+    "\\SongsinkBL",
+    "\\SongsinkDL",
+    "\\SongsinkUI"
   ],
-  "SelectedNode": "\\SIModel\\Category.cs",
+  "SelectedNode": "\\SongsinkUI\\Startup.cs",
   "PreviewInSolutionExplorer": false
 }
