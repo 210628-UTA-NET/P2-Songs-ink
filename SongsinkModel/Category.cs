@@ -35,5 +35,6 @@ namespace SIModel
 		}
 
         public List<Word> Words { get => _words; set => _words = value; }
+        public Player PlayerList { get; set; }
     }
 }

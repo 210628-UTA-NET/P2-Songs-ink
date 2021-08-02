@@ -7,6 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using SongsinkDL;
+using SongsinkBL;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace WebAngUI
 {
@@ -24,6 +27,10 @@ namespace WebAngUI
         {
             services.AddDbContext<SIDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("Reference2DB")));
             services.AddControllersWithViews();
+
+            services.AddScoped<IBL, BL>();
+            services.AddScoped<IDL, DL>();
+
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
