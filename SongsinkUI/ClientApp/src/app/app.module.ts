@@ -10,6 +10,9 @@ import { HomeComponent } from './components/home/home.component';
 import { CounterComponent } from './components/counter/counter.component';
 import { FetchDataComponent } from './components/fetch-data/fetch-data.component';
 import { GameComponent } from './components/game/game.component';
+import { PlayerListComponent } from './components/player-list/player-list.component';
+import { CanvasComponent } from './components/canvas/canvas.component';
+import { PlayerListItemComponent } from './components/player-list-item/player-list-item.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,10 @@ import { GameComponent } from './components/game/game.component';
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-    GameComponent
+    GameComponent,
+    PlayerListComponent,
+    CanvasComponent,
+    PlayerListItemComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -28,6 +34,7 @@ import { GameComponent } from './components/game/game.component';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
+      { path: 'game', component: GameComponent}
     ])
   ],
   providers: [],
