@@ -15,6 +15,12 @@ namespace SongsinkDL
         public DbSet<Song> Songs { get; set; }
         public DbSet<Word> Words { get; set; }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder p_options)
+        {
+           p_options.UseNpgsql( @"Server=hansken.db.elephantsql.com;Database=nxackagz;User ID=nxackagz;Password=5kbgSpXPnnXuypCmL7HRA_3Jm_w4sOkJ;Port=5432");
+        }
+
+
 
         public SIDbContext() : base()
         { }
@@ -75,6 +81,21 @@ namespace SongsinkDL
                 .HasOne(wrd => wrd.Category)
                 .WithMany(cat => cat.Words)
                 .HasForeignKey(wrd => wrd.CategoryId);
+
+            p_modelBuilder.Entity<Player>()
+                .HasOne<Category>(play => play.PlayerCategory)
+                .WithOne(cat => cat.PlayerList)
+                .HasForeignKey<Player>(play => play.PlayerCategoryID);
+
+            p_modelBuilder.Entity<Picture>()
+                .HasOne(pic => pic.PictureRoom)
+                .WithMany(rom => rom.PicturesInRoom)
+                .HasForeignKey(pic => pic.RoomID);
+
+            p_modelBuilder.Entity<Player>()
+                .HasOne(play => play.ProfileImg)
+                .WithMany(pic => pic.PlayerPicture)
+                .HasForeignKey(play => play.ProfileImgID);
         }
     }
 }
