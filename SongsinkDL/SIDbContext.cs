@@ -20,8 +20,6 @@ namespace SongsinkDL
            p_options.UseNpgsql( @"Server=hansken.db.elephantsql.com;Database=nxackagz;User ID=nxackagz;Password=5kbgSpXPnnXuypCmL7HRA_3Jm_w4sOkJ;Port=5432");
         }
 
-
-
         public SIDbContext() : base()
         { }
 
