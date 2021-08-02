@@ -14,6 +14,7 @@ namespace SIModel
 		private int _profileImgID;
 		private int _playerCategoryID;
 		private string _password;
+		private string _salt;
 
 		public Player()
 		{
@@ -29,5 +30,6 @@ namespace SIModel
         public int PlayerCategoryID { get => _playerCategoryID; set => _playerCategoryID = value; }
 		public string Password { get => _password; set => _password = value; }
         public Category PlayerCategory { get; set; }
-    }
+		public string Salt { get => _salt; set => _salt = value; }
+	}
 }
