@@ -275,11 +275,11 @@ namespace SonsinkTests
                 };
 
                 //These may need to be changed a bit once the dbset is made
-                //context.Category.AddRange(cat1,cat2,cat3,cat4);
-                //context.Word.AddRange(word1,word2,word3,word4,word5,word6,word7,word8);
-                //context.Song.AddRange(song1,song2,song3,song4,song5,song6,song7,song8);
-                //context.Picture.AddRange(pic1,pic2,pic3,pic4);
-                //context.Room.AddRange(roompub1,roompub2,roompub3,roompriv1,roompriv2,roompriv3);
+                context.Categories.AddRange(cat1, cat2, cat3, cat4);
+                context.Words.AddRange(word1, word2, word3, word4, word5, word6, word7, word8);
+                context.Songs.AddRange(song1, song2, song3, song4, song5, song6, song7, song8);
+                context.Pictures.AddRange(pic1, pic2, pic3, pic4);
+                context.Rooms.AddRange(roompub1, roompub2, roompub3, roompriv1, roompriv2, roompriv3);
 
                 context.SaveChanges();
             }
