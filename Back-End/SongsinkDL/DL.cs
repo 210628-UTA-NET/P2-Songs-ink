@@ -33,5 +33,10 @@ namespace SongsinkDL
         {
             throw new NotImplementedException();
         }
+
+        List<Song> GetAllSongs()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
