@@ -97,7 +97,29 @@ namespace SonsinkTests
                 Assert.Equal(expectedUrl, songUrl);
             }
         }
+        [Fact]
+        public void GetAllSongsShouldGetAllSongs()
+        {
+            using (var context = new SIDbContext(_options))
+            {
+                // Arrange
+                IDL dl = new DL(context);
 
+                //Act
+                List<Song> allSongs = dl.GetAllSongs();
+
+                //Assert
+                Assert.NotNull(allSongs);
+                Assert.NotEmpty(allSongs);
+                foreach (Song song in allSongs)
+                {
+                    Assert.NotEqual(0, song.Id);
+                    Assert.NotEqual("",song.SongName);
+                    Assert.NotEqual("",song.SongURL);
+                }
+
+            }
+        }
         private void Seed()
         {
             using (var context = new SIDbContext(_options))
