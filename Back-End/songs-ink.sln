@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SIModel", "SongsinkModel\SI
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAngUI", "SongsinkUI\WebAngUI.csproj", "{98BB45A6-BDD4-4A6A-A62D-8EB0D9D5F3E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SonsinkTests", "SonsinkTests\SonsinkTests.csproj", "{15CC47B0-822A-49AB-B19B-5317D9338234}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SongsinkTests", "SongsinkTests\SongsinkTests.csproj", "{15CC47B0-822A-49AB-B19B-5317D9338234}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
