@@ -30,7 +30,7 @@ namespace SonsinkTests
                 List<Category> allCategories = dl.GetAllCategories();
 
                 //Assert
-                Assert.Equal(4, allCategories.Count);
+                Assert.Equal(5, allCategories.Count);
                 foreach (Category category in allCategories)
                 {
                     Assert.NotNull(category);
@@ -123,6 +123,16 @@ namespace SonsinkTests
                 {
                     Id = 4,
                     CategoryName = "cat4"
+                };
+                Category catplayer1 = new Category() //player word category
+                {
+                    Id = 5,
+                    CategoryName = "playercat1"
+                };
+                Category catplayer2 = new Category() //player word category
+                {
+                    Id = 6,
+                    CategoryName = "playercat2"
                 };
                 Word word1 = new Word()
                 {
@@ -220,26 +230,8 @@ namespace SonsinkTests
                     SongName = "song8",
                     SongURL = "https://SongStorage.com/songlist/song8"
                 };
-                Picture pic1 = new Picture()
-                {
-                    Id = 1,
-                    PictureURL = "https://SongStorage.com/picturelist/picture1"
-                };
-                Picture pic2 = new Picture()
-                {
-                    Id =2,
-                    PictureURL = "https://SongStorage.com/picturelist/picture2"
-                };
-                Picture pic3 = new Picture()
-                {
-                    Id =3,
-                    PictureURL = "https://SongStorage.com/picturelist/picture3"
-                };
-                Picture pic4 = new Picture()
-                {
-                    Id =4,
-                    PictureURL = "https://SongStorage.com/picturelist/picture4"
-                };
+
+                
                 Room roompub1 = new Room()
                 {
                     Id = 1,
@@ -273,13 +265,69 @@ namespace SonsinkTests
                     Password = "room6",
                     Public = false
                 };
+                Picture pic1 = new Picture()
+                {
+                    Id = 1,
+                    PictureURL = "https://SongStorage.com/picturelist/picture1",
+                    RoomID =1
+              
+                };
+                Picture pic2 = new Picture()
+                {
+                    Id = 2,
+                    PictureURL = "https://SongStorage.com/picturelist/picture2",
+                    RoomID =1
+                };
+                Picture pic3 = new Picture()
+                {
+                    Id = 3,
+                    PictureURL = "https://SongStorage.com/picturelist/picture3",
+                    RoomID = 2
+                };
+                Picture pic4 = new Picture()
+                {
+                    Id = 4,
+                    PictureURL = "https://SongStorage.com/picturelist/picture4",
+                    RoomID = 3
+                };
+                Player player1 = new Player()
+                {
+                    Id = 1,
+                    PlayerName = "Player1",
+                    PlayerScore = 1000,
+                    CurrentScore = 875,
+                    GamesPlayed = 10,
+                    Password = "0384174",
+                    Salt = "9043vnsjoig",
+                    PlayerCategory = catplayer1,
+                    PlayerCategoryID = 5,
+                    ProfileImg = pic1,
+                    ProfileImgID = 1
+               
+                };
+                Player player2 = new Player()
+                {
+                    Id = 2,
+                    PlayerName = "Player2",
+                    PlayerScore = 800,
+                    CurrentScore = 120,
+                    GamesPlayed = 15,
+                    Password = "charlie",
+                    Salt = "93jfjvxoiv",
+                    PlayerCategory = catplayer2,
+                    PlayerCategoryID = 6,
+                    ProfileImg = pic2,
+                    ProfileImgID = 2
+
+                };
 
                 //These may need to be changed a bit once the dbset is made
-                context.Categories.AddRange(cat1, cat2, cat3, cat4);
+                context.Categories.AddRange(cat1, cat2, cat3, cat4, catplayer1);
                 context.Words.AddRange(word1, word2, word3, word4, word5, word6, word7, word8);
                 context.Songs.AddRange(song1, song2, song3, song4, song5, song6, song7, song8);
                 context.Pictures.AddRange(pic1, pic2, pic3, pic4);
                 context.Rooms.AddRange(roompub1, roompub2, roompub3, roompriv1, roompriv2, roompriv3);
+                context.Players.AddRange(player1, player2);
 
                 context.SaveChanges();
             }
