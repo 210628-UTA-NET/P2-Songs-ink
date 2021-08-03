@@ -38,5 +38,10 @@ namespace SongsinkDL
         {
             throw new NotImplementedException();
         }
+
+        List<Song> IDL.GetAllSongs()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
