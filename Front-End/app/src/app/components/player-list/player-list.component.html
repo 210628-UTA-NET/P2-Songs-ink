@@ -1,0 +1,16 @@
+
+
+<table>
+    <thead>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Score</th>
+    </thead>
+    <tbody>
+        <tr *ngFor="let player of players">
+            <app-player-list-item
+            [player]="player"
+            > </app-player-list-item> 
+        </tr>
+    </tbody>
+</table>
