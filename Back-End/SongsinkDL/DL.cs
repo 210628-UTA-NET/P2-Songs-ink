@@ -16,27 +16,27 @@ namespace SongsinkDL
         }
         public List<Category> GetAllCategories()
         {
-            throw new NotImplementedException();
+            return _context.Categories.Select(cat=>cat).ToList();
         }
 
         public List<Word> GetAllWords()
         {
-            throw new NotImplementedException();
+            return _context.Words.Select(word => word).ToList();
         }
 
         public List<Word> GetAllWordsOfACategory(int p_categoryId)
         {
-            throw new NotImplementedException();
+            return _context.Words.Where(word => word.CategoryId == p_categoryId).Select(word => word).ToList();
         }
 
         public string GetASongUrl(int p_songId)
         {
-            throw new NotImplementedException();
+            return _context.Songs.FirstOrDefault(song => song.Id == p_songId).SongURL;
         }
 
-        List<Song> GetAllSongs()
+        public List<Song> GetAllSongs()
         {
-            throw new NotImplementedException();
+            return _context.Songs.Select(song => song).ToList();
         }
     }
 }
