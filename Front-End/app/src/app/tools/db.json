@@ -1,0 +1,29 @@
+
+{
+    "players": 
+    [
+        {
+            "id": 1,
+            "name": "Jacob",
+            "score": 2000
+        },
+    
+        {
+            "id": 2, 
+            "name": "Chase",
+            "score": 5000
+        },
+    
+        {
+            "id": 3,
+            "name": "Caleb",
+            "score": 4302
+        },
+    
+        {
+            "id": 4,
+            "name": "Hieu",
+            "score": 9000
+        }
+    ]
+  }
