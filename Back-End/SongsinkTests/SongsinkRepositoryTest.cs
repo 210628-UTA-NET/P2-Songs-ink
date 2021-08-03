@@ -117,7 +117,6 @@ namespace SonsinkTests
                     Assert.NotEqual("",song.SongName);
                     Assert.NotEqual("",song.SongURL);
                 }
-
             }
         }
         private void Seed()
@@ -343,7 +342,6 @@ namespace SonsinkTests
 
                 };
 
-                //These may need to be changed a bit once the dbset is made
                 context.Categories.AddRange(cat1, cat2, cat3, cat4, catplayer1);
                 context.Words.AddRange(word1, word2, word3, word4, word5, word6, word7, word8);
                 context.Songs.AddRange(song1, song2, song3, song4, song5, song6, song7, song8);

@@ -14,22 +14,22 @@ namespace SongsinkBL
         }
         public List<Category> GetAllCategories()
         {
-            throw new NotImplementedException();
+            return _repo.GetAllCategories();
         }
 
         public List<Word> GetAllWords()
         {
-            throw new NotImplementedException();
+            return _repo.GetAllWords;
         }
 
         public List<Word> GetAllWordsOfACategory(int p_categoryId)
         {
-            throw new NotImplementedException();
+            return _repo.GetAllWordsOfACategory(p_categoryId);
         }
 
         public string GetASongUrl(int p_songId)
         {
-            throw new NotImplementedException();
+            return _repo.GetASongUrl(p_songId);
         }
     }
 }
