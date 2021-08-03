@@ -32,7 +32,13 @@ namespace SongsinkBL
         /// <returns></returns>
         string GetASongUrl(int p_songId);
 
-        
+        /// <summary>
+        /// Get A List Of All Songs For The User To Choose From
+        /// </summary>
+        /// <returns>
+        /// Returns The List Of All Songs In The Database
+        /// </returns>
+        List<Song> GetAllSongs();
 
 
     }
