@@ -38,5 +38,28 @@ namespace SongsinkDL
         {
             return _context.Songs.Select(song => song).ToList();
         }
+
+        public void AddPictures(List<Picture> p_pictures)
+        {
+            foreach (Picture item in p_pictures)
+            {
+                _context.Pictures.Add(item);
+            }
+        }
+
+        public void AddRoom(Room p_room)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void PlayerCategory(Player p_player, Category p_category)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddPlayer(Player p_player)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
