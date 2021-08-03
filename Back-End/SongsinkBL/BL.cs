@@ -17,9 +17,14 @@ namespace SongsinkBL
             return _repo.GetAllCategories();
         }
 
+        public List<Song> GetAllSongs()
+        {
+            return _repo.GetAllSongs();
+        }
+
         public List<Word> GetAllWords()
         {
-            return _repo.GetAllWords;
+            return _repo.GetAllWords();
         }
 
         public List<Word> GetAllWordsOfACategory(int p_categoryId)
