@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SIModel", "SongsinkModel\SI
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SonsinkTests", "SonsinkTests\SonsinkTests.csproj", "{15CC47B0-822A-49AB-B19B-5317D9338234}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SongsinkWebAPI", "WebAPI\SongsinkWebAPI.csproj", "{B49D961C-69E3-4C64-A7DE-D5A940CBA362}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SongsinkWebAPI", "SongsinkWebAPI\SongsinkWebAPI.csproj", "{B49D961C-69E3-4C64-A7DE-D5A940CBA362}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
