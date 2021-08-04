@@ -15,6 +15,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatListModule} from '@angular/material/list';
 import {MatInputModule} from '@angular/material/input'; 
 import {MatMenuModule} from '@angular/material/menu'; 
+import { SocketioService } from './services/socketio.service';
+import { ChatComponent } from './components/chat/chat.component';
 
 
 @NgModule({
@@ -25,6 +27,7 @@ import {MatMenuModule} from '@angular/material/menu';
     PlayerListComponent,
     CanvasComponent,
     PlayerListItemComponent,
+    ChatComponent,
 
   ],
   imports: [
@@ -36,7 +39,7 @@ import {MatMenuModule} from '@angular/material/menu';
     MatInputModule,
     MatMenuModule    
   ],
-  providers: [],
+  providers: [SocketioService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
