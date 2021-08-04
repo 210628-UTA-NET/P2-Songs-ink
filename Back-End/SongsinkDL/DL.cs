@@ -1,4 +1,5 @@
-﻿using SIModel;
+﻿using Microsoft.EntityFrameworkCore;
+using SIModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,29 +15,29 @@ namespace SongsinkDL
         {
             _context = p_context;
         }
-        public List<Category> GetAllCategories()
+        public async Task<List<Category>> GetAllCategories()
         {
-            return _context.Categories.Select(cat=>cat).ToList();
+            return await _context.Categories.Select(cat=>cat).ToListAsync();
         }
 
-        public List<Word> GetAllWords()
+        public async Task<List<Word>> GetAllWords()
         {
-            return _context.Words.Select(word => word).ToList();
+            return await _context.Words.Select(word => word).ToListAsync();
         }
 
-        public List<Word> GetAllWordsOfACategory(int p_categoryId)
+        public async Task<List<Word>> GetAllWordsOfACategory(int p_categoryId)
         {
-            return _context.Words.Where(word => word.CategoryId == p_categoryId).Select(word => word).ToList();
+            return await _context.Words.Where(word => word.CategoryId == p_categoryId).Select(word => word).ToListAsync();
         }
 
         public string GetASongUrl(int p_songId)
-        {
-            return _context.Songs.FirstOrDefault(song => song.Id == p_songId).SongURL;
+        {           
+            return _context.Songs.FirstOrDefault(song => song.Id == p_songId).SongURL.ToString();
         }
 
-        public List<Song> GetAllSongs()
+        public async Task<List<Song>> GetAllSongs()
         {
-            return _context.Songs.Select(song => song).ToList();
+            return await _context.Songs.Select(song => song).ToListAsync();
         }
 
         public void AddPictures(List<Picture> p_pictures)

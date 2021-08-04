@@ -1,6 +1,7 @@
 ﻿using SIModel;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SongsinkDL
 {
@@ -10,20 +11,20 @@ namespace SongsinkDL
         /// Get All Categories DB-Categories
         /// </summary>
         /// <returns></returns>
-        List<Category> GetAllCategories();
+        Task<List<Category>> GetAllCategories();
 
         /// <summary>
         /// Get All Words DB-Words
         /// </summary>
         /// <returns></returns>
-        List<Word> GetAllWords();
+        Task<List<Word>> GetAllWords();
 
         /// <summary>
         /// Get All Words Of A Specific Category DB-Words
         /// </summary>
         /// <param name="p_categoryId"></param>
         /// <returns></returns>
-        List<Word> GetAllWordsOfACategory(int p_categoryId);
+        Task<List<Word>> GetAllWordsOfACategory(int p_categoryId);
 
         /// <summary>
         /// Get A Song Url Using Its Id DB-Songs
@@ -38,6 +39,6 @@ namespace SongsinkDL
         /// <returns>
         /// Returns The List Of All Songs In The Database
         /// </returns>
-        List<Song> GetAllSongs();
+        Task<List<Song>> GetAllSongs();
     }
 }

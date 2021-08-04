@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using SIModel;
 using SongsinkDL;
 
@@ -12,29 +13,34 @@ namespace SongsinkBL
         {
             _repo = p_repo;
         }
-        public List<Category> GetAllCategories()
+        public async Task<List<Category>> GetAllCategories()
         {
-            return _repo.GetAllCategories();
+            return await _repo.GetAllCategories();
         }
 
-        public List<Song> GetAllSongs()
+        public async Task<List<Word>> GetAllWords()
         {
-            return _repo.GetAllSongs();
+            return await _repo.GetAllWords();
         }
 
-        public List<Word> GetAllWords()
+        public async Task<List<Word>> GetAllWordsOfACategory(int p_categoryId)
         {
-            return _repo.GetAllWords();
-        }
-
-        public List<Word> GetAllWordsOfACategory(int p_categoryId)
-        {
-            return _repo.GetAllWordsOfACategory(p_categoryId);
+            return await _repo.GetAllWordsOfACategory(p_categoryId);
         }
 
         public string GetASongUrl(int p_songId)
         {
-            return _repo.GetASongUrl(p_songId);
+            string found = _repo.GetASongUrl(p_songId);
+            if (found == null)
+            {
+                found = "empty";
+                throw new Exception("Song URL Not Found");
+            }
+            return found;
+        }
+        public async Task<List<Song>> GetAllSongs()
+        {
+            return await _repo.GetAllSongs();
         }
     }
 }
