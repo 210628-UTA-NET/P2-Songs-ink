@@ -39,5 +39,25 @@ namespace SongsinkDL
         /// Returns The List Of All Songs In The Database
         /// </returns>
         List<Song> GetAllSongs();
+        
+        /// <summary>
+        /// Add a list of pictures to the Database
+        /// </summary>
+        /// <param name="p_pictures">list of pictures to add</param>
+        void AddPictures(List<Picture> p_pictures);
+
+        /// <summary>
+        /// Update or Create a category for a player.
+        /// </summary>
+        /// <param name="p_player"></param>
+        /// <param name="p_category"></param>
+        void PlayerCategory(Player p_player, Category p_category);
+
+        /// <summary>
+        /// Adds a player to the database
+        /// </summary>
+        /// <param name="p_player">Player to add to the database</param>
+        void AddPlayer(Player p_player);
+
     }
 }
