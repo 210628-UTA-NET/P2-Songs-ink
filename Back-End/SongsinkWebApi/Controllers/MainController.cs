@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SIModel;
 using SongsinkBL;
 using System;
 using System.Collections.Generic;
@@ -47,6 +48,12 @@ namespace SongsinkWebApi.Controllers
         public async Task<IActionResult> GetAllSongs()
         {
             return Ok(await _BL.GetAllSongs());
+        }
+
+        [HttpPost("addGameHistory")]
+        public async Task<IActionResult> AddGameHistory([FromBody] GameHistory p_gameHistory)
+        {
+            return  Created("api/Main/addGameHistory", await _BL.AddGameHistory(p_gameHistory));
         }
     }
 }

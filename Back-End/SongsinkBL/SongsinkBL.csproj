@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\SongsinkModel\SIModel.csproj" />
+    <ProjectReference Include="..\SongsinkModel\SongsinkModel.csproj" />
     <ProjectReference Include="..\SongsinkDL\SongsinkDL.csproj" />
   </ItemGroup>
 
