@@ -28,9 +28,9 @@ namespace SongsinkBL
             return await _repo.GetAllWordsOfACategory(p_categoryId);
         }
 
-        public string GetASongUrl(int p_songId)
+        public async Task<string> GetASongUrl(int p_songId)
         {
-            string found = _repo.GetASongUrl(p_songId);
+            string found = await _repo.GetASongUrl(p_songId);
             if (found == null)
             {
                 found = "empty";

@@ -15,10 +15,10 @@ namespace SongsinkDL
         public DbSet<Song> Songs { get; set; }
         public DbSet<Word> Words { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder p_options)
-        {
-           p_options.UseNpgsql( @"Server=hansken.db.elephantsql.com;Database=nxackagz;User ID=nxackagz;Password=5kbgSpXPnnXuypCmL7HRA_3Jm_w4sOkJ;Port=5432");
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder p_options)
+        //{
+        //   p_options.UseNpgsql( @"Server=hansken.db.elephantsql.com;Database=nxackagz;User ID=nxackagz;Password=5kbgSpXPnnXuypCmL7HRA_3Jm_w4sOkJ;Port=5432");
+        //}
 
         public SIDbContext() : base()
         { }
