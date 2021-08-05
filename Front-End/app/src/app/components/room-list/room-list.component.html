@@ -1,0 +1,14 @@
+<div class='sidenav'>
+    <span
+      (click)='addRoom()'
+    >
+      New Document
+    </span>
+    <span
+      [class.selected]='roomId === currentRoom'
+      (click)='loadRoom(roomId)'
+      *ngFor='let roomId of rooms | async'
+    >
+      {{ roomId }}
+    </span>
+</div>

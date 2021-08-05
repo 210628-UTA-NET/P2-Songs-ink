@@ -1,31 +1,37 @@
 import { Injectable } from '@angular/core';
-import { io, Socket } from 'socket.io-client';
-import { DefaultEventsMap } from 'socket.io-client/build/typed-events';
-
-export const environment = {  
-	production: false,  
-	SOCKET_ENDPOINT: 'http://localhost:3000'
-};
+import { Socket } from 'ngx-socket-io';
+import { Room } from 'src/app/models/room';
+import { Chatline } from '../models/chatline';
 
 @Injectable({
   providedIn: 'root'
 })
+export class SocketIoService {
+  currentRoom = this.socket.fromEvent<Room>('room');
+  roomList = this.socket.fromEvent<string[]>('rooms');
 
+  constructor(private socket: Socket) { }
 
-export class SocketioService {
-
-  socket: Socket<DefaultEventsMap, DefaultEventsMap>;
-
-  constructor() { }
-
-  setupSocketConnection() {
-    this.socket = io(environment.SOCKET_ENDPOINT, {transports: ['websocket']});
-    // this.socket = io('http://localhost:3000');
+  getRoom(id: string) {
+    this.socket.emit('getRoom', id);
   }
 
-  disconnect() {
-    if(this.socket) {
-      this.socket.disconnect();
+  addRoom() {
+    this.socket.emit('addRoom', { id: this.roomId(), doc: '' });
+  }
+
+  editChat(chatline: Chatline) {
+    this.socket.emit('editChat', chatline);
+  }
+
+  private roomId() {
+    let text = '';
+    const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+    for (let i = 0; i < 5; i++) {
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
     }
+
+    return text;
   }
 }

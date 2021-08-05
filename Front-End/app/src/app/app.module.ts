@@ -15,9 +15,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatListModule} from '@angular/material/list';
 import {MatInputModule} from '@angular/material/input'; 
 import {MatMenuModule} from '@angular/material/menu'; 
-import { SocketioService } from './services/socketio.service';
+import { SocketIoService } from './services/socketio.service';
 import { ChatComponent } from './components/chat/chat.component';
+import { RoomListComponent } from './components/room-list/room-list.component';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
+const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
 @NgModule({
   declarations: [
@@ -28,6 +31,7 @@ import { ChatComponent } from './components/chat/chat.component';
     CanvasComponent,
     PlayerListItemComponent,
     ChatComponent,
+    RoomListComponent,
 
   ],
   imports: [
@@ -37,9 +41,10 @@ import { ChatComponent } from './components/chat/chat.component';
     BrowserAnimationsModule,
     MatListModule,
     MatInputModule,
-    MatMenuModule    
+    MatMenuModule,
+    SocketIoModule.forRoot(config) 
   ],
-  providers: [SocketioService],
+  providers: [SocketIoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
