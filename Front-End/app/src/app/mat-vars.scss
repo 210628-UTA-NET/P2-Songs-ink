@@ -1,0 +1,11 @@
+@import '~@angular/material/theming';
+//And then retrieve the palette
+
+$myPrimaryPaletteVariable : mat-palette($mat-purple, 700, 500, 800);
+$myAccentPaletteVariable : mat-palette($mat-green, A200, A100, A400);
+
+
+
+//Retrive the colors you need
+$myPrimaryColor : mat-color($myPrimaryPaletteVariable);
+$myAccentColor : mat-color($myAccentPaletteVariable);
