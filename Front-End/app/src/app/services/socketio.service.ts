@@ -19,7 +19,8 @@ export class SocketioService {
   constructor() { }
 
   setupSocketConnection() {
-    this.socket = io(environment.SOCKET_ENDPOINT);
+    this.socket = io(environment.SOCKET_ENDPOINT, {transports: ['websocket']});
+    // this.socket = io('http://localhost:3000');
   }
 
   disconnect() {
