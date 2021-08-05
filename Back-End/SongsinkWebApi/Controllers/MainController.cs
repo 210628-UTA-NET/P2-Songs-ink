@@ -37,10 +37,10 @@ namespace SongsinkWebApi.Controllers
             return Ok(await _BL.GetAllWordsOfACategory(p_categoryId));
         }
 
-        [HttpGet("getASongUrl")]
-        public IActionResult GetASongUrl(int p_songId)
+        [HttpGet("getASong/{p_id}")]
+        public async Task<IActionResult> GetASong(int p_songId)
         {
-            return Ok(_BL.GetASongUrl(p_songId));
+            return Ok(await _BL.GetASong(p_songId));
         }
 
         [HttpGet("getAllSongs")]

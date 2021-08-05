@@ -30,10 +30,9 @@ namespace SongsinkDL
             return await _context.Words.Where(word => word.CategoryId == p_categoryId).Select(word => word).ToListAsync();
         }
 
-        public async Task<string> GetASongUrl(int p_songId)
-        {           
-            string songUrl = _context.Songs.FirstOrDefault(song => song.Id == p_songId).SongURL.ToString();
-            return await Task.FromResult(songUrl);
+        public async Task<Song> GetASong(int p_songId)
+        {
+            return await _context.Songs.FirstOrDefaultAsync(song => song.Id == p_songId);
         }
 
         public async Task<List<Song>> GetAllSongs()

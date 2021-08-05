@@ -28,12 +28,11 @@ namespace SongsinkBL
             return await _repo.GetAllWordsOfACategory(p_categoryId);
         }
 
-        public async Task<string> GetASongUrl(int p_songId)
+        public async Task<Song> GetASong(int p_songId)
         {
-            string found = await _repo.GetASongUrl(p_songId);
+            Song found = await _repo.GetASong(p_songId);
             if (found == null)
             {
-                found = "empty";
                 throw new Exception("Song URL Not Found");
             }
             return found;

@@ -31,7 +31,7 @@ namespace SongsinkDL
         /// </summary>
         /// <param name="p_songId"></param>
         /// <returns></returns>
-        Task<string> GetASongUrl(int p_songId);
+        Task<Song> GetASong(int p_songId);
 
         /// <summary>
         /// Get A List Of All Songs For The User To Choose From
