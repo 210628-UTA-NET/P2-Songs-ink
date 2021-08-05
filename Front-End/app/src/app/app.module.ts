@@ -15,6 +15,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatListModule} from '@angular/material/list';
 import {MatInputModule} from '@angular/material/input'; 
 import {MatMenuModule} from '@angular/material/menu'; 
+import {MatTableModule} from '@angular/material/table'; 
 import { SocketioService } from './services/socketio.service';
 import { ChatComponent } from './components/chat/chat.component';
 
@@ -37,7 +38,8 @@ import { ChatComponent } from './components/chat/chat.component';
     BrowserAnimationsModule,
     MatListModule,
     MatInputModule,
-    MatMenuModule    
+    MatMenuModule,
+    MatTableModule
   ],
   providers: [SocketioService],
   bootstrap: [AppComponent]
