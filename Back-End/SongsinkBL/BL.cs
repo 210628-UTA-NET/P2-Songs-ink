@@ -41,5 +41,10 @@ namespace SongsinkBL
         {
             return await _repo.GetAllSongs();
         }
+
+        public async Task<GameHistory> AddGameHistory(GameHistory p_gameHistory)
+        {
+            return await _repo.AddGameHistory(p_gameHistory);
+        }
     }
 }

@@ -42,6 +42,12 @@ namespace SongsinkDL
         Task<List<Song>> GetAllSongs();
 
         /// <summary>
+        /// Add new game history to DB-GameHistories
+        /// </summary>
+        /// <returns></returns>
+        Task<GameHistory> AddGameHistory(GameHistory p_gameHistory);
+
+        /// <summary>
         /// Add a list of pictures to the Database
         /// </summary>
         /// <param name="p_pictures">list of pictures to add</param>

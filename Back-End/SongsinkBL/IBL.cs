@@ -41,6 +41,11 @@ namespace SongsinkBL
         /// </returns>
         Task<List<Song>> GetAllSongs();
 
+        /// <summary>
+        /// Add new game history to DB-GameHistories
+        /// </summary>
+        /// <returns></returns>
+        Task<GameHistory> AddGameHistory(GameHistory p_gameHistory);
 
     }
 }

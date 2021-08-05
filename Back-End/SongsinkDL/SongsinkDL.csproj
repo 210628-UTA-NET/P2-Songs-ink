@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SongsinkModel\SIModel.csproj" />
+    <ProjectReference Include="..\SongsinkModel\SongsinkModel.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -22,7 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SongsinkDL\SongsinkDL.csproj" />
-    <ProjectReference Include="..\SongsinkModel\SIModel.csproj" />
+    <ProjectReference Include="..\SongsinkModel\SongsinkModel.csproj" />
   </ItemGroup>
 
 </Project>

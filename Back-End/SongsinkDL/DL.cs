@@ -48,6 +48,14 @@ namespace SongsinkDL
             }
         }
 
+        public async Task<GameHistory> AddGameHistory(GameHistory p_gameHistory)
+        {
+            _context.GameHistories.Add(p_gameHistory);
+            _context.SaveChanges();
+            return await _context.GameHistories.FirstOrDefaultAsync(gh => gh.ChatLogUrl == p_gameHistory.ChatLogUrl
+                                                                    && gh.Date == p_gameHistory.Date);
+        }
+
         public async Task AddRoom(Room p_room)
         {
             throw new NotImplementedException();
@@ -62,5 +70,7 @@ namespace SongsinkDL
         {
             throw new NotImplementedException();
         }
+
+        
     }
 }
