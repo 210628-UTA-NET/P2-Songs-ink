@@ -30,9 +30,10 @@ namespace SongsinkDL
             return await _context.Words.Where(word => word.CategoryId == p_categoryId).Select(word => word).ToListAsync();
         }
 
-        public string GetASongUrl(int p_songId)
+        public async Task<string> GetASongUrl(int p_songId)
         {           
-            return _context.Songs.FirstOrDefault(song => song.Id == p_songId).SongURL.ToString();
+            string songUrl = _context.Songs.FirstOrDefault(song => song.Id == p_songId).SongURL.ToString();
+            return await Task.FromResult(songUrl);
         }
 
         public async Task<List<Song>> GetAllSongs()
@@ -40,7 +41,7 @@ namespace SongsinkDL
             return await _context.Songs.Select(song => song).ToListAsync();
         }
 
-        public void AddPictures(List<Picture> p_pictures)
+        public async Task AddPictures(List<Picture> p_pictures)
         {
             foreach (Picture item in p_pictures)
             {
@@ -48,17 +49,17 @@ namespace SongsinkDL
             }
         }
 
-        public void AddRoom(Room p_room)
+        public async Task AddRoom(Room p_room)
         {
             throw new NotImplementedException();
         }
 
-        public void PlayerCategory(Player p_player, Category p_category)
+        public async Task PlayerCategory(Player p_player, Category p_category)
         {
             throw new NotImplementedException();
         }
 
-        public void AddPlayer(Player p_player)
+        public async Task AddPlayer(Player p_player)
         {
             throw new NotImplementedException();
         }
