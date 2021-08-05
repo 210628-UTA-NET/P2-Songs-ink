@@ -82,7 +82,7 @@ namespace SonsinkTests
             }
         }
         [Fact]
-        public async Task GetASongUrlShouldGetASongUrl()
+        public async Task GetASongShouldGetASong()
         {
             using (var context = new SIDbContext(_options))
             {
@@ -92,10 +92,10 @@ namespace SonsinkTests
                 string expectedUrl = "https://SongStorage.com/songlist/song1";
 
                 //Act
-                string songUrl = await dl.GetASongUrl(songID);
+                Song s = await dl.GetASong(songID);
 
                 //Assert
-                Assert.Equal(expectedUrl, songUrl);
+                Assert.Equal(expectedUrl, s.SongURL);
             }
         }
         [Fact]
