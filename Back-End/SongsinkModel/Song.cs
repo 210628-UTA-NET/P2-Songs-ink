@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SIModel
+namespace SongsinkModel
 {
 	public class Song
 	{

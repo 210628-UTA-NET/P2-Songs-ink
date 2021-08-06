@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace SIModel
+namespace SongsinkModel
 {
 	public class Category
 	{

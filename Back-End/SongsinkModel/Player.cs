@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace SIModel
+namespace SongsinkModel
 {
 	public class Player
 	{
@@ -15,6 +15,7 @@ namespace SIModel
 		private int _playerCategoryID;
 		private string _password;
 		private string _salt;
+		private string _email;
 
 		public Player()
 		{
@@ -31,5 +32,6 @@ namespace SIModel
 		public string Password { get => _password; set => _password = value; }
         public Category PlayerCategory { get; set; }
 		public string Salt { get => _salt; set => _salt = value; }
-	}
+        public string Email { get => _email; set => _email = value; }
+    }
 }

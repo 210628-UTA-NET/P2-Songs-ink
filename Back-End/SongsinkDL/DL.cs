@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SIModel;
+using SongsinkModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,13 +40,13 @@ namespace SongsinkDL
             return await _context.Songs.Select(song => song).ToListAsync();
         }
 
-        public async Task AddPictures(List<Picture> p_pictures)
-        {
-            foreach (Picture item in p_pictures)
-            {
-                _context.Pictures.Add(item);
-            }
-        }
+        //public async Task AddPictures(List<Picture> p_pictures)
+        //{
+        //    foreach (Picture item in p_pictures)
+        //    {
+        //        _context.Pictures.Add(item);
+        //    }
+        //}
 
         public async Task<GameHistory> AddGameHistory(GameHistory p_gameHistory)
         {
@@ -56,21 +56,16 @@ namespace SongsinkDL
                                                                     && gh.Date == p_gameHistory.Date);
         }
 
-        public async Task AddRoom(Room p_room)
-        {
-            throw new NotImplementedException();
-        }
 
-        public async Task PlayerCategory(Player p_player, Category p_category)
-        {
-            throw new NotImplementedException();
-        }
+        //public async Task AddPlayer(Player p_player)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public async Task AddPlayer(Player p_player)
+        public async Task<Player> GetAPlayer(string p_email, string p_password)
         {
-            throw new NotImplementedException();
+            return await _context.Players.FirstOrDefaultAsync(p => p.Email == p_email
+                                                                    && p.Password == p_password);
         }
-
-        
     }
 }
