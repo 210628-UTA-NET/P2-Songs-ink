@@ -8,8 +8,8 @@ import { Chatline } from '../models/chatline';
   providedIn: 'root'
 })
 export class SocketIoService {
-  currentRoom = this.socket.fromEvent<Room>('room');
-  roomList = this.socket.fromEvent<string[]>('rooms');
+  // currentRoom = this.socket.fromEvent<Room>('room');
+  // roomList = this.socket.fromEvent<string[]>('rooms');
   // chat = this.socket.fromEvent<string>('AddToChatBox');
   message$ : BehaviorSubject<string> = new BehaviorSubject('');
   rooms$ : BehaviorSubject<string> = new BehaviorSubject('');
@@ -20,14 +20,14 @@ export class SocketIoService {
   }
 
   getRooms() {
-    this.socket.on('rooms', (room: string) => {
+    this.socket.on('room', (room: string) => {
       this.rooms$.next(room);
     });
     return this.rooms$.asObservable();
   }
 
   addRoom() {
-    this.socket.emit('addRoom', { id: this.roomId(), doc: '' });
+    this.socket.emit('addRoom', { id: this.roomId()});
   }
 
   editChat(chatline: string) {
