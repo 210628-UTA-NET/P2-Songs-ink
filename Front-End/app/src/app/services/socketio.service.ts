@@ -8,12 +8,13 @@ import { Chatline } from '../models/chatline';
   providedIn: 'root'
 })
 export class SocketIoService {
-  // currentRoom = this.socket.fromEvent<Room>('room');
-  // roomList = this.socket.fromEvent<string[]>('rooms');
-  // chat = this.socket.fromEvent<string>('AddToChatBox');
+  currentRoom = this.socket.fromEvent<string>('room');
+  roomList = this.socket.fromEvent<string[]>('room list');
+  chat = this.socket.fromEvent<string>('AddToChatBox');
   message$ : BehaviorSubject<string> = new BehaviorSubject('');
   rooms$ : BehaviorSubject<string> = new BehaviorSubject('');
   constructor(private socket: Socket) { }
+  
 
   getRoom(id: string) {
     this.socket.emit('getRoom', id);
@@ -27,7 +28,7 @@ export class SocketIoService {
   }
 
   addRoom() {
-    this.socket.emit('addRoom', { id: this.roomId()});
+    this.socket.emit('addRoom', this.roomId());
   }
 
   editChat(chatline: string) {
@@ -49,7 +50,6 @@ export class SocketIoService {
     for (let i = 0; i < 5; i++) {
       text += possible.charAt(Math.floor(Math.random() * possible.length));
     }
-
     return text;
   }
 }
