@@ -16,9 +16,13 @@ import {MatListModule} from '@angular/material/list';
 import {MatInputModule} from '@angular/material/input'; 
 import {MatMenuModule} from '@angular/material/menu'; 
 import { SocketIoService } from './services/socketio.service';
+import {MatTableModule} from '@angular/material/table'; 
+// import { SocketioService } from './services/socketio.service';
 import { ChatComponent } from './components/chat/chat.component';
 import { RoomListComponent } from './components/room-list/room-list.component';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { LobbyComponent } from './components/lobby/lobby.component';
+import { LoginComponent } from './components/login/login.component';
 
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
@@ -32,17 +36,24 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     PlayerListItemComponent,
     ChatComponent,
     RoomListComponent,
+    LobbyComponent,
+    LoginComponent,
 
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    RouterModule,
+    RouterModule.forRoot([
+      {path:"lobby", component: LobbyComponent},
+      {path:"room-list", component: RoomListComponent},
+      {path:"login", component: LoginComponent}
+    ]),
     BrowserAnimationsModule,
     MatListModule,
     MatInputModule,
     MatMenuModule,
-    SocketIoModule.forRoot(config) 
+    SocketIoModule.forRoot(config),
+    MatTableModule
   ],
   providers: [SocketIoService],
   bootstrap: [AppComponent]

@@ -4,6 +4,7 @@ using Xunit;
 using SIModel;
 using SongsinkDL;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace SonsinkTests
 {
@@ -19,7 +20,7 @@ namespace SonsinkTests
         }
  
         [Fact]
-        public void GetAllCategoriesShouldGetAllCategories()
+        public async Task GetAllCategoriesShouldGetAllCategories()
         {
             using (var context = new SIDbContext(_options))
             {
@@ -27,7 +28,7 @@ namespace SonsinkTests
                 IDL dl = new DL(context);
 
                 //Act
-                List<Category> allCategories = dl.GetAllCategories();
+                List<Category> allCategories = await dl.GetAllCategories();
 
                 //Assert
                 Assert.Equal(5, allCategories.Count);
@@ -40,7 +41,7 @@ namespace SonsinkTests
             }
         }
         [Fact]
-        public void GetAllWordsShouldGetAllWords()
+        public async Task GetAllWordsShouldGetAllWords()
         {
             using (var context = new SIDbContext(_options))
             {
@@ -48,7 +49,7 @@ namespace SonsinkTests
                 IDL dl = new DL(context);
 
                 //Act
-                List<Word> allWords = dl.GetAllWords();
+                List<Word> allWords = await dl.GetAllWords();
 
                 //Assert
                 Assert.Equal(8, allWords.Count);
@@ -61,7 +62,7 @@ namespace SonsinkTests
             }
         }
         [Fact]
-        public void GetAllWordsOfACategoryShouldGetAllWordsOfACategory()
+        public async Task GetAllWordsOfACategoryShouldGetAllWordsOfACategory()
         {
             using (var context = new SIDbContext(_options))
             {
@@ -69,7 +70,7 @@ namespace SonsinkTests
                 IDL dl = new DL(context);
                 int catID = 1;
                 //Act
-                List<Word> wordsofCategory = dl.GetAllWordsOfACategory(catID);
+                List<Word> wordsofCategory = await dl.GetAllWordsOfACategory(catID);
 
                 //Assert
                 Assert.Equal(2, wordsofCategory.Count);
@@ -81,7 +82,7 @@ namespace SonsinkTests
             }
         }
         [Fact]
-        public void GetASongUrlShouldGetASongUrl()
+        public async Task GetASongShouldGetASong()
         {
             using (var context = new SIDbContext(_options))
             {
@@ -91,14 +92,14 @@ namespace SonsinkTests
                 string expectedUrl = "https://SongStorage.com/songlist/song1";
 
                 //Act
-                string songUrl = dl.GetASongUrl(songID);
+                Song s = await dl.GetASong(songID);
 
                 //Assert
-                Assert.Equal(expectedUrl, songUrl);
+                Assert.Equal(expectedUrl, s.SongURL);
             }
         }
         [Fact]
-        public void GetAllSongsShouldGetAllSongs()
+        public async Task GetAllSongsShouldGetAllSongs()
         {
             using (var context = new SIDbContext(_options))
             {
@@ -106,7 +107,7 @@ namespace SonsinkTests
                 IDL dl = new DL(context);
 
                 //Act
-                List<Song> allSongs = dl.GetAllSongs();
+                List<Song> allSongs = await dl.GetAllSongs();
 
                 //Assert
                 Assert.NotNull(allSongs);

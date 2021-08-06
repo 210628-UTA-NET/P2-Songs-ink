@@ -14,10 +14,11 @@ namespace SongsinkDL
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Song> Songs { get; set; }
         public DbSet<Word> Words { get; set; }
+        public DbSet<GameHistory> GameHistories { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder p_options)
         {
-           p_options.UseNpgsql( @"Server=hansken.db.elephantsql.com;Database=nxackagz;User ID=nxackagz;Password=5kbgSpXPnnXuypCmL7HRA_3Jm_w4sOkJ;Port=5432");
+            p_options.UseNpgsql(@"Server=hansken.db.elephantsql.com;Database=nxackagz;User ID=nxackagz;Password=5kbgSpXPnnXuypCmL7HRA_3Jm_w4sOkJ;Port=5432");
         }
 
         public SIDbContext() : base()
@@ -94,6 +95,10 @@ namespace SongsinkDL
                 .HasOne(play => play.ProfileImg)
                 .WithMany(pic => pic.PlayerPicture)
                 .HasForeignKey(play => play.ProfileImgID);
+
+            p_modelBuilder.Entity<GameHistory>()
+                .Property(gh => gh.Id)
+                .ValueGeneratedOnAdd();
         }
     }
 }

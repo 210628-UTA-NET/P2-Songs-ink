@@ -1,24 +1,13 @@
 <p>chat works!</p>
 <head>
     <title>Socket.IO chat</title>
-    <style>
-      body { margin: 0px; padding-bottom: 3rem; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-
-      #form { background: rgba(0, 0, 0, 0.15); position:relative; left: 103px; width:500px; padding: 0.25rem; display: flex; height: 3rem; box-sizing: border-box; backdrop-filter: blur(10px); }
-      #input { border: none; padding: 0 1rem; flex-grow: 1; border-radius: 2rem; margin: 0.25rem; }
-      #input:focus { outline: none; }
-      #form > button { background: #333; border: none; padding: 0 1rem; margin: 0.25rem; border-radius: 3px; outline: none; color: #fff; }
-      #container {position: relative; width: 500px ; border:solid; height: 500px; left: 100px; overflow-y:auto; display:flex; flex-direction:column-reverse}
-      #messages { list-style-type: none; margin: 0; padding: 0; }
-      #messages > li { padding: 0.5rem 1rem; }
-      #messages > li:nth-child(odd) { background: #efefef; }
-    </style>
+    <style></style>
   </head>
   <body>
-      <div id="container">
-          <ul id="messages"></ul>
+      <div id="container" style="border:solid; width: 500px; height: 500px; overflow-y:auto; display:flex; flex-direction:column-reverse">
+          <ul id="messages" *ngFor = "let line of chatlines" >{{line}}</ul>
       </div>
-    <form>
-      <input id="input" autocomplete="off"/><button (click) = 'editChat'>Send</button>
+    <form style="width:500px" onkeypress="return event.keyCode != 13">
+     <input id="text" #chatinput autocomplete="off" class="form-control"/><button type="button" (click) = "AddChat(chatinput.value)" >Send</button>
     </form>
   </body>

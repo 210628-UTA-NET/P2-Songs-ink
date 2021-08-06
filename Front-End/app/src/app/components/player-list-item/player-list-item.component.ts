@@ -3,7 +3,7 @@ import { Player } from 'src/app/models/Player';
 @Component({
   selector: 'app-player-list-item',
   templateUrl: './player-list-item.component.html',
-  styleUrls: ['./player-list-item.component.css']
+  styleUrls: ['./player-list-item.component.scss']
 })
 export class PlayerListItemComponent implements OnInit {
 

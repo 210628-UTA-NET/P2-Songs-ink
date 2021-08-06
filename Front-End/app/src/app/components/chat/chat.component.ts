@@ -1,9 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { SocketIoService } from 'src/app/services/socketio.service';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { startWith } from 'rxjs/operators';
 import {Room} from 'src/app/models/room';
 import {Chatline} from 'src/app/models/chatline';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-chat',
@@ -11,9 +12,15 @@ import {Chatline} from 'src/app/models/chatline';
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit, OnDestroy {
+  @Input() newChatParameter: string;
   room: Room;
-  chatline:Chatline;
+  chatlines:string[] = [];
+  newChat:string;
   private _roomsub: Subscription;
+  
+  chatGroup = new FormGroup({
+    id: new FormControl()
+  });
 
   title = 'socketio-angular';
   
@@ -23,12 +30,16 @@ export class ChatComponent implements OnInit, OnDestroy {
     this._roomsub = this.socketService.currentRoom.pipe(
       startWith({ id: '',})
     ).subscribe(room => this.room = room);
-  }
 
+      this.socketService.getNewMessage().subscribe((message:string)=> {
+        this.chatlines.unshift(message);
+      })
+
+  }
   ngOnDestroy() {
     this._roomsub.unsubscribe();
   }
-  editChat() {
-    this.socketService.editChat(this.chatline);
+  AddChat(message:string) {
+    this.socketService.editChat(message);
   }
 }
