@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import {RegisterService} from '../../services/register.service';
+import {Register} from '../../models/Register';
 
 @Component({
   selector: 'app-register',
@@ -7,13 +9,14 @@ import { FormGroup, FormControl } from '@angular/forms';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
+
   registerGroup = new FormGroup({
-    email: new FormControl(),
-    username: new FormControl(),
-    password: new FormControl()
+    email!: new FormControl(),
+    username!: new FormControl(),
+    password!: new FormControl()
   });
 
-  constructor() { }
+  constructor(private regApi: RegisterService) { }
 
   ngOnInit(): void {
   }
@@ -32,7 +35,13 @@ export class RegisterComponent implements OnInit {
     {
       alert('Please enter a valid password');
     }
-    //Need call to service to create new user
-  }
+    let newAcc: Register = {
+      email: registerGroup.get("email")?.value,
+      username: registerGroup.get("username")?.value,
+      password: registerGroup.get("password")?.value
+    };
 
+    this.regApi.addAccount(newAcc).subscribe();
+   
+  }
 }
