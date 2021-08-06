@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SIModel;
+using SongsinkModel;
 using SongsinkBL;
 using System;
 using System.Collections.Generic;
@@ -54,6 +54,12 @@ namespace SongsinkWebApi.Controllers
         public async Task<IActionResult> AddGameHistory([FromBody] GameHistory p_gameHistory)
         {
             return  Created("api/Main/addGameHistory", await _BL.AddGameHistory(p_gameHistory));
+        }
+
+        [HttpGet("getAPlayer/{p_email}/{p_password}")]
+        public async Task<IActionResult> GetAPlayer(string p_email, string p_password)
+        {
+            return Ok(await _BL.GetAPlayer(p_email, p_password));
         }
     }
 }

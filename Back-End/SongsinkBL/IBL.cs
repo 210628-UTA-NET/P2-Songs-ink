@@ -1,5 +1,5 @@
 ﻿using System;
-using SIModel;
+using SongsinkModel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -46,6 +46,14 @@ namespace SongsinkBL
         /// </summary>
         /// <returns></returns>
         Task<GameHistory> AddGameHistory(GameHistory p_gameHistory);
+
+        /// <summary>
+        /// Get player from DB-Players
+        /// </summary>
+        /// <param name="p_email"></param>
+        /// <param name="p_password"></param>
+        /// <returns></returns>
+        Task<Player> GetAPlayer(string p_email, string p_password);
 
     }
 }
