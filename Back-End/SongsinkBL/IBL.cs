@@ -31,7 +31,7 @@ namespace SongsinkBL
         /// </summary>
         /// <param name="p_songId"></param>
         /// <returns></returns>
-        Task<string> GetASongUrl(int p_songId);
+        Task<Song> GetASong(int p_songId);
 
         /// <summary>
         /// Get A List Of All Songs For The User To Choose From
@@ -41,6 +41,11 @@ namespace SongsinkBL
         /// </returns>
         Task<List<Song>> GetAllSongs();
 
+        /// <summary>
+        /// Add new game history to DB-GameHistories
+        /// </summary>
+        /// <returns></returns>
+        Task<GameHistory> AddGameHistory(GameHistory p_gameHistory);
 
     }
 }

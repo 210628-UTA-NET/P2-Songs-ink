@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SIModel;
 using SongsinkBL;
 using System;
 using System.Collections.Generic;
@@ -37,16 +38,22 @@ namespace SongsinkWebApi.Controllers
             return Ok(await _BL.GetAllWordsOfACategory(p_categoryId));
         }
 
-        [HttpGet("getASongUrl")]
-        public IActionResult GetASongUrl(int p_songId)
+        [HttpGet("getASong/{p_id}")]
+        public async Task<IActionResult> GetASong(int p_songId)
         {
-            return Ok(_BL.GetASongUrl(p_songId));
+            return Ok(await _BL.GetASong(p_songId));
         }
 
         [HttpGet("getAllSongs")]
         public async Task<IActionResult> GetAllSongs()
         {
             return Ok(await _BL.GetAllSongs());
+        }
+
+        [HttpPost("addGameHistory")]
+        public async Task<IActionResult> AddGameHistory([FromBody] GameHistory p_gameHistory)
+        {
+            return  Created("api/Main/addGameHistory", await _BL.AddGameHistory(p_gameHistory));
         }
     }
 }

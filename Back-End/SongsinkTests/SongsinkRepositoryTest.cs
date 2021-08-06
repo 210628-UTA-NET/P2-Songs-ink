@@ -82,7 +82,7 @@ namespace SonsinkTests
             }
         }
         [Fact]
-        public async Task GetASongUrlShouldGetASongUrl()
+        public async Task GetASongShouldGetASong()
         {
             using (var context = new SIDbContext(_options))
             {
@@ -92,10 +92,10 @@ namespace SonsinkTests
                 string expectedUrl = "https://SongStorage.com/songlist/song1";
 
                 //Act
-                string songUrl = await dl.GetASongUrl(songID);
+                Song s = await dl.GetASong(songID);
 
                 //Assert
-                Assert.Equal(expectedUrl, songUrl);
+                Assert.Equal(expectedUrl, s.SongURL);
             }
         }
         [Fact]
@@ -120,6 +120,83 @@ namespace SonsinkTests
                 }
             }
         }
+
+        /* Right now the following tests do not have a way to be validated
+         * so until we make some methods to retrieve the added entries
+         * Im just going to leave them commented out and when we add the
+         * needed methods just uncomment them
+         */
+
+        //[Fact]
+        //public async Task AddPicturesShouldAddPictures()
+        //{
+        //    using (var context = new SIDbContext(_options))
+        //    {
+        //        //Arrange
+        //        IDL dl = new DL(context);
+        //        Picture pic5 = new Picture()
+        //        {
+        //            Id = 5,
+        //            PictureURL = "https://SongStorage.com/picturelist/picture5",
+        //            RoomID = 3
+        //        };
+        //        Picture pic6 = new Picture()
+        //        {
+        //            Id = 6,
+        //            PictureURL = "https://SongStorage.com/picturelist/picture6",
+        //            RoomID = 3
+        //        };
+        //        List<Picture> newPictures = new List<Picture>() { pic5, pic6 };
+
+        //        //Act
+        //        await dl.AddPictures(newPictures);
+        //        //function to retrieve pictures goes here
+        //        //Assert
+        //        //Assert.Equal(6,allPictures.Count);
+        //    }
+        //}
+        //[Fact]
+        //public async Task PlayerCategoryShouldUpdateorCreateACategory()
+        //{
+        //    using (var context = new SIDbContext(_options))
+        //    {
+        //        //Arrange
+        //        IDL dl = new DL(context);
+
+        //        //Act
+
+
+        //        //Assert
+        //    }
+        //}
+        //[Fact]
+        //public async Task AddPlayerShouldAddPlayer()
+        //{
+        //    using (var context = new SIDbContext(_options))
+        //    {
+        //        //Arrange
+        //        IDL dl = new DL(context);
+
+        //        Player player3 = new Player()
+        //        {
+        //            Id = 3,
+        //            PlayerName = "Player3",
+        //            PlayerScore = 700,
+        //            CurrentScore = 600,
+        //            GamesPlayed = 13,
+        //            Password = "chasdfrlie",
+        //            Salt = "93jfoiv",
+        //            PlayerCategoryID = 6,
+        //            ProfileImgID = 3
+        //        };
+        //        //Act
+        //        await dl.AddPlayer(player3);
+
+        //        //Assert
+        //    }
+        //}
+
+
         private void Seed()
         {
             using (var context = new SIDbContext(_options))
