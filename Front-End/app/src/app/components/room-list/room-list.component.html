@@ -1,0 +1,15 @@
+<div class='sidenav'>
+    <button
+      (click)='addRoom()'
+    >
+      New Room
+    </button>
+    <button
+      [class.selected]='roomId === currentRoom'
+      (click)='loadRoom(roomId)'
+      *ngFor='let roomId of rooms'
+    >
+      {{ roomId }}
+  </button>
+</div>
+<app-game></app-game>
