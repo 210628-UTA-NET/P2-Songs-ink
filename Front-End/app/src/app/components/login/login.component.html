@@ -1,1 +1,11 @@
-<p>login works!</p>
+<div><h1>Login</h1></div>
+<div>
+    <form class="form-group" [formGroup]="loginGroup">
+        <label>Email</label>
+        <input type="email" class="form-control" formControlName = "email" placeholder="example@email.com">
+        <label>Password</label>
+        <input type="password" class="form-control" formControlName = "password">
+        <button class="btn btn-primary" (click)="login(loginGroup)">Login</button>
+    </form>
+    <!-- Need a way to route to register account -->
+</div>
