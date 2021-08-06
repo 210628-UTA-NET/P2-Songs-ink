@@ -86,6 +86,9 @@ namespace SongsinkDL.Migrations
                     b.Property<int>("CurrentScore")
                         .HasColumnType("integer");
 
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
                     b.Property<int>("GamesPlayed")
                         .HasColumnType("integer");
 

@@ -1,4 +1,4 @@
-﻿using SIModel;
+﻿using SongsinkModel;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -47,24 +47,20 @@ namespace SongsinkDL
         /// <returns></returns>
         Task<GameHistory> AddGameHistory(GameHistory p_gameHistory);
 
-        /// <summary>
-        /// Add a list of pictures to the Database
-        /// </summary>
-        /// <param name="p_pictures">list of pictures to add</param>
-        Task AddPictures(List<Picture> p_pictures);
+
+        ///// <summary>
+        ///// Adds a player to the database
+        ///// </summary>
+        ///// <param name="p_player">Player to add to the database</param>
+        //Task AddPlayer(Player p_player);
 
         /// <summary>
-        /// Update or Create a category for a player.
+        /// Get player from DB-Players
         /// </summary>
-        /// <param name="p_player"></param>
-        /// <param name="p_category"></param>
-        Task PlayerCategory(Player p_player, Category p_category);
-
-        /// <summary>
-        /// Adds a player to the database
-        /// </summary>
-        /// <param name="p_player">Player to add to the database</param>
-        Task AddPlayer(Player p_player);
+        /// <param name="p_email"></param>
+        /// <param name="p_password"></param>
+        /// <returns></returns>
+        Task<Player> GetAPlayer(string p_email, string p_password);
 
     }
 }

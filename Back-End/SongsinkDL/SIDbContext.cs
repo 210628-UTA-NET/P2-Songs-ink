@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SIModel;
+using SongsinkModel;
 using Npgsql.EntityFrameworkCore.PostgreSQL;
 
 namespace SongsinkDL
