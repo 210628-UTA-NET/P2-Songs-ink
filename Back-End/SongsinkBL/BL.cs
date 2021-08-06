@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using SIModel;
+using SongsinkModel;
 using SongsinkDL;
 
 namespace SongsinkBL
@@ -33,7 +33,7 @@ namespace SongsinkBL
             Song found = await _repo.GetASong(p_songId);
             if (found == null)
             {
-                throw new Exception("Song URL Not Found");
+                throw new Exception("Song Not Found");
             }
             return found;
         }
@@ -45,6 +45,16 @@ namespace SongsinkBL
         public async Task<GameHistory> AddGameHistory(GameHistory p_gameHistory)
         {
             return await _repo.AddGameHistory(p_gameHistory);
+        }
+
+        public async Task<Player> GetAPlayer(string p_email, string p_password)
+        {
+            Player found = await _repo.GetAPlayer(p_email, p_password);
+            if (found == null)
+            {
+                throw new Exception("Player Not Found");
+            }
+            return found;
         }
     }
 }

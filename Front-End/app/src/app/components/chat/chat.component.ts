@@ -18,18 +18,15 @@ export class ChatComponent implements OnInit, OnDestroy {
   newChat:string;
   private _roomsub: Subscription;
   
-  chatGroup = new FormGroup({
-    id: new FormControl()
-  });
 
   title = 'socketio-angular';
   
   constructor(private socketService: SocketIoService) {}
   
   ngOnInit() {
-    this._roomsub = this.socketService.currentRoom.pipe(
-      startWith({ id: '',})
-    ).subscribe(room => this.room = room);
+    // this._roomsub = this.socketService.currentRoom.pipe(
+    //   startWith({ id: '',})
+    // ).subscribe(room => this.room = room);
 
       this.socketService.getNewMessage().subscribe((message:string)=> {
         this.chatlines.unshift(message);

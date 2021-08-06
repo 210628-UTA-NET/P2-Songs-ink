@@ -16,7 +16,7 @@ export class RoomListComponent implements OnInit, OnDestroy {
   constructor(private SocketService: SocketIoService) { }
 
   ngOnInit(): void {
-    this._roomsub = this.SocketService.currentRoom.subscribe(room => this.currentRoom = room.id);
+    // this._roomsub = this.SocketService.currentRoom.subscribe(room => this.currentRoom = room.id);
     this.SocketService.getRooms().subscribe((room:string)=> {
       this.rooms.push(room)
     });
