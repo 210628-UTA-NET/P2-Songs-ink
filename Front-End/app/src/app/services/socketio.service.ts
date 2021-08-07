@@ -10,7 +10,7 @@ import { Chatline } from '../models/chatline';
 export class SocketIoService {
   currentRoom = this.socket.fromEvent<string>('room');
   roomList = this.socket.fromEvent<string[]>('room list');
-  chat = this.socket.fromEvent<string>('AddToChatBox');
+  chatLogOfRoom = this.socket.fromEvent<string[]>('EnterChatBox');
   message$ : BehaviorSubject<string> = new BehaviorSubject('');
   rooms$ : BehaviorSubject<string> = new BehaviorSubject('');
   constructor(private socket: Socket) { }
@@ -20,18 +20,19 @@ export class SocketIoService {
     this.socket.emit('getRoom', id);
   }
 
-  getRooms() {
-    this.socket.on('room', (room: string) => {
-      this.rooms$.next(room);
-    });
-    return this.rooms$.asObservable();
-  }
+  // getRooms() {
+  //   this.socket.on('room', (room: string) => {
+  //     this.rooms$.next(room);
+  //   });
+  //   return this.rooms$.asObservable();
+  // }
 
   addRoom() {
     this.socket.emit('addRoom', this.roomId());
   }
 
   editChat(chatline: string) {
+    this.socket.emit('userName', "Chase");
     this.socket.emit('message', chatline);
   }
 
