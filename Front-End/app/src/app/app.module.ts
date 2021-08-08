@@ -47,6 +47,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     RouterModule.forRoot([
       {path:"lobby", component: LobbyComponent},
       {path:"room-list", component: RoomListComponent},
+      {path: "game", component: GameComponent},
       {path:"login", component: LoginComponent},
       {path:"register", component: RegisterComponent}
     ]),
