@@ -1,7 +1,21 @@
 canvas {
     width: 600px;
-    height: 600px;;
-    border: solid 8px black;
-    border-radius: 10px;
+    height: 600px;
     background-color: white;
+}
+#button-red {
+    background-color: red;
+}
+#button-green {
+    background-color: green;
+}
+#button-yellow {
+    background-color: yellow;
+    color: black;
+}
+#button-blue {
+    background-color: blue;
+}
+#button-black {
+    background-color: black;
 }
