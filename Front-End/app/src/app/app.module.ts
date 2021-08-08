@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
 
@@ -23,6 +23,7 @@ import { RoomListComponent } from './components/room-list/room-list.component';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { LobbyComponent } from './components/lobby/lobby.component';
 import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
 
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
@@ -38,7 +39,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     RoomListComponent,
     LobbyComponent,
     LoginComponent,
-
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -46,14 +47,16 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     RouterModule.forRoot([
       {path:"lobby", component: LobbyComponent},
       {path:"room-list", component: RoomListComponent},
-      {path:"login", component: LoginComponent}
+      {path:"login", component: LoginComponent},
+      {path:"register", component: RegisterComponent}
     ]),
     BrowserAnimationsModule,
     MatListModule,
     MatInputModule,
     MatMenuModule,
     SocketIoModule.forRoot(config),
-    MatTableModule
+    MatTableModule,
+    ReactiveFormsModule
   ],
   providers: [SocketIoService],
   bootstrap: [AppComponent]

@@ -25,7 +25,12 @@ const io = require("socket.io")(server, {
 
 let rooms = [];
 // let users = [];
-// const messages = {};
+const roomItems = {
+  chatlog:[],
+  pictures:[],
+  users:[]
+};
+const chatMap = new Map();
 
 io.on('connection', (socket) => {
 
@@ -79,25 +84,34 @@ io.on('connection', (socket) => {
     //   });
     // });
 
-    let previousId="";
+    let previousId;
 
-  const safeJoin = currentId => {
-    socket.leave(previousId);
-    socket.join(currentId, () => console.log(`Socket ${username} joined room ${currentId}`));
-    previousId = currentId;
-  };
+  // function safeJoin(currentId) {
+  //   socket.leave(previousId);
+  //   socket.join(currentId, () => console.log(`Socket ${username} joined room ${currentId}`));
+  //   previousId = currentId;
+  // };
   
 
   
-    socket.on('chat message', (msg) => {
-      io.emit('chat message', msg);
-    });
+    // socket.on('chat message', (msg) => {
+    //   io.emit('chat message', msg);
+    // });
   
 
   
     socket.on("getRoom", roomId => {
-      safeJoin(roomId);
-      socket.emit("Room", rooms[roomId]);
+      socket.leave(previousId);
+      socket.join(roomId);
+      console.log(`Socket ${username} joined room ${roomId}`);
+      previousId = roomId;
+      socket.emit("room", roomId);
+    //   if(roomItems[roomId].chatlog){}
+    //   roomItems[roomId].chatlog.forEach(element => {
+    //     socket.emit('message', element)
+    //   });
+    // }
+      socket.emit("EnterChatBox", chatMap.get(roomId))
     });
 
     // socket.on("addRoom", room => {
@@ -111,6 +125,7 @@ io.on('connection', (socket) => {
     socket.on('addRoom', room => {
       rooms.push(room);
       console.log(room + " Created");
+      chatMap.set(room, [room+" Created"]);
       io.emit("room list", rooms);
     })
 
@@ -122,17 +137,16 @@ io.on('connection', (socket) => {
       username = nickname;
     });
 
-    if(rooms.id){
-      socket.on("message", message => {
-        io.to(rooms.id).emit('message', username + ': '+message);
-        console.log('message: ' + username + ': '+message+rooms.id);
-      });
-    }else{
-      socket.on('message', message => {
-        io.emit('message', username + ': '+message+rooms.id);
-        console.log('message: ' + username + ': '+message+rooms.id);
-      });
-    }
+    
+      socket.on("message", message=> {
+        io.to(previousId).emit('message', username + ': '+message);
+        console.log('message: ' + username + ': '+message);
+        console.log(chatMap.get(previousId));
+        if(chatMap.get(previousId)) {
+          chatMap[previousId]=chatMap.get(previousId).push(username + ': '+message);
+      }
+    });
+  
     
 
 

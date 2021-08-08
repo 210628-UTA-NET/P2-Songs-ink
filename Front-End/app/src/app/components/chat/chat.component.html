@@ -18,5 +18,6 @@
       </div>
     <form id="form" style="width:300px" onkeypress="return event.keyCode != 13">
      <input id="input" #chatinput autocomplete="off" class="form-control"/><button type="button" (click) = "AddChat(chatinput.value)" >Send</button>
+     <a>{{room}}</a>
     </form>
   </body>

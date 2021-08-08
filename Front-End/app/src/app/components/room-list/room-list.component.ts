@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { SocketIoService } from 'src/app/services/socketio.service';
+import { ChatComponent } from '../chat/chat.component';
 
 @Component({
   selector: 'app-room-list',
@@ -17,9 +18,9 @@ export class RoomListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this._roomsub = this.SocketService.currentRoom.subscribe(room => this.currentRoom = room);
-    this.SocketService.getRooms().subscribe((room:string)=> {
-      this.rooms.push(room)
-    });
+    // this.SocketService.getRooms().subscribe((room:string)=> {
+    //   this.rooms.push(room)
+    // });
     this._roomsub = this.SocketService.roomList.subscribe(rooms => this.rooms = rooms);
   }
 
