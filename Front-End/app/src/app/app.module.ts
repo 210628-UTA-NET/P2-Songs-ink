@@ -15,6 +15,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatListModule} from '@angular/material/list';
 import {MatInputModule} from '@angular/material/input'; 
 import {MatMenuModule} from '@angular/material/menu'; 
+import {MatIconModule} from '@angular/material/icon'; 
+import { MatButtonModule } from '@angular/material/button';
 import { SocketIoService } from './services/socketio.service';
 import {MatTableModule} from '@angular/material/table'; 
 // import { SocketioService } from './services/socketio.service';
@@ -55,8 +57,10 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     MatListModule,
     MatInputModule,
     MatMenuModule,
+    MatButtonModule,
     SocketIoModule.forRoot(config),
     MatTableModule,
+    MatIconModule,
     ReactiveFormsModule
   ],
   providers: [SocketIoService],
