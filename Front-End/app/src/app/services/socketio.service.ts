@@ -8,6 +8,7 @@ import { Chatline } from '../models/chatline';
   providedIn: 'root'
 })
 export class SocketIoService {
+  roomListstatic:string[]=[];
   currentRoom = this.socket.fromEvent<string>('room');
   roomList = this.socket.fromEvent<string[]>('room list');
   chatLogOfRoom = this.socket.fromEvent<string[]>('EnterChatBox');
@@ -17,6 +18,7 @@ export class SocketIoService {
   
 
   getRoom(id: string) {
+    
     this.socket.emit('getRoom', id);
   }
 
@@ -29,6 +31,10 @@ export class SocketIoService {
 
   addRoom() {
     this.socket.emit('addRoom', this.roomId());
+    
+  }
+  setUpRoomList() {
+    this.roomList.subscribe(list=> this.roomListstatic=list);
   }
 
   editChat(chatline: string) {
@@ -37,10 +43,14 @@ export class SocketIoService {
   }
 
   getNewMessage = () => {
-    this.socket.on('message', (message: string) => {
+    this.socket.once('message', (message: string) => {
       this.message$.next(message);
     });
     return this.message$.asObservable();
+  }
+
+  leaveRoom(){
+    this.socket.emit("leave room");
   }
 
 

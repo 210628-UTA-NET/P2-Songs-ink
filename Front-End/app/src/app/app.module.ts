@@ -48,7 +48,8 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
       {path:"lobby", component: LobbyComponent},
       {path:"room-list", component: RoomListComponent},
       {path:"login", component: LoginComponent},
-      {path:"register", component: RegisterComponent}
+      {path:"register", component: RegisterComponent},
+      {path:"game", component: GameComponent}
     ]),
     BrowserAnimationsModule,
     MatListModule,
@@ -61,4 +62,4 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
   providers: [SocketIoService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
