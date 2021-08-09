@@ -44,4 +44,4 @@ jobs:
       with:
         app-name: 'songsink'
         publish-profile: ${{ secrets.ANGULAR_SECRET }}
-        package: ./Front-End/app/dist/Front-End
+        package: ./Front-End/app/dist/app
