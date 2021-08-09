@@ -19,19 +19,28 @@ const roomItems = {
   users:[]
 };
 const chatMap = new Map();
+const userMap = new Map();
+const drawMap = new Map();
 
 // canvas stuff
 var line_history = [];
 
 io.on('connection', (socket) => {
   
-  for (var i in line_history) {
-    socket.emit('draw_line',{ line: line_history[i] });
-  }
+  // for (var i in line_history) {
+  //   // socket.emit('draw_line',{ line: line_history[i] });
+  //   socket.emit('draw_line',{ line: drawMap.get(previousId)[i] });
+  // }
 
   socket.on('draw_line', function (data) {
-    line_history.push(data.line);
-    io.emit('draw_line', { line: data.line } );
+    if(drawMap.get(previousId)){
+    // line_history.push(data.line);
+    drawMap[previousId]=drawMap.get(previousId).push(data.line);
+    } else{
+      drawMap.set(previousId,[data.line]);
+    }
+    io.to(previousId).emit('draw_line', { line: data.line } );
+
   })
 
 
@@ -43,13 +52,22 @@ io.on('connection', (socket) => {
       console.log(`Socket ${username} joined room ${roomId}`);
       previousId = roomId;
       socket.emit("room", roomId);
-      socket.emit("EnterChatBox", chatMap.get(roomId))
+      // socket.emit("EnterChatBox", chatMap.get(roomId))
+      for (var i in chatMap.get(previousId)) {
+        // socket.emit('draw_line',{ line: line_history[i] });
+        socket.emit('message',chatMap.get(previousId)[i] );
+      }
+      for (var i in drawMap.get(previousId)) {
+        // socket.emit('draw_line',{ line: line_history[i] });
+        socket.emit('draw_line',{ line: drawMap.get(previousId)[i] });
+      }
     });
 
     socket.on('addRoom', room => {
       rooms.push(room);
       console.log(room + " Created");
       chatMap.set(room, [room+" Created"]);
+      // drawMap.set(room,["a"]);
       io.emit("room list", rooms);
     })
 
@@ -75,13 +93,13 @@ io.on('connection', (socket) => {
   
     socket.on("leave room", () => {
       console.log(previousId);
-    socket.leave(previousId);
-    // socket.removeAllListeners('message');
-    // socket.on('message');
-    console.log(`Socket ${username} joined the Lobby`);
-    previousId = "";
-    socket.emit("room", "Lobby");
-    // socket.removeAllListeners(previousId + 'message');
+      socket.leave(previousId);
+      // socket.removeAllListeners('message');
+      // socket.on('message');
+      console.log(`Socket ${username} joined the Lobby`);
+      previousId = "";
+      socket.emit("room", "Lobby");
+      // socket.removeAllListeners(previousId + 'message');
   });
 
     io.emit("Rooms", Object.keys(rooms));
