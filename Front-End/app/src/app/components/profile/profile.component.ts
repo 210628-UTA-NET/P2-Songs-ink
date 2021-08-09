@@ -13,8 +13,7 @@ export class ProfileComponent implements OnInit {
   constructor(private profApi: ProfileService) { }
 
   ngOnInit(): void {
-    //get userid
-    let userID: number = 1; //place holder so stuff works
+    let userID: number = parseInt(sessionStorage.getItem('id')!); //pget userID from session variable
   this.profApi.getUserInfo(userID).subscribe((response)=> {
     this.currentPlayer.playerName = response.playerName;
     this.currentPlayer.playerScore = response.playerScore;
