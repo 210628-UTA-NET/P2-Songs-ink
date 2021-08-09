@@ -1,0 +1,50 @@
+
+name: CI/CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Setup ASP .NET
+      uses: nuget/setup-nuget@v1
+      with:
+        nuget-version: ${{ env.NUGET_VERSION}}
+    - name: Restore dependencies
+      run: dotnet restore Back-End/
+    - name: Build
+      run: dotnet build Back-End/ --configuration Release --no-restore
+    - name: Test
+      run: dotnet test Back-End/ --no-restore --verbosity normal
+    - name: Code Analysis
+      uses: highbyte/sonarscan-dotnet@v2.1.1-beta
+      with:
+        sonarProjectKey: 210628-UTA-NET_P2-Songs-ink
+        sonarProjectName: P2-Songs-ink
+        sonarOrganization: 210628-uta-net
+        dotnetBuildArguments: Back-End/
+        dotnetTestArguments: Back-End/ --logger trx --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
+        sonarBeginArguments: /d:sonar.cs.opencover.reportsPaths="**/TestResults/**/coverage.opencover.xml" -d:sonar.cs.vstest.reportsPaths="**/TestResults/*.trx"
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: publish
+      run: dotnet publish Back-End/ --configuration Release -o ./publish
+    - name: deploy
+      uses: azure/webapps-deploy@v2
+      with: 
+        app-name: songsinkbackend
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE  }}
+        package: ./publish

@@ -26,6 +26,7 @@ import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { LobbyComponent } from './components/lobby/lobby.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
@@ -41,7 +42,8 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     RoomListComponent,
     LobbyComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
