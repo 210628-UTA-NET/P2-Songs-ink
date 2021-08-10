@@ -10,13 +10,13 @@
     </button>
   
 
-    <button
+    <!-- <button
       (click)='showRooms()'
       (click)='syncRooms()'
     >
       Show List of Rooms
     </button>
-    <ng-container *ngIf="isVisible">
+    <ng-container *ngIf="isVisible"> -->
     <button
       [class.selected]='roomId === currentRoom'
       (click)='loadRoom(roomId)'
@@ -25,5 +25,5 @@
     >
       {{ roomId }}
   </button>
-</ng-container>
+<!-- </ng-container> -->
 </div>

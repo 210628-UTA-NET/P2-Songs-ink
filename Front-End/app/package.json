@@ -21,6 +21,7 @@
     "@angular/platform-browser": "~12.1.0",
     "@angular/platform-browser-dynamic": "~12.1.0",
     "@angular/router": "~12.1.0",
+    "@auth0/auth0-angular": "^1.6.0",
     "express": "^4.17.1",
     "json-server": "^0.16.3",
     "ngx-socket-io": "^3.2.0",
