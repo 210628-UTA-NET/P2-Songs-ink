@@ -67,5 +67,10 @@ namespace SongsinkDL
             return await _context.Players.FirstOrDefaultAsync(p => p.Email == p_email
                                                                     && p.Password == p_password);
         }
+
+        public async Task<Player> GetAPlayer(int p_id)
+        {
+            return await _context.Players.FirstOrDefaultAsync(p => p.Id == p_id);
+        }
     }
 }

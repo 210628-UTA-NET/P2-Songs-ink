@@ -56,5 +56,15 @@ namespace SongsinkBL
             }
             return found;
         }
+
+        public async Task<Player> GetAPlayer(int p_id)
+        {
+            Player found = await _repo.GetAPlayer(p_id);
+            if (found == null)
+            {
+                throw new Exception("Player Not Found");
+            }
+            return found;
+        }
     }
 }

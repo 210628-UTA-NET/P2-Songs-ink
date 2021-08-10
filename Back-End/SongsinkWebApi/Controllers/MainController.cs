@@ -61,5 +61,11 @@ namespace SongsinkWebApi.Controllers
         {
             return Ok(await _BL.GetAPlayer(p_email, p_password));
         }
+
+        [HttpGet("getAPlayer/{p_id}")]
+        public async Task<IActionResult> GetAPlayer(int p_id)
+        {
+            return Ok(await _BL.GetAPlayer(p_id));
+        }
     }
 }

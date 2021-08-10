@@ -14,6 +14,7 @@ export class CanvasComponent implements OnInit {
 
   mouse: mouse;
   canvas: HTMLCanvasElement;
+  colorSelector: HTMLInputElement;
   context: CanvasRenderingContext2D;
   width: number;
   height: number;
@@ -29,8 +30,6 @@ export class CanvasComponent implements OnInit {
       pos: {x: 0, y: 0},
       pos_prev: false
     };
-    this.lineColor = 'black';
-    this.lineWidth = 4;
 
     this.canvas = <HTMLCanvasElement> document.getElementById('drawing');
     this.context =  <CanvasRenderingContext2D>this.canvas.getContext('2d');
@@ -39,11 +38,19 @@ export class CanvasComponent implements OnInit {
     this.height = window.innerHeight;
     this.canvas.width = this.canvas.getBoundingClientRect().width;
     this.canvas.height = this.canvas.getBoundingClientRect().height;
+    
+    this.colorSelector = <HTMLInputElement> document.getElementById('color-selector');
+    this.lineColor = 'black';
+    this.lineWidth = 4;
     this.context.lineWidth = this.lineWidth;
     this.context.strokeStyle = this.lineColor;
     
     this.canvas.addEventListener('mousedown', () => {
       this.mouse.click = true;
+    });
+    this.canvas.addEventListener('mouseleave', () => {
+      this.mouse.click = false;
+      this.mouse.move = false;
     });
     this.canvas.addEventListener('mouseup', () => {
       this.mouse.click = false;
@@ -55,7 +62,11 @@ export class CanvasComponent implements OnInit {
     })
     this.socket.fromEvent('draw_line').subscribe((data: any) => {
       this.draw(data);
-    });     
+    });   
+    
+    this.colorSelector.addEventListener('input', (evt : any) => {
+      this.lineColor = evt.target.value;
+    });
   }
   ngAfterViewInit() {
   }
@@ -93,6 +104,7 @@ export class CanvasComponent implements OnInit {
   checkDraw = () => {
     if (this.mouse.click && this.mouse.move && this.mouse.pos_prev)
     {
+      console.log(this.lineColor);
       this.socket.emit('draw_line', 
       { line: [this.mouse.pos, this.mouse.pos_prev, this.lineColor, this.lineWidth] });
       this.mouse.move = false;
