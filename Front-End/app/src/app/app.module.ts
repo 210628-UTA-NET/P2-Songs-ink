@@ -68,7 +68,8 @@ const config: SocketIoConfig = { url: 'https://songsinksocketserver.azurewebsite
     MatTableModule,
     MatIconModule,
     ReactiveFormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    FormsModule
   ],
   providers: [SocketIoService],
   bootstrap: [AppComponent]
