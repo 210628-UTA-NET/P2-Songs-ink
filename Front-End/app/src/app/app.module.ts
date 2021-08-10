@@ -30,7 +30,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { ProfileWordlistComponent } from './components/profile-wordlist/profile-wordlist.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
-const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
+const config: SocketIoConfig = { url: 'https://songsinksocketserver.azurewebsites.net:3000', options: {} };
 
 @NgModule({
   declarations: [
@@ -56,7 +56,8 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
       {path:"room-list", component: RoomListComponent},
       {path: "game", component: GameComponent},
       {path:"login", component: LoginComponent},
-      {path:"register", component: RegisterComponent}
+      {path:"register", component: RegisterComponent},
+      {path:"game", component: GameComponent}
     ]),
     BrowserAnimationsModule,
     MatListModule,
@@ -72,4 +73,4 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
   providers: [SocketIoService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

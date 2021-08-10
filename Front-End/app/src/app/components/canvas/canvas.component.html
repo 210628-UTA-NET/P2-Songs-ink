@@ -1,30 +1,35 @@
 <canvas id="drawing"></canvas>
+
+<input id="color-selector" type="color" [value]='lineColor'>
+
 <button (click)="changeColor('red')" mat-icon-button id="button-red">
-    <mat-icon>brush</mat-icon>
+    <mat-icon>palette</mat-icon>
 </button>
+
 <button (click)="changeColor('blue')"mat-icon-button id="button-blue">
-    <mat-icon>brush</mat-icon>
+    <mat-icon>palette</mat-icon>
 </button>
+
 <button (click)="changeColor('yellow')"mat-icon-button id="button-yellow">
-    <mat-icon>brush</mat-icon>
+    <mat-icon>palette</mat-icon>
 </button>
+
 <button (click)="changeColor('green')"mat-icon-button id="button-green">
-    <mat-icon>brush</mat-icon>
+    <mat-icon>palette</mat-icon>
 </button>
+
 <button (click)="changeColor('black')" mat-icon-button id="button-black">
-    <mat-icon>brush</mat-icon>
+    <mat-icon>palette</mat-icon>
 </button>
 
-<label>small</label>
 <button (click)="changeWidth('small')" mat-icon-button id="button-thickness-small">
-    <mat-icon>line_weight</mat-icon>
+    <mat-icon id="brush-small">brush</mat-icon>
 </button>
 
-<label>medium</label>
-<button (click)="changeWidth('medium')" mat-icon-button id="button-thickness-small">
-    <mat-icon>line_weight</mat-icon>
+<button (click)="changeWidth('medium')" mat-icon-button id="button-thickness-medium">
+    <mat-icon id="brush-medium">brush</mat-icon>
 </button>
-<label>large</label>
-<button (click)="changeWidth('large')" mat-icon-button id="button-thickness-small">
-    <mat-icon>line_weight</mat-icon>
+
+<button (click)="changeWidth('large')" mat-icon-button id="button-thickness-large">
+    <mat-icon id="brush-large">brush</mat-icon>
 </button>
