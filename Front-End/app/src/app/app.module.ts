@@ -27,6 +27,8 @@ import { LobbyComponent } from './components/lobby/lobby.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { ProfileWordlistComponent } from './components/profile-wordlist/profile-wordlist.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 const config: SocketIoConfig = { url: 'localhost:3000', options: {} };
 
@@ -43,7 +45,8 @@ const config: SocketIoConfig = { url: 'localhost:3000', options: {} };
     LobbyComponent,
     LoginComponent,
     RegisterComponent,
-    ProfileComponent
+    ProfileComponent,
+    ProfileWordlistComponent
   ],
   imports: [
     BrowserModule,
@@ -64,7 +67,9 @@ const config: SocketIoConfig = { url: 'localhost:3000', options: {} };
     SocketIoModule.forRoot(config),
     MatTableModule,
     MatIconModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FontAwesomeModule,
+    FormsModule
   ],
   providers: [SocketIoService],
   bootstrap: [AppComponent]
