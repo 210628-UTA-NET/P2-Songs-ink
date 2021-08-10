@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SongsinkDL;
@@ -10,9 +11,10 @@ using SongsinkDL;
 namespace SongsinkDL.Migrations
 {
     [DbContext(typeof(SIDbContext))]
-    partial class SIDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210810200809_CustomerCategoriesAndWords")]
+    partial class CustomerCategoriesAndWords
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,8 +51,6 @@ namespace SongsinkDL.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PlayerId");
 
                     b.ToTable("CustomCategories");
                 });
@@ -135,6 +135,9 @@ namespace SongsinkDL.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("text");
 
+                    b.Property<int>("PlayerCategoryID")
+                        .HasColumnType("integer");
+
                     b.Property<string>("PlayerName")
                         .HasColumnType("text");
 
@@ -148,6 +151,9 @@ namespace SongsinkDL.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PlayerCategoryID")
+                        .IsUnique();
 
                     b.HasIndex("ProfileImgID");
 
@@ -210,17 +216,6 @@ namespace SongsinkDL.Migrations
                     b.ToTable("Words");
                 });
 
-            modelBuilder.Entity("SongsinkModel.CustomCategory", b =>
-                {
-                    b.HasOne("SongsinkModel.Player", "Player")
-                        .WithMany()
-                        .HasForeignKey("PlayerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Player");
-                });
-
             modelBuilder.Entity("SongsinkModel.CustomWord", b =>
                 {
                     b.HasOne("SongsinkModel.CustomCategory", "CustomCategory")
@@ -245,11 +240,19 @@ namespace SongsinkDL.Migrations
 
             modelBuilder.Entity("SongsinkModel.Player", b =>
                 {
+                    b.HasOne("SongsinkModel.Category", "PlayerCategory")
+                        .WithOne("PlayerList")
+                        .HasForeignKey("SongsinkModel.Player", "PlayerCategoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("SongsinkModel.Picture", "ProfileImg")
                         .WithMany("PlayerPicture")
                         .HasForeignKey("ProfileImgID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("PlayerCategory");
 
                     b.Navigation("ProfileImg");
                 });
@@ -267,6 +270,8 @@ namespace SongsinkDL.Migrations
 
             modelBuilder.Entity("SongsinkModel.Category", b =>
                 {
+                    b.Navigation("PlayerList");
+
                     b.Navigation("Words");
                 });
 

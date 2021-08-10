@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SongsinkDL;
@@ -10,9 +11,10 @@ using SongsinkDL;
 namespace SongsinkDL.Migrations
 {
     [DbContext(typeof(SIDbContext))]
-    partial class SIDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210810202604_removePlayerAndGeneralCaterogyRel")]
+    partial class removePlayerAndGeneralCaterogyRel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,7 +32,12 @@ namespace SongsinkDL.Migrations
                     b.Property<string>("CategoryName")
                         .HasColumnType("text");
 
+                    b.Property<int?>("PlayerListId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("PlayerListId");
 
                     b.ToTable("Categories");
                 });
@@ -208,6 +215,15 @@ namespace SongsinkDL.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Words");
+                });
+
+            modelBuilder.Entity("SongsinkModel.Category", b =>
+                {
+                    b.HasOne("SongsinkModel.Player", "PlayerList")
+                        .WithMany()
+                        .HasForeignKey("PlayerListId");
+
+                    b.Navigation("PlayerList");
                 });
 
             modelBuilder.Entity("SongsinkModel.CustomCategory", b =>
