@@ -7,44 +7,38 @@ on:
   pull_request:
     branches: [ main ]
 
+env:
+  AZURE_WEBAPP_NAME: songsinkbackend
+  AZURE_WEBAPP_PACKAGE_PATH: Back-End/SongsinkWebApi/publish
+  AZURE_WEBAPP_PUBLISH_PROFILE: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+  CONFIGURATION: Release
+  DOTNET_CORE_VERSION: 5.0.x
+  WORKING_DIRECTORY: Back-End/SongsinkWebApi
 jobs:
-  build:
-
-    runs-on: ubuntu-latest
-
+  build-and-deploy:
+    runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Setup .NET
+    - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 5.0.x
-    - name: Setup ASP .NET
-      uses: nuget/setup-nuget@v1
-      with:
-        nuget-version: ${{ env.NUGET_VERSION}}
-    - name: Restore dependencies
-      run: dotnet restore Back-End/
+        dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
+    - name: Restore
+      run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
     - name: Build
-      run: dotnet build Back-End/ --configuration Release --no-restore
+      run: dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
     - name: Test
-      run: dotnet test Back-End/ --no-restore --verbosity normal
-    - name: Code Analysis
-      uses: highbyte/sonarscan-dotnet@v2.1.1-beta
-      with:
-        sonarProjectKey: 210628-UTA-NET_P2-Songs-ink
-        sonarProjectName: P2-Songs-ink
-        sonarOrganization: 210628-uta-net
-        dotnetBuildArguments: Back-End/
-        dotnetTestArguments: Back-End/ --logger trx --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
-        sonarBeginArguments: /d:sonar.cs.opencover.reportsPaths="**/TestResults/**/coverage.opencover.xml" -d:sonar.cs.vstest.reportsPaths="**/TestResults/*.trx"
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: publish
-      run: dotnet publish Back-End/ --configuration Release -o ./publish
-    - name: deploy
+      run: dotnet test "${{ env.WORKING_DIRECTORY }}" --no-build
+    - name: Publish
+      run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
+    - name: Deploy to Azure WebApp
       uses: azure/webapps-deploy@v2
-      with: 
-        app-name: songsinkbackend
-        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE  }}
-        package: ./publish
+      with:
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        publish-profile: ${{ env.AZURE_WEBAPP_PUBLISH_PROFILE }}
+    - name: Publish Artifacts
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: webapp
+        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
