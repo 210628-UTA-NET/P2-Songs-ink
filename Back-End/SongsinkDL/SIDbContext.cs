@@ -15,6 +15,8 @@ namespace SongsinkDL
         public DbSet<Song> Songs { get; set; }
         public DbSet<Word> Words { get; set; }
         public DbSet<GameHistory> GameHistories { get; set; }
+        public DbSet<CustomCategory> CustomCategories { get; set; }
+        public DbSet<CustomWord> CustomWords { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder p_options)
         {
@@ -81,11 +83,6 @@ namespace SongsinkDL
                 .WithMany(cat => cat.Words)
                 .HasForeignKey(wrd => wrd.CategoryId);
 
-            p_modelBuilder.Entity<Player>()
-                .HasOne<Category>(play => play.PlayerCategory)
-                .WithOne(cat => cat.PlayerList)
-                .HasForeignKey<Player>(play => play.PlayerCategoryID);
-
             p_modelBuilder.Entity<Picture>()
                 .HasOne(pic => pic.PictureRoom)
                 .WithMany(rom => rom.PicturesInRoom)
@@ -98,6 +95,15 @@ namespace SongsinkDL
 
             p_modelBuilder.Entity<GameHistory>()
                 .Property(gh => gh.Id)
+                .ValueGeneratedOnAdd();
+
+            p_modelBuilder.Entity<CustomCategory>()
+                .Property(cc => cc.Id)
+                .ValueGeneratedOnAdd();
+                
+
+            p_modelBuilder.Entity<CustomWord>()
+                .Property(cw => cw.Id)
                 .ValueGeneratedOnAdd();
         }
     }
