@@ -234,3 +234,5 @@ SongsinkUI/appsettings.json
 .vs/songs-ink/v16/.suo
 .vscode/launch.json
 .vscode/tasks.json
+
+.SocketServer/.git/

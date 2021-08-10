@@ -28,7 +28,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { ProfileComponent } from './components/profile/profile.component';
 
-const config: SocketIoConfig = { url: 'localhost:3000', options: {} };
+const config: SocketIoConfig = { url: 'https://ancient-beach-47155.herokuapp.com/', options: {} };
 
 @NgModule({
   declarations: [
