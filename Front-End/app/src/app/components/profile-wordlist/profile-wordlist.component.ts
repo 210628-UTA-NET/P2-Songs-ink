@@ -11,7 +11,7 @@ export class ProfileWordlistComponent implements OnInit {
   @Output() onAddWord: EventEmitter<number> = new EventEmitter;
   playerWords: string[] = [];
   faTimes = faTimes;
-  wordAddCost:number = 100;
+  wordAddCost:number = -100;
   newWord: string;
   playerId: number = parseInt(sessionStorage.getItem('id')!);
 
