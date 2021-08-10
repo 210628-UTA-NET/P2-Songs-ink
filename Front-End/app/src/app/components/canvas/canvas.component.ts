@@ -63,6 +63,12 @@ export class CanvasComponent implements OnInit {
     this.socket.fromEvent('draw_line').subscribe((data: any) => {
       this.draw(data);
     });   
+    this.socket.fromEvent('redraw').subscribe((data: any) => {
+      this.redraw(data);
+    });
+    this.socket.fromEvent('clear').subscribe((data: any) => {
+      this.redraw(data);
+    });
     
     this.colorSelector.addEventListener('input', (evt : any) => {
       this.lineColor = evt.target.value;
@@ -84,6 +90,14 @@ export class CanvasComponent implements OnInit {
     this.context.stroke();
   }
 
+  redraw(data: any) {
+    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    for (let i= 0; i < data.length; i++) 
+    {
+      this.draw( {line: data[i] } );
+    }
+  }
+
   changeColor(color: string) {
     this.lineColor = color;
   }
@@ -96,15 +110,18 @@ export class CanvasComponent implements OnInit {
     
     else if (size == 'large')
       this.lineWidth = 6.0;
-
-    console.log
-    
+  }
+  
+  Undo() {
+    this.socket.emit('Undo');
+  }
+  Clear() {
+    this.socket.emit('Clear');
   }
 
   checkDraw = () => {
     if (this.mouse.click && this.mouse.move && this.mouse.pos_prev)
     {
-      console.log(this.lineColor);
       this.socket.emit('draw_line', 
       { line: [this.mouse.pos, this.mouse.pos_prev, this.lineColor, this.lineWidth] });
       this.mouse.move = false;
