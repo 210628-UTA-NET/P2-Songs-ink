@@ -4,7 +4,7 @@ const http = require('http');
 const server = http.createServer(app);
 const io = require("socket.io")(server, {
   cors: {
-    origin: 'http://localhost:4200',
+    origin: 'https://songsink.azurewebsites.net:3000',
     methods: ["GET", "POST"],
     transports: ['websocket', 'polling'],
     credentials: true
