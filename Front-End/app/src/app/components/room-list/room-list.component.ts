@@ -15,7 +15,7 @@ export class RoomListComponent implements OnInit, OnDestroy, AfterViewChecked {
   currentRoom: string;
   private _roomsub: Subscription;
   private _roomsub2: Subscription;
-  isVisible: boolean=false;
+  // isVisible: boolean=false;
 
   constructor(private SocketService: SocketIoService) { 
   }
@@ -28,6 +28,10 @@ export class RoomListComponent implements OnInit, OnDestroy, AfterViewChecked {
     // });
     this.SocketService.setUpRoomList();
     this._roomsub2 = this.SocketService.roomList.subscribe(rooms => this.rooms = rooms);
+    if (!this.rooms) {
+      this.rooms=this.SocketService.roomListstatic;
+    }
+    
   }
 
   ngAfterViewChecked(){
@@ -58,7 +62,7 @@ export class RoomListComponent implements OnInit, OnDestroy, AfterViewChecked {
     this._roomsub2 = this.SocketService.roomList.subscribe(rooms => this.rooms = rooms);
   }
 
-  showRooms() {
-    this.isVisible=!this.isVisible;
-  }
+  // showRooms() {
+  //   this.isVisible=!this.isVisible;
+  // }
 }

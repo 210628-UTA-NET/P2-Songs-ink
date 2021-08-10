@@ -30,7 +30,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { ProfileWordlistComponent } from './components/profile-wordlist/profile-wordlist.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
-const config: SocketIoConfig = { url: 'https://songsinksocketserver.azurewebsites.net:3000', options: {} };
+const config: SocketIoConfig = { url: 'localhost:3000', options: {} };
 
 @NgModule({
   declarations: [
