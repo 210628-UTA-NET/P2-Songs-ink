@@ -1,3 +1,4 @@
+@import '../../mat-vars';
 canvas {
     width: 600px;
     height: 600px;
@@ -30,4 +31,12 @@ canvas {
 
 #brush-large {
     font-size: xx-large;
+}
+
+#button-thickness-medium {
+    background-color: $myAccentColor;
+}
+
+#button-clear {
+    background-color: red;
 }
