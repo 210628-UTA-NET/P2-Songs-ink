@@ -55,12 +55,19 @@ namespace SongsinkDL
         //Task AddPlayer(Player p_player);
 
         /// <summary>
-        /// Get player from DB-Players
+        /// Get A Player from DB-Players
         /// </summary>
         /// <param name="p_email"></param>
         /// <param name="p_password"></param>
         /// <returns></returns>
         Task<Player> GetAPlayer(string p_email, string p_password);
+
+        /// <summary>
+        /// Get A Player from DB-Players
+        /// </summary>
+        /// <param name="p_id"></param>
+        /// <returns></returns>
+        Task<Player> GetAPlayer(int p_id);
 
     }
 }

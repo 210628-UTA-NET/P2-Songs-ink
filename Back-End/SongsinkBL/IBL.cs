@@ -55,5 +55,11 @@ namespace SongsinkBL
         /// <returns></returns>
         Task<Player> GetAPlayer(string p_email, string p_password);
 
+        /// <summary>
+        /// Get A Player from DB-Players
+        /// </summary>
+        /// <param name="p_id"></param>
+        /// <returns></returns>
+        Task<Player> GetAPlayer(int p_id);
     }
 }
