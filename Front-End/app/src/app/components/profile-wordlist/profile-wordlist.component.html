@@ -1,0 +1,18 @@
+<div *ngFor="let word of playerWords;">
+    <h4>{{word}} <fa-icon 
+                    (click)="removeWord(word)"
+                    [ngStyle]="{'color': 'red'}" 
+                    [icon]="faTimes">
+                </fa-icon></h4>
+</div>
+<div>
+    <form (ngSubmit="addWord")>
+        <div class="form-control">
+            <label for="text">Add a word (cost {{wordAddCost}} points)</label>
+            <input type="text" name="text" id="newWord" [(ngModel)]="newWord">
+        </div>
+        <input type="submit" value="Add Word" class="btn btn-primary">
+
+
+    </form>
+</div>

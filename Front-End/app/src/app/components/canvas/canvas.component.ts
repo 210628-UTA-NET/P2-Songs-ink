@@ -14,6 +14,7 @@ export class CanvasComponent implements OnInit {
 
   mouse: mouse;
   canvas: HTMLCanvasElement;
+  colorSelector: HTMLInputElement;
   context: CanvasRenderingContext2D;
   width: number;
   height: number;
@@ -29,8 +30,6 @@ export class CanvasComponent implements OnInit {
       pos: {x: 0, y: 0},
       pos_prev: false
     };
-    this.lineColor = 'black';
-    this.lineWidth = 4;
 
     this.canvas = <HTMLCanvasElement> document.getElementById('drawing');
     this.context =  <CanvasRenderingContext2D>this.canvas.getContext('2d');
@@ -39,11 +38,19 @@ export class CanvasComponent implements OnInit {
     this.height = window.innerHeight;
     this.canvas.width = this.canvas.getBoundingClientRect().width;
     this.canvas.height = this.canvas.getBoundingClientRect().height;
+    
+    this.colorSelector = <HTMLInputElement> document.getElementById('color-selector');
+    this.lineColor = 'black';
+    this.lineWidth = 4;
     this.context.lineWidth = this.lineWidth;
     this.context.strokeStyle = this.lineColor;
     
     this.canvas.addEventListener('mousedown', () => {
       this.mouse.click = true;
+    });
+    this.canvas.addEventListener('mouseleave', () => {
+      this.mouse.click = false;
+      this.mouse.move = false;
     });
     this.canvas.addEventListener('mouseup', () => {
       this.mouse.click = false;
@@ -55,7 +62,17 @@ export class CanvasComponent implements OnInit {
     })
     this.socket.fromEvent('draw_line').subscribe((data: any) => {
       this.draw(data);
-    });     
+    });   
+    this.socket.fromEvent('redraw').subscribe((data: any) => {
+      this.redraw(data);
+    });
+    this.socket.fromEvent('clear').subscribe((data: any) => {
+      this.redraw(data);
+    });
+    
+    this.colorSelector.addEventListener('input', (evt : any) => {
+      this.lineColor = evt.target.value;
+    });
   }
   ngAfterViewInit() {
   }
@@ -73,6 +90,14 @@ export class CanvasComponent implements OnInit {
     this.context.stroke();
   }
 
+  redraw(data: any) {
+    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    for (let i= 0; i < data.length; i++) 
+    {
+      this.draw( {line: data[i] } );
+    }
+  }
+
   changeColor(color: string) {
     this.lineColor = color;
   }
@@ -85,9 +110,13 @@ export class CanvasComponent implements OnInit {
     
     else if (size == 'large')
       this.lineWidth = 6.0;
-
-    console.log
-    
+  }
+  
+  Undo() {
+    this.socket.emit('Undo');
+  }
+  Clear() {
+    this.socket.emit('Clear');
   }
 
   checkDraw = () => {

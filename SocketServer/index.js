@@ -40,8 +40,24 @@ io.on('connection', (socket) => {
       drawMap.set(previousId,[data.line]);
     }
     io.to(previousId).emit('draw_line', { line: data.line } );
+  });
+  
+  socket.on('Undo', function () {
+    // Can change depending on feedback
+    let undoHeuristic = 10;
+    let temp = Array.from(drawMap.get(previousId));
+    for (i = 0; i < undoHeuristic; i++)
+    { 
+      temp.pop(); 
+    }
+    drawMap.set(previousId, temp);
+    io.to(previousId).emit('redraw', drawMap.get(previousId));
+  });
 
-  })
+  socket.on('Clear', function () {
+    drawMap.set(previousId, []);
+    io.to(previousId).emit('clear', drawMap.get(previousId));
+  });
 
 
     let previousId;
@@ -112,6 +128,6 @@ io.on('connection', (socket) => {
   )
 
 });
-server.listen(3000, () => {
+server.listen(process.env.PORT||3000, () => {
   console.log('listening on *:3000');
 });

@@ -12,6 +12,7 @@ export class SocketIoService {
   currentRoom = this.socket.fromEvent<string>('room');
   roomList = this.socket.fromEvent<string[]>('room list');
   chatLogOfRoom = this.socket.fromEvent<string[]>('EnterChatBox');
+  newMessage = this.socket.fromEvent<string>('message');
   message$ : BehaviorSubject<string> = new BehaviorSubject('');
   rooms$ : BehaviorSubject<string> = new BehaviorSubject('');
   constructor(private socket: Socket) { }
@@ -42,12 +43,12 @@ export class SocketIoService {
     this.socket.emit('message', chatline);
   }
 
-  getNewMessage = () => {
-    this.socket.once('message', (message: string) => {
-      this.message$.next(message);
-    });
-    return this.message$.asObservable();
-  }
+  // getNewMessage = () => {
+  //   this.socket.once('message', (message: string) => {
+  //     this.message$.next(message);
+  //   });
+  //   return this.message$.asObservable();
+  // }
 
   leaveRoom(){
     this.socket.emit("leave room");

@@ -37,7 +37,7 @@ jobs:
     - name: npm install, build, and test
       run: |
         npm install
-        npm run build --prod
+#        npm run build --prod
       working-directory: ./SocketServer
         
     - name: 'Deploy to Azure WebApp'

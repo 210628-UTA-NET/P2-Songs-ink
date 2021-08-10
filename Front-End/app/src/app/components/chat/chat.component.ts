@@ -32,8 +32,12 @@ export class ChatComponent implements OnInit {
     //   startWith({ id: '',})
     // ).subscribe(room => this.room = room);
     
-    this._roomsub = this.socketService.chatLogOfRoom.subscribe(recursive => this.chatlines = recursive.reverse());
-    this._roomsub = this.socketService.getNewMessage().subscribe((message:string)=> {
+    // this._roomsub = this.socketService.chatLogOfRoom.subscribe(recursive => this.chatlines = recursive.reverse());
+    // this._roomsub = this.socketService.getNewMessage().subscribe((message:string)=> {
+    //     this.chatlines.unshift(message);
+    //   })
+
+      this._roomsub = this.socketService.newMessage.subscribe((message:string)=> {
         this.chatlines.unshift(message);
       })
       
@@ -44,11 +48,11 @@ export class ChatComponent implements OnInit {
     this.socketService.editChat(message);
   }
 
-  updateChat(){
-    this.backup.forEach(element => {
-      this.chatlines.unshift(element);
-    });
-  }
+  // updateChat(){
+  //   this.backup.forEach(element => {
+  //     this.chatlines.unshift(element);
+  //   });
+  // }
 
   leaveRoom(){
     this.socketService.leaveRoom();

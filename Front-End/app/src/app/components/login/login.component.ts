@@ -14,6 +14,8 @@ export class LoginComponent implements OnInit {
     email: new FormControl(),
     password: new FormControl()
   });
+  logResponse: Player;
+
   constructor(private loginApi: LoginService) { }
 
   ngOnInit(): void {
@@ -32,17 +34,22 @@ export class LoginComponent implements OnInit {
       email: loginGroup.get("email")?.value,
       password: loginGroup.get("password")?.value
     };
-    let logResponse: Player;
+    
 
     //if you need more user data then the player model and the login service should be changed
     this.loginApi.getAccount(newLogin).subscribe(
       (response) => {
-        logResponse.id = response.id;
-        logResponse.name = response.name;
-        logResponse.score = response.score;
+        this.logResponse.id = response.id;
+        this.logResponse.name = response.name;
+        this.logResponse.score = response.score;
       }
     )
+
     //should probably do some form of validation in case the login valid
+
+    //Store user id and username to session storage for use across the application
+    sessionStorage.setItem('id',this.logResponse.id!.toString());
+    sessionStorage.setItem('username', this.logResponse.name);
     //now do something with socket.io i imagine
   }
 }
