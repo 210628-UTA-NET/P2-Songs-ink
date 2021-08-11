@@ -2,37 +2,43 @@
 <div>
     <span>
         <h4>Player Info</h4>
-        <div class="container">  
-            <p>Email: {{currentPlayer.email}}</p>   
+        <div>
+            <p>Email: {{currentPlayer.email}}</p>
         </div>
-        <div class="container">   
+        <div>
             <p>Username: {{currentPlayer.playerName}}</p>
+            <form (ngSubmit)="changeUserName()">
+                <div class="form-control">
+                    <label for="text">Update username</label>
+                    <input type="text" name="text" id="newName" [(ngModel)]="newName">
+                    <input type="submit" value="Update" class="btn btn-primary">
+                </div>
+                
+            </form>
         </div>
-        <div class="container">   
+        <div>
             <p>Games Played: {{currentPlayer.gamesPlayed}}</p>
         </div>
-        <div class="container">   
+        <div>
             <p>Total Score: {{currentPlayer.playerScore}}</p>
         </div>
-        <div class="container">   
+        <div>
             <p>Current Score: {{currentPlayer.currentScore}}</p>
         </div>
     </span>
     <span>
-       <app-profile-wordlist 
-       *ngFor="let word of currentPlayer.customWords" 
-       [word]="word"
-       (onRemoveWord)="removeWord(word)"
-       ></app-profile-wordlist>
-       <div>
+        <app-profile-wordlist *ngFor="let word of currentPlayer.customWords" [word]="word"
+            (onRemoveWord)="removeWord(word)"></app-profile-wordlist>
+        <div>
 
-        <form (ngSubmit="addWord")>
-            <div class="form-control">
-                <label for="text">Add a word (cost {{wordAddCost}} points)</label>
-                <input type="text" name="text" id="newWord" [(ngModel)]="newWord">
-            </div>
-            <input type="submit" value="Add Word" class="btn btn-primary">
-        </form>
-    </div>
+            <form (ngSubmit)="addWord()">
+                <div class="form-control">
+                    <label for="text">Add a word (cost {{wordAddCost * -1}} points)</label>
+                    <input type="text" name="text" id="newWord" [(ngModel)]="newWord">
+                    <input type="submit" value="Add Word" class="btn btn-primary">
+                </div>
+                
+            </form>
+        </div>
     </span>
 </div>

@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 import { Profile } from '../../models/Profile';
 import { ProfileService } from '../../services/profile.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -21,6 +22,7 @@ export class ProfileComponent implements OnInit {
   };
   tempName: string | undefined;
   newWord: string;
+  newName: string = "";
   wordAddCost: number = -100;
   constructor(private profApi: ProfileService, public auth: AuthService) { }
 
@@ -31,19 +33,21 @@ export class ProfileComponent implements OnInit {
         this.currentPlayer.email = response?.email;
         this.tempName=response?.nickname; // should always be defined 
         this.getUserInfo(this.currentPlayer.email!); 
+
+        // if the id is 0 then the profile doesnt exist so it is made
+        if(this.currentPlayer.id == 0)
+        {
+          this.currentPlayer.playerName=this.tempName;
+          this.profApi.addPlayerProfile(this.currentPlayer).subscribe(
+            (response) => {
+              this.currentPlayer.id = response.id;
+            }
+          );
+        }
       }
     );
 
-    // if the id is 0 then the profile doesnt exist so it is made
-    if(this.currentPlayer.id == 0)
-    {
-      this.currentPlayer.playerName=this.tempName;
-      this.profApi.addPlayerProfile(this.currentPlayer).subscribe(
-        (response) => {
-          this.currentPlayer.id = response.id;
-        }
-      );
-    }
+    
 
   }
   getUserInfo(p_email: string) {
@@ -61,11 +65,11 @@ export class ProfileComponent implements OnInit {
   // I think having the parameter is irrelevant since the current profile is the only
   // one being updated but Ill leave it like this.
   updatePlayerProfile(profile: Profile) { 
-    this.profApi.updatePlayerProfile(profile);
+    this.profApi.updatePlayerProfile(profile).subscribe();
   }
 
   addWord(){
-    if(this.currentPlayer.currentScore<this.wordAddCost)
+    if(this.currentPlayer.currentScore < Math.abs(this.wordAddCost))
     {
       alert("You do not have enough points to add a word");
       return;
@@ -89,6 +93,17 @@ export class ProfileComponent implements OnInit {
       this.currentPlayer.customWords.splice(index,1); //removes the word to be removed
     }
     this.updatePlayerProfile(this.currentPlayer); //update player profile with new list
+  }
+  changeUserName()
+  {
+    if(!this.newName || this.newName==this.currentPlayer.playerName)
+    {
+      alert("Please enter a new usename");
+      return;
+    }
+    this.currentPlayer.playerName = this.newName;
+    this.updatePlayerProfile(this.currentPlayer);
+    this.newName = "";
   }
 
 }
