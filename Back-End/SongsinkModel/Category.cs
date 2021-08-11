@@ -13,10 +13,7 @@ namespace SongsinkModel
 		public Category ()
 		{
 		}
-		/// <summary>
-		/// Primary key for 
-		/// </summary>
-		/// <value></value>
+
 		public int Id { get; set; }
 		public string CategoryName 
 		{ 
@@ -35,6 +32,5 @@ namespace SongsinkModel
 		}
 
         public List<Word> Words { get => _words; set => _words = value; }
-        public Player PlayerList { get; set; }
     }
 }

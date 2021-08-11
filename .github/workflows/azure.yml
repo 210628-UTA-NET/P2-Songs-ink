@@ -36,9 +36,11 @@ jobs:
     - name: npm install, build, and test
       run: |
         npm install
-        npm run build --prod
+        npm run build
       working-directory: ./Front-End/app/
-        
+      env:
+        DOMAIN_KEY: ${{secrets.DOMAIN_KEY}}
+        CLIENTID_KEY: ${{secrets.CLIENTID_KEY}}
     - name: 'Deploy to Azure WebApp'
       uses: azure/webapps-deploy@v2
       with:
