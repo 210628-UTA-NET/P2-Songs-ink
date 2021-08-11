@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SongsinkDL;
@@ -10,9 +11,10 @@ using SongsinkDL;
 namespace SongsinkDL.Migrations
 {
     [DbContext(typeof(SIDbContext))]
-    partial class SIDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210811145025_removedRoom")]
+    partial class removedRoom
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,6 +72,8 @@ namespace SongsinkDL.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CustomCategoryId");
+
                     b.ToTable("CustomWords");
                 });
 
@@ -119,9 +123,6 @@ namespace SongsinkDL.Migrations
                     b.Property<int>("CurrentScore")
                         .HasColumnType("integer");
 
-                    b.Property<List<string>>("CustomWords")
-                        .HasColumnType("text[]");
-
                     b.Property<string>("Email")
                         .HasColumnType("text");
 
@@ -133,6 +134,9 @@ namespace SongsinkDL.Migrations
 
                     b.Property<int>("PlayerScore")
                         .HasColumnType("integer");
+
+                    b.Property<List<string>>("PlayerWords")
+                        .HasColumnType("text[]");
 
                     b.HasKey("Id");
 
@@ -188,13 +192,26 @@ namespace SongsinkDL.Migrations
                     b.Navigation("Player");
                 });
 
+            modelBuilder.Entity("SongsinkModel.CustomWord", b =>
+                {
+                    b.HasOne("SongsinkModel.CustomCategory", "CustomCategory")
+                        .WithMany()
+                        .HasForeignKey("CustomCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CustomCategory");
+                });
+
             modelBuilder.Entity("SongsinkModel.Word", b =>
                 {
-                    b.HasOne("SongsinkModel.Category", null)
+                    b.HasOne("SongsinkModel.Category", "Category")
                         .WithMany("Words")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("SongsinkModel.Category", b =>

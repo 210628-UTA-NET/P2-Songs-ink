@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Text.Json;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -38,7 +39,7 @@ namespace SongsinkWebApi.Controllers
             return Ok(await _BL.GetAllWordsOfACategory(p_categoryId));
         }
 
-        [HttpGet("getASong/{p_id}")]
+        [HttpGet("getASong/{p_songId}")]
         public async Task<IActionResult> GetASong(int p_songId)
         {
             return Ok(await _BL.GetASong(p_songId));
@@ -56,16 +57,28 @@ namespace SongsinkWebApi.Controllers
             return  Created("api/Main/addGameHistory", await _BL.AddGameHistory(p_gameHistory));
         }
 
-        [HttpGet("getAPlayer/{p_email}/{p_password}")]
-        public async Task<IActionResult> GetAPlayer(string p_email, string p_password)
-        {
-            return Ok(await _BL.GetAPlayer(p_email, p_password));
-        }
-
-        [HttpGet("getAPlayer/{p_id}")]
-        public async Task<IActionResult> GetAPlayer(int p_id)
+        [HttpGet("getAPlayerWithId/{p_id}")]
+        public async Task<IActionResult> GetAPlayerWithId(int p_id)
         {
             return Ok(await _BL.GetAPlayer(p_id));
+        }
+
+        [HttpGet("getAPlayer/{p_email}")]
+        public async Task<IActionResult> GetAPlayer(string p_email)
+        {
+            return Ok(await _BL.GetAPlayer(p_email));
+        }
+
+        [HttpPost("createNewPlayer")]
+        public async Task<IActionResult> CreateNewPlayer([FromBody] Player p_player)
+        {
+            return Created("api/Main/createNewPlayer", await _BL.CreateNewPlayer(p_player));
+        }
+
+        [HttpPut("updatePlayer")]
+        public async Task<IActionResult> UpdatePlayer([FromBody] Player p_player)
+        {
+            return Ok(await _BL.UpdatePlayer(p_player));
         }
     }
 }

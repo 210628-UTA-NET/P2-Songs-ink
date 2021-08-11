@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.RegularExpressions;
 
 namespace SongsinkModel
@@ -11,13 +12,12 @@ namespace SongsinkModel
 		private int _playerScore;
 		private int _currentScore;
 		private int _gamesPlayed;
-		private int _profileImgID;
-		private string _password;
-		private string _salt;
+		//private int _profileImgID;
 		private string _email;
-		private List<CustomCategory> _customCategoryList = new List<CustomCategory>();
+		private List<string> _customWords = new List<string>();
+        private List<CustomCategory> _customCategoryList = new List<CustomCategory>();
 
-		public Player()
+        public Player()
 		{
 		}
 
@@ -26,11 +26,10 @@ namespace SongsinkModel
         public int PlayerScore { get => _playerScore; set => _playerScore = value; }
 		public int CurrentScore { get => _currentScore; set => _currentScore = value; }
 		public int GamesPlayed { get => _gamesPlayed; set => _gamesPlayed = value; }
-		public int ProfileImgID { get => _profileImgID; set => _profileImgID = value; }
-        public Picture ProfileImg { get; set; }
-		public string Password { get => _password; set => _password = value; }
-		public string Salt { get => _salt; set => _salt = value; }
+		//public int ProfileImgID { get => _profileImgID; set => _profileImgID = value; }
+        //public Picture ProfileImg { get; set; }
         public string Email { get => _email; set => _email = value; }
+        public List<string> CustomWords { get => _customWords; set => _customWords = value; }
         internal List<CustomCategory> CustomCategoryList { get => _customCategoryList; set => _customCategoryList = value; }
     }
 }

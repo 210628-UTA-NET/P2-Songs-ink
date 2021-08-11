@@ -9,7 +9,7 @@ namespace SongsinkModel
 		private int _id;
 		private string _wordName;
 		private int _categoryId;
-		private Category _category;
+		//private Category _category;
 
 		public Word()
 		{
@@ -32,7 +32,7 @@ namespace SongsinkModel
 			}
 		}
 		public int CategoryId { get; set; }
-		public Category Category {get => _category; set => _category = value; }
+		//public Category Category {get => _category; set => _category = value; }
 
 	}
 }
