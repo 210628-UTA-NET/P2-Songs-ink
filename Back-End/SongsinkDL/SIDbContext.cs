@@ -11,17 +11,16 @@ namespace SongsinkDL
         public DbSet<Category> Categories { get; set; }
         public DbSet<Picture> Pictures { get; set; }
         public DbSet<Player> Players { get; set; }
-        public DbSet<Room> Rooms { get; set; }
         public DbSet<Song> Songs { get; set; }
         public DbSet<Word> Words { get; set; }
         public DbSet<GameHistory> GameHistories { get; set; }
         public DbSet<CustomCategory> CustomCategories { get; set; }
         public DbSet<CustomWord> CustomWords { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder p_options)
-        {
-            p_options.UseNpgsql(@"Server=hansken.db.elephantsql.com;Database=nxackagz;User ID=nxackagz;Password=5kbgSpXPnnXuypCmL7HRA_3Jm_w4sOkJ;Port=5432");
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder p_options)
+        //{
+        //    p_options.UseNpgsql(@"Server=hansken.db.elephantsql.com;Database=nxackagz;User ID=nxackagz;Password=5kbgSpXPnnXuypCmL7HRA_3Jm_w4sOkJ;Port=5432");
+        //}
 
         public SIDbContext() : base()
         { }
@@ -55,14 +54,6 @@ namespace SongsinkDL
                 .HasKey(pla => pla.Id);
 
 
-            p_modelBuilder.Entity<Room>()
-                .Property(rom => rom.Id)
-                .ValueGeneratedOnAdd();
-
-            p_modelBuilder.Entity<Room>()
-                .HasKey(rom => rom.Id);
-
-
             p_modelBuilder.Entity<Song>()
                 .Property(sng => sng.Id)
                 .ValueGeneratedOnAdd();
@@ -83,15 +74,11 @@ namespace SongsinkDL
                 .WithMany(cat => cat.Words)
                 .HasForeignKey(wrd => wrd.CategoryId);
 
-            p_modelBuilder.Entity<Picture>()
-                .HasOne(pic => pic.PictureRoom)
-                .WithMany(rom => rom.PicturesInRoom)
-                .HasForeignKey(pic => pic.RoomID);
 
-            p_modelBuilder.Entity<Player>()
-                .HasOne(play => play.ProfileImg)
-                .WithMany(pic => pic.PlayerPicture)
-                .HasForeignKey(play => play.ProfileImgID);
+            //p_modelBuilder.Entity<Player>()
+            //    .HasOne(play => play.ProfileImg)
+            //    .WithMany(pic => pic.PlayerPicture)
+            //    .HasForeignKey(play => play.ProfileImgID);
 
             p_modelBuilder.Entity<GameHistory>()
                 .Property(gh => gh.Id)
