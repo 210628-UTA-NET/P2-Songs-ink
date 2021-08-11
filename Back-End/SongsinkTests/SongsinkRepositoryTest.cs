@@ -398,8 +398,6 @@ namespace SonsinkTests
                     GamesPlayed = 10,
                     Password = "0384174",
                     Salt = "9043vnsjoig",
-                    PlayerCategory = catplayer1,
-                    PlayerCategoryID = 5,
                     ProfileImg = pic1,
                     ProfileImgID = 1
                
@@ -413,8 +411,6 @@ namespace SonsinkTests
                     GamesPlayed = 15,
                     Password = "charlie",
                     Salt = "93jfjvxoiv",
-                    PlayerCategory = catplayer2,
-                    PlayerCategoryID = 6,
                     ProfileImg = pic2,
                     ProfileImgID = 2
 
