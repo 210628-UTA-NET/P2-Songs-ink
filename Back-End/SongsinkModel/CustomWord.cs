@@ -12,7 +12,6 @@ namespace SongsinkModel
 		private int _id;
 		private string _customWordName;
 		private int _customCategoryId;
-		private CustomCategory _customCategory;
 
 		public CustomWord()
 		{
@@ -34,6 +33,5 @@ namespace SongsinkModel
 			}
 		}
         public int CustomCategoryId { get => _customCategoryId; set => _customCategoryId = value; }
-        public CustomCategory CustomCategory { get => _customCategory; set => _customCategory = value; }
     }
 }
