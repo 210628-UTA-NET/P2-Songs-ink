@@ -1,5 +1,41 @@
-
 {
+    "words": 
+    [
+        {
+            "name": "giraffe",
+            "category": "animal"
+        },
+
+        {
+            "name": "dog",
+            "category": "animal"
+        },
+
+        {
+           
+            "name": "elephant",
+            "category": "animal"
+        },
+
+        {
+          
+            "name": "tiger",
+            "category": "animal"
+        },
+
+        {
+            "name": "lion",
+            "category": "animal"
+        },
+
+        {
+            "id": 6,
+            "name": "monkey",
+            "category": "animal"
+        }
+
+    ],
+
     "players": 
     [
         {
