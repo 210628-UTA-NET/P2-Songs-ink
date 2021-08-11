@@ -25,10 +25,11 @@ import { RoomListComponent } from './components/room-list/room-list.component';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { LobbyComponent } from './components/lobby/lobby.component';
 import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ProfileWordlistComponent } from './components/profile-wordlist/profile-wordlist.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AuthModule } from '@auth0/auth0-angular';
+import { environment } from 'src/environments/environment';
 
 const config: SocketIoConfig = { url: 'https://ancient-beach-47155.herokuapp.com/', options: {} };
 
@@ -44,19 +45,21 @@ const config: SocketIoConfig = { url: 'https://ancient-beach-47155.herokuapp.com
     RoomListComponent,
     LobbyComponent,
     LoginComponent,
-    RegisterComponent,
     ProfileComponent,
     ProfileWordlistComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
+    AuthModule.forRoot({
+      domain: environment.domain,
+      clientId: environment.clientId
+    }),
     RouterModule.forRoot([
       {path:"lobby", component: LobbyComponent},
       {path:"room-list", component: RoomListComponent},
       {path: "game", component: GameComponent},
       {path:"login", component: LoginComponent},
-      {path:"register", component: RegisterComponent},
       {path:"game", component: GameComponent}
     ]),
     BrowserAnimationsModule,
