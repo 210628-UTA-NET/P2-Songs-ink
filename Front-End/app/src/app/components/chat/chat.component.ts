@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { SocketIoService } from 'src/app/services/socketio.service';
 import { Observable, Subscription } from 'rxjs';
 import { startWith } from 'rxjs/operators';
@@ -13,7 +13,7 @@ import { stringify } from '@angular/compiler/src/util';
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, OnDestroy {
   @Input() newChatParameter: string;
   room: string;
   backup:string[] = [];
@@ -54,7 +54,8 @@ export class ChatComponent implements OnInit {
   //   });
   // }
 
-  leaveRoom(){
+
+  ngOnDestroy(){
     this.socketService.leaveRoom();
     this._roomsub.unsubscribe();
   }

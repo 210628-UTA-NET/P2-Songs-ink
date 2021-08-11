@@ -28,10 +28,13 @@ import { LoginComponent } from './components/login/login.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ProfileWordlistComponent } from './components/profile-wordlist/profile-wordlist.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { TimerComponent } from './components/timer/timer.component';
+
+// const config: SocketIoConfig = { url: 'https://ancient-beach-47155.herokuapp.com/', options: {} };
+const config: SocketIoConfig = { url: 'localhost:3000', options: {} };
 import { AuthGuard, AuthModule } from '@auth0/auth0-angular';
 import { environment } from 'src/environments/environment';
 
-const config: SocketIoConfig = { url: 'https://ancient-beach-47155.herokuapp.com/', options: {} };
 
 @NgModule({
   declarations: [
@@ -46,7 +49,8 @@ const config: SocketIoConfig = { url: 'https://ancient-beach-47155.herokuapp.com
     LobbyComponent,
     LoginComponent,
     ProfileComponent,
-    ProfileWordlistComponent
+    ProfileWordlistComponent,
+    TimerComponent
   ],
   imports: [
     BrowserModule,
