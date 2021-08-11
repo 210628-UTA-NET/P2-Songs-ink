@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { AuthService } from '@auth0/auth0-angular';
 import { Profile } from '../../models/Profile';
 import { ProfileService } from '../../services/profile.service';
-import { PointsService } from '../..//services/points.service';
 
 @Component({
   selector: 'app-profile',
@@ -9,32 +9,86 @@ import { PointsService } from '../..//services/points.service';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  userID: number = parseInt(sessionStorage.getItem('id')!); //get userID from session variable
-  currentPlayer: Profile;
-  constructor(private profApi: ProfileService, private pointsApi: PointsService) { }
+
+  currentPlayer: Profile = {
+    currentScore: 0,
+    email: "",
+    playerScore: 0,
+    playerName: "",
+    gamesPlayed: 0,
+    id: 0,
+    customWords: []
+  };
+  tempName: string | undefined;
+  newWord: string;
+  wordAddCost: number = -100;
+  constructor(private profApi: ProfileService, public auth: AuthService) { }
 
   ngOnInit(): void {
+    // on startup get the profile from the data base
+    this.auth.user$.subscribe(
+      (response) => {
+        this.currentPlayer.email = response?.email;
+        this.tempName=response?.nickname; // should always be defined 
+        this.getUserInfo(this.currentPlayer.email!); 
+      }
+    );
 
-    this.profApi.getUserInfo(this.userID).subscribe((response) => {
-      this.currentPlayer.playerName = response.playerName;
-      this.currentPlayer.playerScore = response.playerScore;
-      this.currentPlayer.email = response.email;
-      this.currentPlayer.currentScore = response.currentScore;
-      this.currentPlayer.gamesPlayed = response.gamesPlayed;
-    });
+    // if the id is 0 then the profile doesnt exist so it is made
+    if(this.currentPlayer.id == 0)
+    {
+      this.currentPlayer.playerName=this.tempName;
+      this.profApi.addPlayerProfile(this.currentPlayer).subscribe(
+        (response) => {
+          this.currentPlayer.id = response.id;
+        }
+      );
+    }
+
   }
-  currentScore()
-  {
-    this.pointsApi.getScoreofPlayer(this.userID).subscribe(
+  getUserInfo(p_email: string) {
+    this.profApi.getUserInfo(p_email).subscribe(
       (response) => {
-        this.currentPlayer.currentScore = response;
-      });
+        this.currentPlayer.id = response.id;
+        this.currentPlayer.playerName = response.playerName;
+        this.currentPlayer.gamesPlayed = response.gamesPlayed;
+        this.currentPlayer.currentScore = response.currentScore;
+        this.currentPlayer.playerScore = response.playerScore;
+        this.currentPlayer.customWords = response.customWords;
+      }
+    );
   }
-  changeScore(points: number)
+  // I think having the parameter is irrelevant since the current profile is the only
+  // one being updated but Ill leave it like this.
+  updatePlayerProfile(profile: Profile) { 
+    this.profApi.updatePlayerProfile(profile);
+  }
+
+  addWord(){
+    if(this.currentPlayer.currentScore<this.wordAddCost)
+    {
+      alert("You do not have enough points to add a word");
+      return;
+    }
+    if(!this.newWord)
+    {
+      alert("Please enter a word");
+      return;
+    }
+    
+    this.currentPlayer.customWords.push(this.newWord);
+    this.currentPlayer.currentScore += this.wordAddCost;
+    this.newWord = "";
+    this.updatePlayerProfile(this.currentPlayer);
+  }
+  removeWord(wordToRemove: string)
   {
-    this.pointsApi.updateScoreOfPlayer(this.userID,points).subscribe(
-      (response) => {
-        this.currentScore();
-      });
+    let index = this.currentPlayer.customWords.indexOf(wordToRemove);
+    if (index > -1) // if index is >= to len of arr then it is -1 
+    {
+      this.currentPlayer.customWords.splice(index,1); //removes the word to be removed
+    }
+    this.updatePlayerProfile(this.currentPlayer); //update player profile with new list
   }
+
 }
