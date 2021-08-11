@@ -19,6 +19,20 @@
         </div>
     </span>
     <span>
-       <app-profile-wordlist (onAddWord)="changeScore($event)"></app-profile-wordlist>
+       <app-profile-wordlist 
+       *ngFor="let word of currentPlayer.customWords" 
+       [word]="word"
+       (onRemoveWord)="removeWord(word)"
+       ></app-profile-wordlist>
+       <div>
+
+        <form (ngSubmit="addWord")>
+            <div class="form-control">
+                <label for="text">Add a word (cost {{wordAddCost}} points)</label>
+                <input type="text" name="text" id="newWord" [(ngModel)]="newWord">
+            </div>
+            <input type="submit" value="Add Word" class="btn btn-primary">
+        </form>
+    </div>
     </span>
 </div>

@@ -47,9 +47,9 @@ namespace SongsinkBL
             return await _repo.AddGameHistory(p_gameHistory);
         }
 
-        public async Task<Player> GetAPlayer(string p_email, string p_password)
+        public async Task<Player> GetAPlayer(string p_email)
         {
-            Player found = await _repo.GetAPlayer(p_email, p_password);
+            Player found = await _repo.GetAPlayer(p_email);
             if (found == null)
             {
                 throw new Exception("Player Not Found");
@@ -60,6 +60,21 @@ namespace SongsinkBL
         public async Task<Player> GetAPlayer(int p_id)
         {
             Player found = await _repo.GetAPlayer(p_id);
+            if (found == null)
+            {
+                throw new Exception("Player Not Found");
+            }
+            return found;
+        }
+
+        public async Task<Player> UpdatePlayer(Player p_player)
+        {
+            return await _repo.UpdatePlayer(p_player);
+        }
+
+        public async Task<Player> CreateNewPlayer(Player p_player)
+        {
+            Player found = await _repo.CreateNewPlayer(p_player);
             if (found == null)
             {
                 throw new Exception("Player Not Found");

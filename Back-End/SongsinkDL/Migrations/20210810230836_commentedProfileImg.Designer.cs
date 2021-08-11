@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SongsinkDL;
@@ -10,9 +11,10 @@ using SongsinkDL;
 namespace SongsinkDL.Migrations
 {
     [DbContext(typeof(SIDbContext))]
-    partial class SIDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210810230836_commentedProfileImg")]
+    partial class commentedProfileImg
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,6 +72,8 @@ namespace SongsinkDL.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CustomCategoryId");
+
                     b.ToTable("CustomWords");
                 });
 
@@ -104,7 +108,12 @@ namespace SongsinkDL.Migrations
                     b.Property<string>("PictureURL")
                         .HasColumnType("text");
 
+                    b.Property<int>("RoomID")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("RoomID");
 
                     b.ToTable("Pictures");
                 });
@@ -119,13 +128,13 @@ namespace SongsinkDL.Migrations
                     b.Property<int>("CurrentScore")
                         .HasColumnType("integer");
 
-                    b.Property<List<string>>("CustomWords")
-                        .HasColumnType("text[]");
-
                     b.Property<string>("Email")
                         .HasColumnType("text");
 
                     b.Property<int>("GamesPlayed")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("PictureId")
                         .HasColumnType("integer");
 
                     b.Property<string>("PlayerName")
@@ -134,9 +143,32 @@ namespace SongsinkDL.Migrations
                     b.Property<int>("PlayerScore")
                         .HasColumnType("integer");
 
+                    b.Property<List<string>>("PlayerWords")
+                        .HasColumnType("text[]");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("PictureId");
+
                     b.ToTable("Players");
+                });
+
+            modelBuilder.Entity("SongsinkModel.Room", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Password")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("Public")
+                        .HasColumnType("boolean");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Rooms");
                 });
 
             modelBuilder.Entity("SongsinkModel.Song", b =>
@@ -188,18 +220,59 @@ namespace SongsinkDL.Migrations
                     b.Navigation("Player");
                 });
 
+            modelBuilder.Entity("SongsinkModel.CustomWord", b =>
+                {
+                    b.HasOne("SongsinkModel.CustomCategory", "CustomCategory")
+                        .WithMany()
+                        .HasForeignKey("CustomCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CustomCategory");
+                });
+
+            modelBuilder.Entity("SongsinkModel.Picture", b =>
+                {
+                    b.HasOne("SongsinkModel.Room", "PictureRoom")
+                        .WithMany("PicturesInRoom")
+                        .HasForeignKey("RoomID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PictureRoom");
+                });
+
+            modelBuilder.Entity("SongsinkModel.Player", b =>
+                {
+                    b.HasOne("SongsinkModel.Picture", null)
+                        .WithMany("PlayerPicture")
+                        .HasForeignKey("PictureId");
+                });
+
             modelBuilder.Entity("SongsinkModel.Word", b =>
                 {
-                    b.HasOne("SongsinkModel.Category", null)
+                    b.HasOne("SongsinkModel.Category", "Category")
                         .WithMany("Words")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("SongsinkModel.Category", b =>
                 {
                     b.Navigation("Words");
+                });
+
+            modelBuilder.Entity("SongsinkModel.Picture", b =>
+                {
+                    b.Navigation("PlayerPicture");
+                });
+
+            modelBuilder.Entity("SongsinkModel.Room", b =>
+                {
+                    b.Navigation("PicturesInRoom");
                 });
 #pragma warning restore 612, 618
         }

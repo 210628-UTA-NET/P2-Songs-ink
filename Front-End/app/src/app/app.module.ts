@@ -27,15 +27,20 @@ import { RoomListComponent } from './components/room-list/room-list.component';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { LobbyComponent } from './components/lobby/lobby.component';
 import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { WordComponent } from './components/word/word.component';
 import { ProfileWordlistComponent } from './components/profile-wordlist/profile-wordlist.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ChooseWordComponent } from './components/choose-word/choose-word.component'; 
 import { ChooseWordDialogComponent } from './components/choose-word/choose-word.component';
-//const config: SocketIoConfig = { url: 'https://ancient-beach-47155.herokuapp.com/', options: {} };
-const config: SocketIoConfig = {url: "localhost:3001", options: {} };
+import { TimerComponent } from './components/timer/timer.component';
+
+// const config: SocketIoConfig = { url: 'https://ancient-beach-47155.herokuapp.com/', options: {} };
+const config: SocketIoConfig = { url: 'localhost:3000', options: {} };
+import { AuthGuard, AuthModule } from '@auth0/auth0-angular';
+import { environment } from 'src/environments/environment';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,24 +53,28 @@ const config: SocketIoConfig = {url: "localhost:3001", options: {} };
     RoomListComponent,
     LobbyComponent,
     LoginComponent,
-    RegisterComponent,
     ProfileComponent,
     ProfileWordlistComponent,
     ProfileComponent,
     WordComponent,
     ChooseWordComponent,
-    ChooseWordDialogComponent
+    ChooseWordDialogComponent,
+    TimerComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
+    AuthModule.forRoot({
+      domain: environment.domain,
+      clientId: environment.clientId
+    }),
     RouterModule.forRoot([
       {path:"lobby", component: LobbyComponent},
       {path:"room-list", component: RoomListComponent},
       {path: "game", component: GameComponent},
       {path:"login", component: LoginComponent},
-      {path:"register", component: RegisterComponent},
-      {path:"game", component: GameComponent}
+      {path:"game", component: GameComponent},
+      {path: "profile", component: ProfileComponent, canActivate: [AuthGuard]}
     ]),
     BrowserAnimationsModule,
     MatListModule,
