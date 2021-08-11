@@ -7,19 +7,19 @@ import { Profile } from '../models/Profile';
   providedIn: 'root'
 })
 export class ProfileService {
-  private url = "urltowebservice";
+  private url = "https://songsinkbackend.azurewebsites.net/api/Main/";
   constructor(private http: HttpClient) { }
 
   getUserInfo(userEmail: string) : Observable<Profile>
   {
-    return this.http.get<Profile>(`${this.url}/${userEmail}`);
+    return this.http.get<Profile>(`${this.url}getAPlayer/${userEmail}`);
   }
   addPlayerProfile(newPlayerProfile: Profile) : Observable<Profile>
   {
-    return this.http.post<Profile>(this.url,newPlayerProfile);
+    return this.http.post<Profile>(this.url+"addAPlayer",newPlayerProfile);//update url when have endpoint
   }
   updatePlayerProfile(playerProfile: Profile): Observable<Profile>
   {
-    return this.http.put<Profile>(this.url,playerProfile);
+    return this.http.put<Profile>(this.url+"updatePlayer",playerProfile);
   }
 }
