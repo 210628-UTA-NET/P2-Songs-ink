@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 import { Profile } from '../../models/Profile';
 import { ProfileService } from '../../services/profile.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -65,7 +66,7 @@ export class ProfileComponent implements OnInit {
   }
 
   addWord(){
-    if(this.currentPlayer.currentScore<this.wordAddCost)
+    if(this.currentPlayer.currentScore < Math.abs(this.wordAddCost))
     {
       alert("You do not have enough points to add a word");
       return;

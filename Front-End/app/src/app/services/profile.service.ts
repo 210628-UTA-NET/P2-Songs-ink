@@ -16,7 +16,7 @@ export class ProfileService {
   }
   addPlayerProfile(newPlayerProfile: Profile) : Observable<Profile>
   {
-    return this.http.post<Profile>(this.url+"addAPlayer",newPlayerProfile);//update url when have endpoint
+    return this.http.post<Profile>(this.url+"createNewPlayer",newPlayerProfile);//update url when have endpoint
   }
   updatePlayerProfile(playerProfile: Profile): Observable<Profile>
   {
