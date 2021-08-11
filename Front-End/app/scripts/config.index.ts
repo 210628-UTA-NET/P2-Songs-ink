@@ -7,7 +7,7 @@ const envConfigFile = `export const environment = {
   domain: '${process.env.DOMAIN_KEY}',
   clientId: '${process.env.CLIENTID_KEY}'
 };
-}`;
+`;
 writeFile(targetPath, envConfigFile, 'utf8', (err)=>{
     if(err){
         return console.log(err);
