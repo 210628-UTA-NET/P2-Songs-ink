@@ -39,7 +39,6 @@ export class SocketIoService {
   }
 
   editChat(chatline: string) {
-    this.socket.emit('userName', "Chase");
     this.socket.emit('message', chatline);
   }
 

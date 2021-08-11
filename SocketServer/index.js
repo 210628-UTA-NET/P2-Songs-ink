@@ -13,11 +13,6 @@ const io = require("socket.io")(server, {
 });
 
 let rooms = [];
-const roomItems = {
-  chatlog:[],
-  pictures:[],
-  users:[]
-};
 const chatMap = new Map();
 const userMap = new Map();
 const drawMap = new Map();
@@ -60,14 +55,65 @@ io.on('connection', (socket) => {
   });
 
 
+
+
     let previousId;
 
     socket.on("getRoom", roomId => {
+      let counter = 0;
+      let usercounter = 0;
+      let test = true;
       socket.leave(previousId);
       socket.join(roomId);
       console.log(`Socket ${username} joined room ${roomId}`);
       previousId = roomId;
       socket.emit("room", roomId);
+
+
+
+
+      if(userMap.get(previousId)){
+
+        
+
+        while (test) {
+          let userCheck = userMap.get(previousId);
+          userCheck = userCheck.filter(user => user===tempusernamer);
+          if(userCheck!=0){
+            usercounter++;
+            tempusernamer=tempusernamer+"("+usercounter+")";       
+          }else{
+            test=false;
+          }
+        }
+        tempusernamer = username+"("+usercounter+")";
+        
+        
+
+
+
+        userMap[previousId]=userMap.get(previousId).push(tempusernamer);
+      }
+
+
+
+
+
+      else{
+        userMap.set(previousId,[username]);
+      }
+
+
+
+
+
+      // for (var i in userMap.get(previousId)){
+      //   counter++;
+      // }
+      // if (counter >9){
+      //   io.to(previousId).emit('room full');
+      // }
+      console.log(userMap.get(previousId));
       // socket.emit("EnterChatBox", chatMap.get(roomId))
       for (var i in chatMap.get(previousId)) {
         // socket.emit('draw_line',{ line: line_history[i] });
@@ -89,7 +135,8 @@ io.on('connection', (socket) => {
 
     io.emit("room list", rooms);
 
-    let username;
+    let username = "Test";
+    let tempusernamer = username;
 
     socket.on("userName", nickname => {
       console.log(socket.id+" has changed to "+nickname);
@@ -104,15 +151,27 @@ io.on('connection', (socket) => {
         if(chatMap.get(previousId)) {
           chatMap[previousId]=chatMap.get(previousId).push(username + ': '+message);
       }
-      console.log(chatMap.get(previousId));
     });
   
     socket.on("leave room", () => {
-      console.log(previousId);
       socket.leave(previousId);
+      let users=[];
       // socket.removeAllListeners('message');
       // socket.on('message');
       console.log(`Socket ${username} joined the Lobby`);
+      users=userMap.get(previousId);
+      users=users.filter(user=>user!=tempusernamer);
+      console.log(users);
+      // userMap[previousId]=userMap.get(previousId).filter(user => user != 'Test');
+      userMap.set(previousId,users);
+      console.log(userMap.get(previousId));
+      io.to(previousId).emit("players", userMap.get(previousId));
+      if(users.length==0){
+        rooms=rooms.filter(place => place != previousId);
+        console.log(rooms);
+      }
+      io.emit('room list', rooms);
+      console.log(users.length);
       previousId = "";
       socket.emit("room", "Lobby");
       // socket.removeAllListeners(previousId + 'message');
@@ -128,6 +187,8 @@ io.on('connection', (socket) => {
   )
 
 });
+
 server.listen(process.env.PORT||3000, () => {
   console.log('listening on *:3000');
+  
 });
