@@ -42,6 +42,10 @@ io.on('connection', (socket) => {
     io.to(previousId).emit('draw_line', { line: data.line } );
   });
   
+  socket.on('setWord', function (word) {
+    io.to(previousId).emit('getWord', word);
+  });
+ 
   socket.on('Undo', function () {
     // Can change depending on feedback
     let undoHeuristic = 10;
@@ -128,6 +132,6 @@ io.on('connection', (socket) => {
   )
 
 });
-server.listen(process.env.PORT||3000, () => {
-  console.log('listening on *:3000');
+server.listen(process.env.PORT||3001, () => {
+  console.log('listening on *:3001');
 });
