@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SongsinkBL\SongsinkBL.csproj" />
     <ProjectReference Include="..\SongsinkDL\SongsinkDL.csproj" />
+    <ProjectReference Include="..\SongsinkModel\SongsinkModel.csproj" />
   </ItemGroup>
 
 </Project>

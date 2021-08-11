@@ -1,11 +1,9 @@
-<div><h1>Login</h1></div>
 <div>
-    <form class="form-group" [formGroup]="loginGroup" style="width: 20%; text-align: center;">
-        <label>Email</label>
-        <input type="email" class="form-control" formControlName = "email" placeholder="example@email.com">
-        <label>Password</label>
-        <input type="password" class="form-control" formControlName = "password">
-        <button class="btn btn-primary" (click)="login(loginGroup)">Login</button>
-    </form>
-    <a routerLink="/register">Register for an account</a>
+    <ng-container *ngIf="auth.isAuthenticated$ | async else Login">
+        <button class="btn btn-danger" (click)="logout()">Log out</button>
+    </ng-container>
+    <ng-template #Login>
+        <button class="btn btn-primary" (click)="login()"> Log in</button>
+    </ng-template>
 </div>
+
