@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
@@ -12,6 +13,7 @@ import { CanvasComponent } from './components/canvas/canvas.component';
 import { PlayerListItemComponent } from './components/player-list-item/player-list-item.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { MatDialogModule } from '@angular/material/dialog';
 import {MatListModule} from '@angular/material/list';
 import {MatInputModule} from '@angular/material/input'; 
 import {MatMenuModule} from '@angular/material/menu'; 
@@ -27,11 +29,13 @@ import { LobbyComponent } from './components/lobby/lobby.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { WordComponent } from './components/word/word.component';
 import { ProfileWordlistComponent } from './components/profile-wordlist/profile-wordlist.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
-const config: SocketIoConfig = { url: 'https://ancient-beach-47155.herokuapp.com/', options: {} };
-
+import { ChooseWordComponent } from './components/choose-word/choose-word.component'; 
+import { ChooseWordDialogComponent } from './components/choose-word/choose-word.component';
+//const config: SocketIoConfig = { url: 'https://ancient-beach-47155.herokuapp.com/', options: {} };
+const config: SocketIoConfig = {url: "localhost:3001", options: {} };
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,7 +50,11 @@ const config: SocketIoConfig = { url: 'https://ancient-beach-47155.herokuapp.com
     LoginComponent,
     RegisterComponent,
     ProfileComponent,
-    ProfileWordlistComponent
+    ProfileWordlistComponent,
+    ProfileComponent,
+    WordComponent,
+    ChooseWordComponent,
+    ChooseWordDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -69,7 +77,9 @@ const config: SocketIoConfig = { url: 'https://ancient-beach-47155.herokuapp.com
     MatIconModule,
     ReactiveFormsModule,
     FontAwesomeModule,
-    FormsModule
+    FormsModule,
+    MatDialogModule,
+    CommonModule
   ],
   providers: [SocketIoService],
   bootstrap: [AppComponent]
