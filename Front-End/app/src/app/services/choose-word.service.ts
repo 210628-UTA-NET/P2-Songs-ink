@@ -7,8 +7,7 @@ import { Word } from '../models/Word';
 })
 export class ChooseWordService {
 
-  private apiURL = ""
-  //'http://localhost:3000/words'
+  private apiURL = 'http://localhost:3004/words'
 
   constructor(private http: HttpClient) { }
 
