@@ -1,0 +1,8 @@
+<ng-container *ngIf="this.word else waiting">
+    <p id="hidden-word">{{ hiddenWord }} </p>
+</ng-container>
+
+<ng-template #waiting>
+    <p id="default-word"> Word is currently being chosen...</p>
+</ng-template>
+
