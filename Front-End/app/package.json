@@ -4,10 +4,11 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "npm run config && ng build --prod",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "db": "json-server --watch ./src/app/tools/db.json"
+    "db": "json-server --watch ./src/app/tools/db.json",
+    "config": "ts-node -O '{\"module\": \"commonjs\"}' ./scripts/config.index.ts"
   },
   "private": true,
   "dependencies": {
