@@ -29,6 +29,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ProfileWordlistComponent } from './components/profile-wordlist/profile-wordlist.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { TimerComponent } from './components/timer/timer.component';
 
 // const config: SocketIoConfig = { url: 'https://ancient-beach-47155.herokuapp.com/', options: {} };
 const config: SocketIoConfig = { url: 'localhost:3000', options: {} };
@@ -48,7 +49,8 @@ const config: SocketIoConfig = { url: 'localhost:3000', options: {} };
     LoginComponent,
     RegisterComponent,
     ProfileComponent,
-    ProfileWordlistComponent
+    ProfileWordlistComponent,
+    TimerComponent
   ],
   imports: [
     BrowserModule,

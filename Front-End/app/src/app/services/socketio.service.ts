@@ -13,6 +13,7 @@ export class SocketIoService {
   roomList = this.socket.fromEvent<string[]>('room list');
   chatLogOfRoom = this.socket.fromEvent<string[]>('EnterChatBox');
   newMessage = this.socket.fromEvent<string>('message');
+  timeRemaining = this.socket.fromEvent<number>('time left');
   message$ : BehaviorSubject<string> = new BehaviorSubject('');
   rooms$ : BehaviorSubject<string> = new BehaviorSubject('');
   constructor(private socket: Socket) { }
@@ -52,6 +53,12 @@ export class SocketIoService {
   leaveRoom(){
     this.socket.emit("leave room");
   }
+
+  StartTimer(){
+    this.socket.emit('begin timer');
+  }
+
+
 
 
   private roomId() {
