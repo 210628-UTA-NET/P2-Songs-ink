@@ -6,7 +6,7 @@ using SongsinkDL;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
-namespace SonsinkTests
+namespace SongsinkTests
 {
     public class SongsinkRepositoryTest
     {
@@ -331,63 +331,26 @@ namespace SonsinkTests
                 };
 
                 
-                Room roompub1 = new Room()
-                {
-                    Id = 1,
-                    Public = true
-                };
-                Room roompub2 = new Room()
-                {
-                    Id = 2,
-                    Public = true
-                };
-                Room roompub3 = new Room()
-                {
-                    Id = 3,
-                    Public = true
-                };
-                Room roompriv1 = new Room()
-                {
-                    Id = 4,
-                    Password = "room4",
-                    Public = false
-                };
-                Room roompriv2 = new Room()
-                {
-                    Id = 5,
-                    Password = "room5",
-                    Public = false
-                };
-                Room roompriv3 = new Room()
-                {
-                    Id = 6,
-                    Password = "room6",
-                    Public = false
-                };
                 Picture pic1 = new Picture()
                 {
                     Id = 1,
                     PictureURL = "https://SongStorage.com/picturelist/picture1",
-                    RoomID =1
               
                 };
                 Picture pic2 = new Picture()
                 {
                     Id = 2,
                     PictureURL = "https://SongStorage.com/picturelist/picture2",
-                    RoomID =1
                 };
                 Picture pic3 = new Picture()
                 {
                     Id = 3,
                     PictureURL = "https://SongStorage.com/picturelist/picture3",
-                    RoomID = 2
                 };
                 Picture pic4 = new Picture()
                 {
                     Id = 4,
                     PictureURL = "https://SongStorage.com/picturelist/picture4",
-                    RoomID = 3
                 };
                 Player player1 = new Player()
                 {
@@ -396,10 +359,14 @@ namespace SonsinkTests
                     PlayerScore = 1000,
                     CurrentScore = 875,
                     GamesPlayed = 10,
-                    Password = "0384174",
-                    Salt = "9043vnsjoig",
-                    ProfileImg = pic1,
-                    ProfileImgID = 1
+                    Email = "player1@gmail.com",
+                    CustomWords = {"dog", "cat"}
+                    //Password = "0384174",
+                    //Salt = "9043vnsjoig",
+                    //PlayerCategory = catplayer1,
+                    //PlayerCategoryID = 5,
+                    //ProfileImg = pic1,
+                    //ProfileImgID = 1
                
                 };
                 Player player2 = new Player()
@@ -409,10 +376,14 @@ namespace SonsinkTests
                     PlayerScore = 800,
                     CurrentScore = 120,
                     GamesPlayed = 15,
-                    Password = "charlie",
-                    Salt = "93jfjvxoiv",
-                    ProfileImg = pic2,
-                    ProfileImgID = 2
+                    Email = "player2@gmail.com",
+                    CustomWords = {"rabbit", "dragon"}
+                    //Password = "charlie",
+                    //Salt = "93jfjvxoiv",
+                    //PlayerCategory = catplayer2,
+                    //PlayerCategoryID = 6,
+                    //ProfileImg = pic2,
+                    //ProfileImgID = 2
 
                 };
 
@@ -420,7 +391,6 @@ namespace SonsinkTests
                 context.Words.AddRange(word1, word2, word3, word4, word5, word6, word7, word8);
                 context.Songs.AddRange(song1, song2, song3, song4, song5, song6, song7, song8);
                 context.Pictures.AddRange(pic1, pic2, pic3, pic4);
-                context.Rooms.AddRange(roompub1, roompub2, roompub3, roompriv1, roompriv2, roompriv3);
                 context.Players.AddRange(player1, player2);
 
                 context.SaveChanges();
