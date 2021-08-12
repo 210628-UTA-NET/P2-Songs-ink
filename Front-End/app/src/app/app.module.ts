@@ -39,7 +39,7 @@ import { TimerComponent } from './components/timer/timer.component';
 const config: SocketIoConfig = { url: 'localhost:3000', options: {} };
 import { AuthGuard, AuthModule } from '@auth0/auth0-angular';
 import { environment } from 'src/environments/environment';
-
+import { ChooseCategoryDialogComponent } from './components/room-list/room-list.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +59,8 @@ import { environment } from 'src/environments/environment';
     WordComponent,
     ChooseWordComponent,
     ChooseWordDialogComponent,
-    TimerComponent
+    TimerComponent,
+    ChooseCategoryDialogComponent
   ],
   imports: [
     BrowserModule,
