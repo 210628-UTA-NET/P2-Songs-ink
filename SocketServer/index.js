@@ -31,6 +31,11 @@ io.on('connection', (socket) => {
     }
     io.to(previousId).emit('draw_line', { line: data.line } );
   });
+  
+  socket.on('setWord', function (word) {
+    io.to(previousId).emit('getWord', word);
+  });
+ 
   socket.on('Undo', function () {
     // Can change depending on feedback
     let undoHeuristic = 10;
