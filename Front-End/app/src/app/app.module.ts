@@ -40,6 +40,8 @@ const config: SocketIoConfig = { url: 'localhost:3000', options: {} };
 import { AuthGuard, AuthModule } from '@auth0/auth0-angular';
 import { environment } from 'src/environments/environment';
 import { ChooseCategoryDialogComponent } from './components/room-list/room-list.component';
+import { JukeboxComponent } from './components/jukebox/jukebox.component';
+
 
 @NgModule({
   declarations: [
@@ -55,6 +57,8 @@ import { ChooseCategoryDialogComponent } from './components/room-list/room-list.
     LoginComponent,
     ProfileComponent,
     ProfileWordlistComponent,
+    TimerComponent,
+    JukeboxComponent,
     ProfileComponent,
     WordComponent,
     ChooseWordComponent,
