@@ -1,0 +1,16 @@
+<p>jukebox works!</p>
+<div style="text-align: center;">
+    <div class="song">
+        <p>Coming Up: {{song3}}</p>
+    </div>
+    <div class="song">
+        <p>Up Next: {{song2}}</p>
+    </div>
+    <div class="song">
+        <p>Current Song: {{song1}}</p>
+        <p>{{currentSongTime * 1000 | date: "mm:ss"}}/{{totalSongTime * 1000 | date: "mm:ss"}}</p>
+        <audio controls id="audio" (ended)="nextSong()" (timeupdate)="updateSongTime()"></audio>
+    </div>
+    <button class="btn btn-info" (click)="randomizeSongs()">Random Songs({{changeSongsCost * -1}} points)</button>
+    <button class="btn btn-success" (click)="nextSong()">Next Song({{nextSongCost *-1}} points)</button>
+</div>
