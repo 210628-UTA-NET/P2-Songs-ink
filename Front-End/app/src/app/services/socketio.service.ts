@@ -1,27 +1,52 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Input, OnInit } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscriber, Subscription } from 'rxjs';
+import { io } from 'socket.io-client';
 import { Room } from 'src/app/models/room';
+import { ProfileComponent } from '../components/profile/profile.component';
 import { Chatline } from '../models/chatline';
+import { Player } from '../models/Player';
+import { ProfileService } from './profile.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SocketIoService {
   roomListstatic:string[]=[];
+  userName:string;
+  gameUserName:string;
   currentRoom = this.socket.fromEvent<string>('room');
   roomList = this.socket.fromEvent<string[]>('room list');
   chatLogOfRoom = this.socket.fromEvent<string[]>('EnterChatBox');
   newMessage = this.socket.fromEvent<string>('message');
-  timeRemaining = this.socket.fromEvent<number>('time left');
-  message$ : BehaviorSubject<string> = new BehaviorSubject('');
-  rooms$ : BehaviorSubject<string> = new BehaviorSubject('');
-  constructor(private socket: Socket) { }
+  timeRemaining = this.socket.fromEvent<string>('time left');
+  usersInRoom = this.socket.fromEvent<Player[]>('players');
+  goalWord = this.socket.fromEvent<string>('goal word');
+  maxPoints = this.socket.fromEvent<boolean>('reset round');
+  activeDrawer = this.socket.fromEvent<boolean>('active drawer');
+  roundPoints = this.socket.fromEvent<number>('add points');
   
 
+  constructor(private socket: Socket) { this.RunOnConnect();  }
+
+    RunOnConnect(){
+    if(!this.userName){
+        this.userName = "Guest "+this.roomId();
+      }
+      console.log(this.userName);
+    }
+
+    SetUsername(newName:string){
+      this.userName=newName;
+    }
+ 
+  
   getRoom(id: string) {
     
-    this.socket.emit('getRoom', id);
+    this.socket.emit('getRoom', {roomId:id, username:this.userName});
+    this.socket.on('update name', (tempusernamer:string) =>{
+      this.gameUserName=tempusernamer;
+    })
   }
 
   // getRooms() {
@@ -39,26 +64,41 @@ export class SocketIoService {
     this.roomList.subscribe(list=> this.roomListstatic=list);
   }
 
-  editChat(chatline: string) {
-    this.socket.emit('message', chatline);
-  }
 
-  // getNewMessage = () => {
-  //   this.socket.once('message', (message: string) => {
-  //     this.message$.next(message);
-  //   });
-  //   return this.message$.asObservable();
-  // }
+  editChat(chatline: string) {
+    this.socket.emit('message', {message:chatline, tempusernamer:this.gameUserName});
+  }
 
   leaveRoom(){
-    this.socket.emit("leave room");
+    this.socket.emit("leave room", this.userName);
   }
 
-  StartTimer(){
-    this.socket.emit('begin timer');
+  UpdateTimer(remaining: number){
+    this.socket.emit('timer update', remaining);
+  }
+
+  TimeUp(){
+    this.socket.emit('times up');
+  }
+
+  AddPoints(points:number){
+    
+    this.socket.emit('add points', {tempuser:this.gameUserName,points:points});
   }
 
 
+  StartRound(){
+    let currentTime = 35;
+    let timerId = setInterval(() =>{
+      if(currentTime==0){
+        this.TimeUp();
+        clearTimeout(timerId);
+      }else{
+      this.UpdateTimer(currentTime);
+      currentTime--;
+      }
+    }, 1000)
+  }
 
 
   private roomId() {

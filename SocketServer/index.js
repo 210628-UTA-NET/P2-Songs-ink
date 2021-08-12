@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const http = require('http');
+const internal = require('stream');
 const server = http.createServer(app);
 const io = require("socket.io")(server, {
   cors: {
@@ -15,6 +16,7 @@ let rooms = [];
 const chatMap = new Map();
 const userMap = new Map();
 const drawMap = new Map();
+
 // canvas stuff
 var line_history = [];
 io.on('connection', (socket) => {
@@ -51,14 +53,13 @@ io.on('connection', (socket) => {
     drawMap.set(previousId, []);
     io.to(previousId).emit('clear', drawMap.get(previousId));
   });
-  let score;
   let previousId;
-  socket.on("getRoom", roomId => {
+  socket.on("getRoom", ({roomId:roomId, username:username}) => {
       let counter = 0;
-      score = 0;
+      let tempUsers=[];
       let usercounter = 0;
       let test = true;
-      tempusernamer=username;
+      let tempusernamer=username;
       socket.leave(previousId);
       socket.join(roomId);
       console.log(`Socket ${username} joined room ${roomId}`);
@@ -66,7 +67,10 @@ io.on('connection', (socket) => {
       socket.emit("room", roomId);
       if(userMap.get(previousId)){
         while (test) {
-          let userCheck = userMap.get(previousId);
+          let userCheck=[];
+          for (var i in userMap.get(previousId)){
+            userCheck.push(userMap.get(previousId)[i].name);
+          }
           userCheck = userCheck.filter(user => user===tempusernamer);
           if(userCheck!=0){
             usercounter++;
@@ -75,19 +79,20 @@ io.on('connection', (socket) => {
             test=false;
           }
         }
-        userMap[previousId]=userMap.get(previousId).push(tempusernamer);
+        userMap[previousId]=userMap.get(previousId).push({name:username,score:0,socket:socket.id,gamename:tempusernamer,ActiveDrawer:false});
+        console.log(userMap.get(previousId));
       }
       else{
-        userMap.set(previousId,[username]);
+        userMap.set(previousId,[{name:username,score:0,socket:socket.id,gamename:username,ActiveDrawer:true}]);
       }
+      socket.emit('update name',tempusernamer)
       // for (var i in userMap.get(previousId)){
       //   counter++;
       // }
       // if (counter >9){
       //   io.to(previousId).emit('room full');
       // }
-      console.log(userMap.get(previousId));
-      io.to(previousId).emit("players",userMap.get(previousId));
+      io.to(previousId).emit('players',userMap.get(previousId))
       // socket.emit("EnterChatBox", chatMap.get(roomId))
       for (var i in chatMap.get(previousId)) {
         // socket.emit('draw_line',{ line: line_history[i] });
@@ -99,23 +104,13 @@ io.on('connection', (socket) => {
       }
   });
 
-  socket.on('begin timer', () => {
-    timeLeft = 35;
-    var timerId = setInterval(countdown,1000);
-    function countdown() {
-      if(timeLeft==0){
-        io.to(previousId).emit('time up');
-        clearTimeout(timerId);
-      }
-      io.to(previousId).emit('time left',timeLeft)
-      timeLeft--;
-    }
-  })
+  socket.on('timer update', timeLeft => {
+      io.to(previousId).emit('time left',timeLeft+" seconds remaining in the round!");
+  });
 
-  function countdown() {
-    if (timeleft==0)
-    io.to(previousId).emit('time up')
-  }
+  socket.on('times up', () => {
+    io.to(previousId).emit('time left',"Time's Up!");
+  })
 
 
   socket.on('addRoom', data => {
@@ -130,48 +125,44 @@ io.on('connection', (socket) => {
   })
 
   io.emit("room list", rooms);
+  console.log(rooms);
 
-  let username = "Test";
-  let tempusernamer = username;
 
-  socket.on("userName", nickname => {
-      console.log(socket.id+" has changed to "+nickname);
-      username = nickname;
-  });
-
-  socket.on("message", message=> {
+  socket.on("message", ({message:message, tempusernamer:tempusernamer})=> {
         io.to(previousId).emit('message', tempusernamer + ': '+message);
-        console.log('message: ' + tempusernamer + ': '+message);
+        console.log(previousId+' message: ' + tempusernamer + ': '+message);
         if(chatMap.get(previousId)) {
           chatMap[previousId]=chatMap.get(previousId).push(tempusernamer + ': '+message);
       }
   });
 
-  socket.on("leave room", () => {
+  socket.on("leave room", (tempusernamer) => {
+    if(previousId){
       socket.leave(previousId);
       let users=[];
       // socket.removeAllListeners('message');
       // socket.on('message');
-      console.log(`Socket ${username} joined the Lobby`);
       users=userMap.get(previousId);
       console.log(users);
       console.log(tempusernamer);
-      users=users.filter(user=>user!=tempusernamer);
+      users=users.filter(user=>user.gamename!=tempusernamer);
       console.log(users);
       // userMap[previousId]=userMap.get(previousId).filter(user => user != 'Test');
       userMap.set(previousId,users);
       console.log(userMap.get(previousId));
-      io.to(previousId).emit("players", userMap.get(previousId));
+      io.to(previousId).emit('players',userMap.get(previousId));
+
+      // io.to(previousId).emit("players", {name:userMap.get(previousId),score:0});
       if(users.length==0){
         rooms=rooms.filter(place => place != previousId);
         console.log(rooms);
       }
       io.emit('room list', rooms);
       console.log(users.length);
-      previousId = "";
-      socket.emit("room", "Lobby");
+      previousId = "MainLobby";
+      socket.emit("room", "MainLobby");
       // socket.removeAllListeners(previousId + 'message');
-  });
+  }});
 
 
   io.emit("Rooms", Object.keys(rooms));
@@ -180,10 +171,23 @@ io.on('connection', (socket) => {
   console.log(`Socket ${socket.id} has connected`);
 
 
-  socket.on("disconnect", () => {
-    console.log(`Socket ${username} has disconnected`)
-  }
-  );
+  // socket.on("disconnect", () => {
+  //   console.log(`Socket ${username} has disconnected`)
+  //   if(userMap.get(previousId!=[])){
+  //   socket.leave(previousId);
+  //   let users=[];
+  //   users=userMap.get(previousId);
+  //   users=users.filter(user=>user!=tempusernamer);
+  //   userMap.set(previousId,users);
+  //     io.to(previousId).emit('players',userMap.get(previousId));
+  //   // io.to(previousId).emit("players", {name:userMap.get(previousId),score:0});
+  //     if(users.length==0){
+  //       rooms=rooms.filter(place => place != previousId);
+  //       console.log(rooms);
+//   //     }
+//   //     io.emit('room list', rooms);
+//   // }
+// });
 });
 
 server.listen(process.env.PORT||3000, () => {

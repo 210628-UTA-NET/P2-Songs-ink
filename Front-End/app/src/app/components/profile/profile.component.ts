@@ -3,6 +3,8 @@ import { AuthService } from '@auth0/auth0-angular';
 import { Profile } from '../../models/Profile';
 import { ProfileService } from '../../services/profile.service';
 import { RouterModule } from '@angular/router';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { SocketIoService } from 'src/app/services/socketio.service';
 
 @Component({
   selector: 'app-profile',
@@ -24,7 +26,9 @@ export class ProfileComponent implements OnInit {
   newWord: string;
   newName: string = "";
   wordAddCost: number = -100;
-  constructor(private profApi: ProfileService, public auth: AuthService) { }
+  
+
+  constructor(private profApi: ProfileService, public auth: AuthService, private socketService:SocketIoService) { }
 
   ngOnInit(): void {
     // on startup get the profile from the data base
@@ -36,11 +40,17 @@ export class ProfileComponent implements OnInit {
 
 
       }
-    );
 
+    );
+    if(this.currentPlayer.playerName){
+    this.socketService.SetUsername(this.currentPlayer.playerName)
+    }
+      
 
 
   }
+
+  
   getUserInfo(p_email: string) {
     this.profApi.getUserInfo(p_email).subscribe(
       (response) => {
@@ -50,6 +60,8 @@ export class ProfileComponent implements OnInit {
         this.currentPlayer.currentScore = response.currentScore;
         this.currentPlayer.playerScore = response.playerScore;
         this.currentPlayer.customWords = response.customWords;
+        if(response.playerName){
+        this.socketService.SetUsername(response.playerName)}
       }, (error) => {
         //If the backend is unable to find the profile from the email then
         //it throws an error, when it does it creates the player profile
@@ -101,6 +113,7 @@ export class ProfileComponent implements OnInit {
       return;
     }
     this.currentPlayer.playerName = this.newName;
+    this.socketService.SetUsername(this.currentPlayer.playerName);
     this.updatePlayerProfile(this.currentPlayer);
     this.newName = "";
   }

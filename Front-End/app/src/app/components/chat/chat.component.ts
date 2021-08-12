@@ -7,6 +7,7 @@ import {Chatline} from 'src/app/models/chatline';
 import { FormControl, FormGroup } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { stringify } from '@angular/compiler/src/util';
+import { Player } from 'src/app/models/Player';
 
 @Component({
   selector: 'app-chat',
@@ -19,7 +20,11 @@ export class ChatComponent implements OnInit, OnDestroy {
   backup:string[] = [];
   chatlines:string[] = [];
   newChat:string;
+  goal:string;
+  currentUsername:string;
+  playerTest:string[];
   private _roomsub: Subscription;
+  firstCorrect:boolean;
   
 
   title = 'socketio-angular';
@@ -28,6 +33,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   
   ngOnInit() {
     this._roomsub = this.socketService.currentRoom.subscribe(currentRoom => this.room = currentRoom);
+    this._roomsub = this.socketService.goalWord.subscribe(theWord => this.goal=theWord);
     // this._roomsub = this.socketService.currentRoom.pipe(
     //   startWith({ id: '',})
     // ).subscribe(room => this.room = room);
@@ -40,13 +46,28 @@ export class ChatComponent implements OnInit, OnDestroy {
       this._roomsub = this.socketService.newMessage.subscribe((message:string)=> {
         this.chatlines.unshift(message);
       })
-      
 
   }
 
   AddChat(message:string) {
+    if(message&&this.goal){
+      if(message.toLowerCase==this.goal.toLowerCase){
+      this.socketService.editChat(this.currentUsername+" guessed correctly!");
+      if(this.firstCorrect){
+        this.socketService.AddPoints(100);
+        this.firstCorrect=false;
+      } else{
+        this.socketService.AddPoints(50);
+      }
+      
+    }
+    }else if(message){
+      console.log("inside else");
     this.socketService.editChat(message);
   }
+}
+
+
 
   // updateChat(){
   //   this.backup.forEach(element => {
