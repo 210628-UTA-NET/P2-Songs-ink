@@ -57,7 +57,7 @@ import { JukeboxComponent } from './components/jukebox/jukebox.component';
     ProfileComponent,
     ProfileWordlistComponent,
     TimerComponent,
-    JukeboxComponent
+    JukeboxComponent,
     ProfileComponent,
     WordComponent,
     ChooseWordComponent,
