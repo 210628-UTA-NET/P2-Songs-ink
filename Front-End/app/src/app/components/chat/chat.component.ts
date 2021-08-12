@@ -24,6 +24,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   currentUsername:string;
   playerTest:string[];
   private _roomsub: Subscription;
+  firstCorrect:boolean;
   
 
   title = 'socketio-angular';
@@ -50,16 +51,23 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   AddChat(message:string) {
     if(message&&this.goal){
-      console.log("inside top if");
       if(message.toLowerCase==this.goal.toLowerCase){
-        console.log("inside second if");
       this.socketService.editChat(this.currentUsername+" guessed correctly!");
+      if(this.firstCorrect){
+        this.socketService.AddPoints(100);
+        this.firstCorrect=false;
+      } else{
+        this.socketService.AddPoints(50);
+      }
+      
     }
     }else if(message){
       console.log("inside else");
     this.socketService.editChat(message);
   }
 }
+
+
 
   // updateChat(){
   //   this.backup.forEach(element => {

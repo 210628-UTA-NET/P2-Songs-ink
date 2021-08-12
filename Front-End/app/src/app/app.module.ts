@@ -23,7 +23,7 @@ import { SocketIoService } from './services/socketio.service';
 import {MatTableModule} from '@angular/material/table'; 
 // import { SocketioService } from './services/socketio.service';
 import { ChatComponent } from './components/chat/chat.component';
-import { RoomListComponent } from './components/room-list/room-list.component';
+import { RoomListComponent, ChooseCategoryDialogComponent } from './components/room-list/room-list.component';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { LobbyComponent } from './components/lobby/lobby.component';
 import { LoginComponent } from './components/login/login.component';
@@ -39,7 +39,6 @@ import { TimerComponent } from './components/timer/timer.component';
 const config: SocketIoConfig = { url: 'localhost:3000', options: {} };
 import { AuthGuard, AuthModule } from '@auth0/auth0-angular';
 import { environment } from 'src/environments/environment';
-import { ChooseCategoryDialogComponent } from './components/room-list/room-list.component';
 import { JukeboxComponent } from './components/jukebox/jukebox.component';
 
 

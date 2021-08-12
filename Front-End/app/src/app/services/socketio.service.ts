@@ -22,6 +22,10 @@ export class SocketIoService {
   timeRemaining = this.socket.fromEvent<string>('time left');
   usersInRoom = this.socket.fromEvent<Player[]>('players');
   goalWord = this.socket.fromEvent<string>('goal word');
+  maxPoints = this.socket.fromEvent<boolean>('reset round');
+  activeDrawer = this.socket.fromEvent<boolean>('active drawer');
+  roundPoints = this.socket.fromEvent<number>('add points');
+  
 
   constructor(private socket: Socket) { this.RunOnConnect();  }
 
@@ -75,6 +79,11 @@ export class SocketIoService {
 
   TimeUp(){
     this.socket.emit('times up');
+  }
+
+  AddPoints(points:number){
+    
+    this.socket.emit('add points', {tempuser:this.gameUserName,points:points});
   }
 
 
