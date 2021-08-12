@@ -19,7 +19,7 @@ export class WordComponent implements OnInit {
     });
   }
 
-  // replaces letters with _s 
+  
   hideWord(word: string) {
     let temp = word;
     var re = /[a-zA-z]/gi;
