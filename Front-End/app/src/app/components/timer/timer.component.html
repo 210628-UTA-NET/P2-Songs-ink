@@ -1,2 +1,4 @@
-<p>{{timeRemaining}} seconds remaining!</p>
-<button class="btn btn-primary" (click)= 'StartTimer()'>Start Timer</button>
+<p>{{timeLine}}</p>
+<ng-container *ngIf='numberInRoom>1'>
+<button class="btn btn-primary" (click)= 'StartRound()' *ngIf='readyToStart'>Start Round</button>
+</ng-container>
