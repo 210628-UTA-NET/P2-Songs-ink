@@ -3,6 +3,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { Socket } from 'ngx-socket-io';
 import { Word } from 'src/app/models/Word';
 import { ChooseWordService } from 'src/app/services/choose-word.service';
+import { SocketIoService } from 'src/app/services/socketio.service';
 
 @Component({
   selector: 'app-choose-word',
@@ -13,23 +14,33 @@ export class ChooseWordComponent implements OnInit {
 
   @Input()
   words: Word[] = [];
+
+  @Input()
+  category: string;
   
   chosenWord: Word;
 
-  constructor(public dialog: MatDialog, private socket: Socket, private wordService: ChooseWordService) { }
+  constructor(public dialog: MatDialog, private socket: Socket, private wordService: ChooseWordService, private socketService:SocketIoService) { }
 
   ngOnInit() {
+    this.chosenWord = {
+      name: '',
+      category: ''
+    };
+    this.category = 'placeholder';
+    // retrieve category from user and pass to getWords()
     this.wordService.getWords().subscribe(words => (this.words = words));
   }
 
   openDialog(): void {
     
     const dialogRef = this.dialog.open(ChooseWordDialogComponent, {
-      data: this.words
+      data: {words: this.words, category: this.category }
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.chosenWord.name = result.name;
-      this.chosenWord.category = result.category;
+      this.chosenWord.name = result;
+      this.socket.emit('setWord', {name: this.chosenWord.name, category: this.category});
+      this.socketService.StartTimer();
     });
   }
 
@@ -43,7 +54,7 @@ export class ChooseWordDialogComponent {
   
   constructor(
     public dialogRef: MatDialogRef<ChooseWordComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Word[]) { console.log(data);}
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
     onNoClick(): void {
       this.dialogRef.close();
