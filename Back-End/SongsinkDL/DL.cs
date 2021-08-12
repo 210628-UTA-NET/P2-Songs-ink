@@ -84,7 +84,7 @@ namespace SongsinkDL
             currentPlayer.CurrentScore = p_player.CurrentScore;
             currentPlayer.GamesPlayed = p_player.GamesPlayed;
             currentPlayer.Email = p_player.Email;
-            //currentPlayer.CustomWords = p_player.CustomWords;
+            currentPlayer.CustomWords = p_player.CustomWords;
             await _context.SaveChangesAsync();
             return await _context.Players.FirstOrDefaultAsync(p => p.Id == p_player.Id);
         }
