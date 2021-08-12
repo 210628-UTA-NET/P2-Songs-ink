@@ -1,6 +1,8 @@
-import { Component, OnInit, OnDestroy, Input, AfterViewInit, AfterViewChecked, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, AfterViewInit, AfterViewChecked, HostListener, Inject } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
+import { ChooseCategoryService } from 'src/app/services/choose-category.service';
 import { SocketIoService } from 'src/app/services/socketio.service';
 import { ChatComponent } from '../chat/chat.component';
 
@@ -17,7 +19,11 @@ export class RoomListComponent implements OnInit, OnDestroy, AfterViewChecked {
   private _roomsub2: Subscription;
   // isVisible: boolean=false;
 
-  constructor(private SocketService: SocketIoService) { 
+  //category stuff
+  categories: string[];
+  chosenCategory: string;
+
+  constructor(private SocketService: SocketIoService, public dialog: MatDialog, private categoryService: ChooseCategoryService) { 
   }
 
   ngOnInit(): void {
@@ -31,7 +37,8 @@ export class RoomListComponent implements OnInit, OnDestroy, AfterViewChecked {
     if (!this.rooms) {
       this.rooms=this.SocketService.roomListstatic;
     }
-    
+    this.categoryService.getDefaultCategories().subscribe(categories => this.categories = categories);
+
   }
 
   ngAfterViewChecked(){
@@ -41,7 +48,10 @@ export class RoomListComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.SocketService.getRoom(id);
   }
   addRoom() {
-    this.SocketService.addRoom();
+    console.log(this.categories);
+    this.openDialog();
+    //add this to openDialog
+    //this.SocketService.addRoom();
   }
 
   getRooms(){
@@ -62,7 +72,29 @@ export class RoomListComponent implements OnInit, OnDestroy, AfterViewChecked {
     this._roomsub2 = this.SocketService.roomList.subscribe(rooms => this.rooms = rooms);
   }
 
+  openDialog(): void {
+    const dialogRef = this.dialog.open(ChooseCategoryDialogComponent, {
+      data: this.categories
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.chosenCategory = result.name;
+      this.SocketService.addRoom(this.chosenCategory);
+      // emit
+    })
+  }
+
   // showRooms() {
   //   this.isVisible=!this.isVisible;
   // }
+}
+
+@Component({
+  selector: 'app-choose-category-dialog',
+  templateUrl: './app-choose-category-dialog.component.html'
+})
+export class ChooseCategoryDialogComponent {
+
+  constructor(
+    public dialogRef: MatDialogRef<RoomListComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 }
