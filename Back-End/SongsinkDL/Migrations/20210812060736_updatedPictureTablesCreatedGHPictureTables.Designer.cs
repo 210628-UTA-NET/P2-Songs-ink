@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SongsinkDL;
@@ -10,9 +11,10 @@ using SongsinkDL;
 namespace SongsinkDL.Migrations
 {
     [DbContext(typeof(SIDbContext))]
-    partial class SIDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210812060736_updatedPictureTablesCreatedGHPictureTables")]
+    partial class updatedPictureTablesCreatedGHPictureTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -63,7 +65,7 @@ namespace SongsinkDL.Migrations
                     b.Property<string>("CustomWordName")
                         .HasColumnType("text");
 
-                    b.Property<int>("PlayerId")
+                    b.Property<int>("CustomerId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -78,13 +80,13 @@ namespace SongsinkDL.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<string>("ChatLogURL")
+                    b.Property<string>("ChatLogUrl")
                         .HasColumnType("text");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<List<string>>("PictureURLs")
+                    b.Property<List<string>>("PictureUrls")
                         .HasColumnType("text[]");
 
                     b.HasKey("Id");
@@ -102,14 +104,30 @@ namespace SongsinkDL.Migrations
                     b.Property<int>("GameHistoryId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("PictureURL")
+                    b.Property<string>("PictureUrl")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GameHistoryId");
-
                     b.ToTable("GameHistoryPictures");
+                });
+
+            modelBuilder.Entity("SongsinkModel.Picture", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("PictureURL")
+                        .HasColumnType("text");
+
+                    b.Property<int>("PlayerId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Pictures");
                 });
 
             modelBuilder.Entity("SongsinkModel.Player", b =>
@@ -134,33 +152,12 @@ namespace SongsinkDL.Migrations
                     b.Property<string>("PlayerName")
                         .HasColumnType("text");
 
-                    b.Property<List<string>>("PlayerPictures")
-                        .HasColumnType("text[]");
-
                     b.Property<int>("PlayerScore")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
                     b.ToTable("Players");
-                });
-
-            modelBuilder.Entity("SongsinkModel.PlayerPicture", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("PictureURL")
-                        .HasColumnType("text");
-
-                    b.Property<int>("PlayerId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PlayerPictures");
                 });
 
             modelBuilder.Entity("SongsinkModel.Song", b =>
@@ -201,15 +198,6 @@ namespace SongsinkDL.Migrations
                     b.ToTable("Words");
                 });
 
-            modelBuilder.Entity("SongsinkModel.GameHistoryPicture", b =>
-                {
-                    b.HasOne("SongsinkModel.GameHistory", null)
-                        .WithMany("PictureURLModel")
-                        .HasForeignKey("GameHistoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("SongsinkModel.Word", b =>
                 {
                     b.HasOne("SongsinkModel.Category", null)
@@ -222,11 +210,6 @@ namespace SongsinkDL.Migrations
             modelBuilder.Entity("SongsinkModel.Category", b =>
                 {
                     b.Navigation("Words");
-                });
-
-            modelBuilder.Entity("SongsinkModel.GameHistory", b =>
-                {
-                    b.Navigation("PictureURLModel");
                 });
 #pragma warning restore 612, 618
         }
