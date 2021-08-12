@@ -49,7 +49,7 @@ namespace SongsinkWebApi
                     builder.AddDefaultPolicy(
                         (policy) =>
                         {
-                            policy.WithOrigins("http://127.0.0.1:4200", "https://songsink.azurewebsites.net/")
+                            policy.WithOrigins("http://127.0.0.1:4200","https://songsink.azurewebsites.net")
                             .AllowAnyHeader()
                             .AllowAnyMethod();
                         }
