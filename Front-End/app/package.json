@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng -version",
+    "build": "npm install -g @angular/cli@latest &&npm run config && ng build --prod",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "db": "json-server --watch ./src/app/tools/db.json",
