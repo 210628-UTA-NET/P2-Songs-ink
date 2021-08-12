@@ -7,14 +7,14 @@ import { Profile } from '../models/Profile';
   providedIn: 'root'
 })
 export class ProfileService {
-  //private url = "https://songsinkbackend.azurewebsites.net/api/Main/";
-  private url = "http://localhost:3000/profiles/";
+  private url = "https://songsinkbackend.azurewebsites.net/api/Main/";
+  //private url = "http://localhost:3000/profiles/";
   constructor(private http: HttpClient) { }
 
   getUserInfo(userEmail: string) : Observable<Profile>
   {
-    // return this.http.get<Profile>(`${this.url}getAPlayer/${userEmail}`);
-    return this.http.get<Profile>(`${this.url}1`);
+    return this.http.get<Profile>(`${this.url}getAPlayer/${userEmail}`);
+    //return this.http.get<Profile>(`${this.url}1`);
   }
   addPlayerProfile(newPlayerProfile: Profile) : Observable<Profile>
   {
@@ -22,7 +22,7 @@ export class ProfileService {
   }
   updatePlayerProfile(playerProfile: Profile): Observable<Profile>
   {
-    //return this.http.put<Profile>(this.url+"updatePlayer",playerProfile);
-    return this.http.put<Profile>(this.url+"1",playerProfile);
+    return this.http.put<Profile>(this.url+"updatePlayer",playerProfile);
+    //return this.http.put<Profile>(this.url+"1",playerProfile);
   }
 }
