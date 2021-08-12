@@ -23,9 +23,32 @@ namespace SongsinkBL
             return await _repo.GetAllWords();
         }
 
+        public async Task<Word> GetAWord(int p_wordId)
+        {
+            return await _repo.GetAWord(p_wordId);
+        }
+
         public async Task<List<Word>> GetAllWordsOfACategory(int p_categoryId)
         {
             return await _repo.GetAllWordsOfACategory(p_categoryId);
+        }
+
+        public async Task<List<Word>> Get4RandomWordsOfACategory(int p_categoryId)
+        {
+            List<Word> words = await this.GetAllWordsOfACategory(p_categoryId);
+            List<Word> randomWords = new List<Word>();
+            Random rnd = new Random();
+
+            while(randomWords.Count != 4)
+            {
+                int index = rnd.Next(words.Count);
+                if (!randomWords.Contains(words[index]))
+                {
+                    randomWords.Add(words[index]);
+                }
+            }
+
+            return randomWords;
         }
 
         public async Task<Song> GetASong(int p_songId)
@@ -47,6 +70,15 @@ namespace SongsinkBL
             return await _repo.AddGameHistory(p_gameHistory);
         }
 
+        public async Task<GameHistory> GetGameHistory(int p_ghId)
+        {
+            GameHistory found = await _repo.GetGameHistory(p_ghId);
+            if (found == null)
+            {
+                throw new Exception("GameHistory Not Found");
+            }
+            return found;
+        }
         public async Task<Player> GetAPlayer(string p_email)
         {
             Player found = await _repo.GetAPlayer(p_email);
@@ -81,5 +113,6 @@ namespace SongsinkBL
             }
             return found;
         }
+
     }
 }
