@@ -7,7 +7,7 @@
     "build": "npm install -g @angular/cli@latest &&npm run config && ng build --prod",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "db": "json-server --watch ./src/app/tools/db.json",
+    "db": "json-server --watch ./src/app/tools/db.json --port 3004",
     "config": "ts-node -O '{\"module\": \"commonjs\"}' ./scripts/config.index.ts",
     "calebdb": "json-server --watch ./src/app/tools/calebdb.json"
   },
