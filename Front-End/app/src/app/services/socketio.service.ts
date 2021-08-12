@@ -45,8 +45,15 @@ export class SocketIoService {
     })
   }
 
-  addRoom() {
-    this.socket.emit('addRoom', this.roomId());
+  // getRooms() {
+  //   this.socket.on('room', (room: string) => {
+  //     this.rooms$.next(room);
+  //   });
+  //   return this.rooms$.asObservable();
+  // }
+
+  addRoom(chosenCategory: string) {
+    this.socket.emit('addRoom', { room: this.roomId(), category: chosenCategory });
     
   }
   setUpRoomList() {
