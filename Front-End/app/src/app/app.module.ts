@@ -90,7 +90,7 @@ import { environment } from 'src/environments/environment';
     MatDialogModule,
     CommonModule
   ],
-  providers: [SocketIoService],
+  providers: [SocketIoService, ProfileComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
