@@ -118,12 +118,15 @@ io.on('connection', (socket) => {
   }
 
 
-  socket.on('addRoom', room => {
-      rooms.push(room);
-      console.log(room + " Created");
-      chatMap.set(room, [room+" Created"]);
-      // drawMap.set(room,["a"]);
-      io.emit("room list", rooms);
+  socket.on('addRoom', data => {
+    let category = data.category;
+    console.log("Chosen Category: " + category);
+    let room = data.room;
+    rooms.push(room);
+    console.log(room + " Created");
+    chatMap.set(room, [room+" Created"]);
+    // drawMap.set(room,["a"]);
+    io.emit("room list", rooms);
   })
 
   io.emit("room list", rooms);
