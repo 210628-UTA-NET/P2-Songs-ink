@@ -33,6 +33,11 @@ namespace SongsinkBL
             return await _repo.GetAllWordsOfACategory(p_categoryId);
         }
 
+        public async Task<List<Word>> GetAllWordsOfACategory(string p_categoryName)
+        {
+            return await _repo.GetAllWordsOfACategory(p_categoryName);
+        }
+
         public async Task<List<Word>> Get4RandomWordsOfACategory(int p_categoryId)
         {
             List<Word> words = await this.GetAllWordsOfACategory(p_categoryId);
@@ -40,6 +45,24 @@ namespace SongsinkBL
             Random rnd = new Random();
 
             while(randomWords.Count != 4)
+            {
+                int index = rnd.Next(words.Count);
+                if (!randomWords.Contains(words[index]))
+                {
+                    randomWords.Add(words[index]);
+                }
+            }
+
+            return randomWords;
+        }
+
+        public async Task<List<Word>> Get4RandomWordsOfACategory(string p_categoryName)
+        {
+            List<Word> words = await this.GetAllWordsOfACategory(p_categoryName);
+            List<Word> randomWords = new List<Word>();
+            Random rnd = new Random();
+
+            while (randomWords.Count != 4)
             {
                 int index = rnd.Next(words.Count);
                 if (!randomWords.Contains(words[index]))

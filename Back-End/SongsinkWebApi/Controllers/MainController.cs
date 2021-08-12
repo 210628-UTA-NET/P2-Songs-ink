@@ -39,10 +39,16 @@ namespace SongsinkWebApi.Controllers
             return Ok(await _BL.GetAllWordsOfACategory(p_categoryId));
         }
 
-        [HttpGet("get4RandomWordsOfACategory/{p_categoryId}")]
-        public async Task<IActionResult> Get4RandomWordsOfACategory(int p_categoryId)
+        [HttpGet("get4RandomWordsOfACategoryWithCategoryId/{p_categoryId}")]
+        public async Task<IActionResult> Get4RandomWordsOfACategoryWithCategoryId(int p_categoryId)
         {
             return Ok(await _BL.Get4RandomWordsOfACategory(p_categoryId));
+        }
+
+        [HttpGet("get4RandomWordsOfACategoryWithCategoryName/{p_categoryName}")]
+        public async Task<IActionResult> Get4RandomWordsOfACategoryWithCategoryName(string p_categoryName)
+        {
+            return Ok(await _BL.Get4RandomWordsOfACategory(p_categoryName));
         }
 
         [HttpGet("getASong/{p_songId}")]

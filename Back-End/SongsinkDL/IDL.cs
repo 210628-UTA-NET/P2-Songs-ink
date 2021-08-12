@@ -33,6 +33,12 @@ namespace SongsinkDL
         /// <returns></returns>
         Task<List<Word>> GetAllWordsOfACategory(int p_categoryId);
 
+        /// <summary>
+        /// Get All Words Of A Specific Category DB-Words
+        /// </summary>
+        /// <param name="p_categoryName"></param>
+        /// <returns></returns>
+        Task<List<Word>> GetAllWordsOfACategory(string p_categoryName);
 
         /// <summary>
         /// Get A Song Url Using Its Id DB-Songs

@@ -34,11 +34,25 @@ namespace SongsinkBL
         Task<List<Word>> GetAllWordsOfACategory(int p_categoryId);
 
         /// <summary>
+        /// Get All Words Of A Specific Category DB-Words
+        /// </summary>
+        /// <param name="p_categoryName"></param>
+        /// <returns></returns>
+        Task<List<Word>> GetAllWordsOfACategory(string p_categoryName);
+
+        /// <summary>
         /// Get 4 random words of a category from DB-Words
         /// </summary>
         /// <param name="p_categoryId"></param>
         /// <returns></returns>
         Task<List<Word>> Get4RandomWordsOfACategory(int p_categoryId);
+
+        /// <summary>
+        /// Get 4 random words of a category from DB-Words
+        /// </summary>
+        /// <param name="p_categoryName"></param>
+        /// <returns></returns>
+        Task<List<Word>> Get4RandomWordsOfACategory(string p_categoryName);
 
         /// <summary>
         /// Get A Song Url Using Its Id DB-Songs
