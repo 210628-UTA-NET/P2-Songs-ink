@@ -39,6 +39,18 @@ namespace SongsinkWebApi.Controllers
             return Ok(await _BL.GetAllWordsOfACategory(p_categoryId));
         }
 
+        [HttpGet("get4RandomWordsOfACategoryWithCategoryId/{p_categoryId}")]
+        public async Task<IActionResult> Get4RandomWordsOfACategoryWithCategoryId(int p_categoryId)
+        {
+            return Ok(await _BL.Get4RandomWordsOfACategory(p_categoryId));
+        }
+
+        [HttpGet("get4RandomWordsOfACategoryWithCategoryName/{p_categoryName}")]
+        public async Task<IActionResult> Get4RandomWordsOfACategoryWithCategoryName(string p_categoryName)
+        {
+            return Ok(await _BL.Get4RandomWordsOfACategory(p_categoryName));
+        }
+
         [HttpGet("getASong/{p_songId}")]
         public async Task<IActionResult> GetASong(int p_songId)
         {
@@ -55,6 +67,12 @@ namespace SongsinkWebApi.Controllers
         public async Task<IActionResult> AddGameHistory([FromBody] GameHistory p_gameHistory)
         {
             return  Created("api/Main/addGameHistory", await _BL.AddGameHistory(p_gameHistory));
+        }
+
+        [HttpGet("getGameHistory/{p_ghId}")]
+        public async Task<IActionResult> GetGameHistory(int p_ghId)
+        {
+            return Ok(await _BL.GetGameHistory(p_ghId));
         }
 
         [HttpGet("getAPlayerWithId/{p_id}")]

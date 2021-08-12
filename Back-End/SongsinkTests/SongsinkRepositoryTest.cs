@@ -331,23 +331,23 @@ namespace SongsinkTests
                 };
 
                 
-                Picture pic1 = new Picture()
+                PlayerPicture pic1 = new PlayerPicture()
                 {
                     Id = 1,
                     PictureURL = "https://SongStorage.com/picturelist/picture1",
               
                 };
-                Picture pic2 = new Picture()
+                PlayerPicture pic2 = new PlayerPicture()
                 {
                     Id = 2,
                     PictureURL = "https://SongStorage.com/picturelist/picture2",
                 };
-                Picture pic3 = new Picture()
+                PlayerPicture pic3 = new PlayerPicture()
                 {
                     Id = 3,
                     PictureURL = "https://SongStorage.com/picturelist/picture3",
                 };
-                Picture pic4 = new Picture()
+                PlayerPicture pic4 = new PlayerPicture()
                 {
                     Id = 4,
                     PictureURL = "https://SongStorage.com/picturelist/picture4",
@@ -360,7 +360,7 @@ namespace SongsinkTests
                     CurrentScore = 875,
                     GamesPlayed = 10,
                     Email = "player1@gmail.com",
-                    CustomWords = {"dog", "cat"}
+                    //CustomWords = {"dog", "cat"}
                     //Password = "0384174",
                     //Salt = "9043vnsjoig",
                     //PlayerCategory = catplayer1,
@@ -377,7 +377,7 @@ namespace SongsinkTests
                     CurrentScore = 120,
                     GamesPlayed = 15,
                     Email = "player2@gmail.com",
-                    CustomWords = {"rabbit", "dragon"}
+                    //CustomWords = {"rabbit", "dragon"}
                     //Password = "charlie",
                     //Salt = "93jfjvxoiv",
                     //PlayerCategory = catplayer2,
@@ -387,11 +387,11 @@ namespace SongsinkTests
 
                 };
 
-                context.Categories.AddRange(cat1, cat2, cat3, cat4, catplayer1);
-                context.Words.AddRange(word1, word2, word3, word4, word5, word6, word7, word8);
-                context.Songs.AddRange(song1, song2, song3, song4, song5, song6, song7, song8);
-                context.Pictures.AddRange(pic1, pic2, pic3, pic4);
-                context.Players.AddRange(player1, player2);
+                //context.Categories.AddRange(cat1, cat2, cat3, cat4, catplayer1);
+                //context.Words.AddRange(word1, word2, word3, word4, word5, word6, word7, word8);
+                //context.Songs.AddRange(song1, song2, song3, song4, song5, song6, song7, song8);
+                //context.Pictures.AddRange(pic1, pic2, pic3, pic4);
+                //context.Players.AddRange(player1, player2);
 
                 context.SaveChanges();
             }

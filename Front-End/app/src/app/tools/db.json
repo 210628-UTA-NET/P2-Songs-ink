@@ -1,4 +1,25 @@
 {
+    "categories":
+    [
+        {
+            "name": "animals"
+        },
+        {
+            "name": "holidays"
+        },
+        {
+            "name": "pirates"
+        },
+        {
+            "name": "sci-fi"
+        },
+        {
+            "name": "fantasy"
+        },
+        {
+            "name": "movies"
+        }
+    ],
     "words": 
     [
         {

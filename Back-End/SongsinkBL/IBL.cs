@@ -20,11 +20,39 @@ namespace SongsinkBL
         Task<List<Word>> GetAllWords();
 
         /// <summary>
+        /// Get A Word from DB-Words
+        /// </summary>
+        /// <param name="p_wordId"></param>
+        /// <returns></returns>
+        Task<Word> GetAWord(int p_wordId);
+
+        /// <summary>
         /// Get All Words Of A Specific Category DB-Words
         /// </summary>
         /// <param name="p_categoryId"></param>
         /// <returns></returns>
         Task<List<Word>> GetAllWordsOfACategory(int p_categoryId);
+
+        /// <summary>
+        /// Get All Words Of A Specific Category DB-Words
+        /// </summary>
+        /// <param name="p_categoryName"></param>
+        /// <returns></returns>
+        Task<List<Word>> GetAllWordsOfACategory(string p_categoryName);
+
+        /// <summary>
+        /// Get 4 random words of a category from DB-Words
+        /// </summary>
+        /// <param name="p_categoryId"></param>
+        /// <returns></returns>
+        Task<List<Word>> Get4RandomWordsOfACategory(int p_categoryId);
+
+        /// <summary>
+        /// Get 4 random words of a category from DB-Words
+        /// </summary>
+        /// <param name="p_categoryName"></param>
+        /// <returns></returns>
+        Task<List<Word>> Get4RandomWordsOfACategory(string p_categoryName);
 
         /// <summary>
         /// Get A Song Url Using Its Id DB-Songs
@@ -46,6 +74,13 @@ namespace SongsinkBL
         /// </summary>
         /// <returns></returns>
         Task<GameHistory> AddGameHistory(GameHistory p_gameHistory);
+
+        /// <summary>
+        /// Get a game history from DB-GameHistories
+        /// </summary>
+        /// <param name="p_ghId"></param>
+        /// <returns></returns>
+        Task<GameHistory> GetGameHistory(int p_ghId);
 
         /// <summary>
         /// Get player from DB-Players

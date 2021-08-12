@@ -4,6 +4,7 @@ import { Socket } from 'ngx-socket-io';
 import { Word } from 'src/app/models/Word';
 import { ChooseWordService } from 'src/app/services/choose-word.service';
 import { SocketIoService } from 'src/app/services/socketio.service';
+import { TimerComponent } from '../timer/timer.component';
 
 @Component({
   selector: 'app-choose-word',
@@ -40,7 +41,7 @@ export class ChooseWordComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       this.chosenWord.name = result;
       this.socket.emit('setWord', {name: this.chosenWord.name, category: this.category});
-      this.socketService.StartTimer();
+      this.socketService.StartRound();
     });
   }
 

@@ -23,7 +23,7 @@ import { SocketIoService } from './services/socketio.service';
 import {MatTableModule} from '@angular/material/table'; 
 // import { SocketioService } from './services/socketio.service';
 import { ChatComponent } from './components/chat/chat.component';
-import { RoomListComponent } from './components/room-list/room-list.component';
+import { RoomListComponent, ChooseCategoryDialogComponent } from './components/room-list/room-list.component';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { LobbyComponent } from './components/lobby/lobby.component';
 import { LoginComponent } from './components/login/login.component';
@@ -62,7 +62,8 @@ import { JukeboxComponent } from './components/jukebox/jukebox.component';
     WordComponent,
     ChooseWordComponent,
     ChooseWordDialogComponent,
-    TimerComponent
+    TimerComponent,
+    ChooseCategoryDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -93,7 +94,7 @@ import { JukeboxComponent } from './components/jukebox/jukebox.component';
     MatDialogModule,
     CommonModule
   ],
-  providers: [SocketIoService],
+  providers: [SocketIoService, ProfileComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
