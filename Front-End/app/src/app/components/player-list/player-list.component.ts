@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 
 import { Player } from 'src/app/models/Player';
 import { PlayerListService } from 'src/app/services/player-list.service';
 import { SocketIoService } from 'src/app/services/socketio.service';
-import {MatTableModule} from '@angular/material/table';
+import {MatTableDataSource, MatTableModule} from '@angular/material/table';
+import { stringify } from '@angular/compiler/src/util';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-player-list',
@@ -12,14 +14,12 @@ import {MatTableModule} from '@angular/material/table';
 })
  export class PlayerListComponent implements OnInit {
  
-  players: string[] = [];
-  scores: number[] = [];
-  playerlist:Player[]=[];
+  playerlist:Player[];
+  private _roomsub: Subscription;
   
 
-  displayedColumns = ['name', 'score'];
+  displayedColumns = ['gamename', 'score'];
  
-
 
 
   // constructor(private playerService: PlayerListService) { }
@@ -27,17 +27,8 @@ import {MatTableModule} from '@angular/material/table';
 
   ngOnInit(): void {
     // this.playerService.getPlayers().subscribe((players) => (this.players = players));
-    this.socketService.usersInRoom.subscribe(list => this.players=list);
-    this.socketService.scores.subscribe(list=>this.scores=list);
-    let count = 0;
-    for (var i in this.players) {
-      console.log(this.playerlist[count])
-      this.playerlist[count]={
-        name:this.players[count],
-        score:0
-      }
-      count++;
-    }
+    this._roomsub=this.socketService.usersInRoom.subscribe(players => this.playerlist=players);
+    // this.playerlist=[this.socketService.SetTest()];
   }
 
 }

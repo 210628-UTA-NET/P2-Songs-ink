@@ -45,7 +45,6 @@ export class ChatComponent implements OnInit, OnDestroy {
       this._roomsub = this.socketService.newMessage.subscribe((message:string)=> {
         this.chatlines.unshift(message);
       })
-      
 
   }
 
