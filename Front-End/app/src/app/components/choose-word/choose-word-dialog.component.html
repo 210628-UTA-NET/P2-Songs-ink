@@ -1,7 +1,4 @@
-<!-- <div mat-dialog-actions *ngFor="let word of data">
-    <button mat-button> {{word.name}} </button>
-</div> -->
-<div *ngFor='let word of data'>
-    <label> {{word.category }} </label>
-    <button mat-button> {{word.name}} </button>
+<h1> {{data.category}} </h1>
+<div *ngFor='let word of data.words'>
+    <button mat-button [mat-dialog-close]="word.name"> {{word.name}} </button>
 </div>
