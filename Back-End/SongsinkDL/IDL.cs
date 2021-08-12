@@ -20,11 +20,19 @@ namespace SongsinkDL
         Task<List<Word>> GetAllWords();
 
         /// <summary>
+        /// Get A Word from DB-Words
+        /// </summary>
+        /// <param name="p_wordId"></param>
+        /// <returns></returns>
+        Task<Word> GetAWord(int p_wordId);
+
+        /// <summary>
         /// Get All Words Of A Specific Category DB-Words
         /// </summary>
         /// <param name="p_categoryId"></param>
         /// <returns></returns>
         Task<List<Word>> GetAllWordsOfACategory(int p_categoryId);
+
 
         /// <summary>
         /// Get A Song Url Using Its Id DB-Songs
@@ -47,12 +55,12 @@ namespace SongsinkDL
         /// <returns></returns>
         Task<GameHistory> AddGameHistory(GameHistory p_gameHistory);
 
-
-        ///// <summary>
-        ///// Adds a player to the database
-        ///// </summary>
-        ///// <param name="p_player">Player to add to the database</param>
-        //Task AddPlayer(Player p_player);
+        /// <summary>
+        /// Get a game history from DB-GameHistories
+        /// </summary>
+        /// <param name="p_ghId"></param>
+        /// <returns></returns>
+        Task<GameHistory> GetGameHistory(int p_ghId);
 
         /// <summary>
         /// Get A Player from DB-Players

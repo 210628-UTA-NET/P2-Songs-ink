@@ -9,18 +9,19 @@ namespace SongsinkDL
     {
 
         public DbSet<Category> Categories { get; set; }
-        public DbSet<Picture> Pictures { get; set; }
+        public DbSet<PlayerPicture> PlayerPictures { get; set; }
         public DbSet<Player> Players { get; set; }
         public DbSet<Song> Songs { get; set; }
         public DbSet<Word> Words { get; set; }
         public DbSet<GameHistory> GameHistories { get; set; }
+        public DbSet<GameHistoryPicture> GameHistoryPictures { get; set; }
         public DbSet<CustomCategory> CustomCategories { get; set; }
         public DbSet<CustomWord> CustomWords { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder p_options)
-        {
-            p_options.UseNpgsql(@"Server=hansken.db.elephantsql.com;Database=nxackagz;User ID=nxackagz;Password=5kbgSpXPnnXuypCmL7HRA_3Jm_w4sOkJ;Port=5432");
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder p_options)
+        //{
+        //    p_options.UseNpgsql(@"Server=hansken.db.elephantsql.com;Database=nxackagz;User ID=nxackagz;Password=5kbgSpXPnnXuypCmL7HRA_3Jm_w4sOkJ;Port=5432");
+        //}
 
         public SIDbContext() : base()
         { }
@@ -37,11 +38,11 @@ namespace SongsinkDL
             p_modelBuilder.Entity<Category>()
                 .HasKey(cat => cat.Id);
 
-            p_modelBuilder.Entity<Picture>()
+            p_modelBuilder.Entity<PlayerPicture>()
                 .Property(pic => pic.Id)
                 .ValueGeneratedOnAdd();
 
-            p_modelBuilder.Entity<Picture>()
+            p_modelBuilder.Entity<PlayerPicture>()
                 .HasKey(pic => pic.Id);
 
             p_modelBuilder.Entity<Player>()
@@ -65,13 +66,12 @@ namespace SongsinkDL
             p_modelBuilder.Entity<Word>()
                 .HasKey(wrd => wrd.Id);
 
-            //p_modelBuilder.Entity<Player>()
-            //    .HasOne(play => play.ProfileImg)
-            //    .WithMany(pic => pic.PlayerPicture)
-            //    .HasForeignKey(play => play.ProfileImgID);
-
             p_modelBuilder.Entity<GameHistory>()
                 .Property(gh => gh.Id)
+                .ValueGeneratedOnAdd();
+
+            p_modelBuilder.Entity<GameHistoryPicture>()
+                .Property(ghp => ghp.Id)
                 .ValueGeneratedOnAdd();
 
             p_modelBuilder.Entity<CustomCategory>()
