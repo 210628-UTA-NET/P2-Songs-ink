@@ -31,23 +31,14 @@ export class ProfileComponent implements OnInit {
     this.auth.user$.subscribe(
       (response) => {
         this.currentPlayer.email = response?.email;
-        this.tempName=response?.nickname; // should always be defined 
-        this.getUserInfo(this.currentPlayer.email!); 
+        this.tempName = response?.nickname; // should always be defined 
+        this.getUserInfo(this.currentPlayer.email!);
 
-        // if the id is 0 then the profile doesnt exist so it is made
-        if(this.currentPlayer.id == 0)
-        {
-          this.currentPlayer.playerName=this.tempName;
-          this.profApi.addPlayerProfile(this.currentPlayer).subscribe(
-            (response) => {
-              this.currentPlayer.id = response.id;
-            }
-          );
-        }
+
       }
     );
 
-    
+
 
   }
   getUserInfo(p_email: string) {
@@ -59,45 +50,53 @@ export class ProfileComponent implements OnInit {
         this.currentPlayer.currentScore = response.currentScore;
         this.currentPlayer.playerScore = response.playerScore;
         this.currentPlayer.customWords = response.customWords;
-      }
+      }, (error) => {
+        //If the backend is unable to find the profile from the email then
+        //it throws an error, when it does it creates the player profile
+      this.currentPlayer.playerName = this.tempName;
+      this.profApi.addPlayerProfile(this.currentPlayer).subscribe(
+        (response) => {
+          this.currentPlayer.id = response.id;
+        }
+      );
+    }
+
+
+
+
     );
   }
   // I think having the parameter is irrelevant since the current profile is the only
   // one being updated but Ill leave it like this.
-  updatePlayerProfile(profile: Profile) { 
+  updatePlayerProfile(profile: Profile) {
     this.profApi.updatePlayerProfile(profile).subscribe();
   }
 
-  addWord(){
-    if(this.currentPlayer.currentScore < Math.abs(this.wordAddCost))
-    {
+  addWord() {
+    if (this.currentPlayer.currentScore < Math.abs(this.wordAddCost)) {
       alert("You do not have enough points to add a word");
       return;
     }
-    if(!this.newWord)
-    {
+    if (!this.newWord) {
       alert("Please enter a word");
       return;
     }
-    
+
     this.currentPlayer.customWords.push(this.newWord);
     this.currentPlayer.currentScore += this.wordAddCost;
     this.newWord = "";
     this.updatePlayerProfile(this.currentPlayer);
   }
-  removeWord(wordToRemove: string)
-  {
+  removeWord(wordToRemove: string) {
     let index = this.currentPlayer.customWords.indexOf(wordToRemove);
     if (index > -1) // if index is >= to len of arr then it is -1 
     {
-      this.currentPlayer.customWords.splice(index,1); //removes the word to be removed
+      this.currentPlayer.customWords.splice(index, 1); //removes the word to be removed
     }
     this.updatePlayerProfile(this.currentPlayer); //update player profile with new list
   }
-  changeUserName()
-  {
-    if(!this.newName || this.newName==this.currentPlayer.playerName)
-    {
+  changeUserName() {
+    if (!this.newName || this.newName == this.currentPlayer.playerName) {
       alert("Please enter a new usename");
       return;
     }
