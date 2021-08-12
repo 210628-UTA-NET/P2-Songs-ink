@@ -26,9 +26,9 @@ export class ProfileComponent implements OnInit {
   newWord: string;
   newName: string = "";
   wordAddCost: number = -100;
-  
 
-  constructor(private profApi: ProfileService, public auth: AuthService, private socketService:SocketIoService) { }
+
+  constructor(private profApi: ProfileService, public auth: AuthService, private socketService: SocketIoService) { }
 
   ngOnInit(): void {
     // on startup get the profile from the data base
@@ -37,20 +37,12 @@ export class ProfileComponent implements OnInit {
         this.currentPlayer.email = response?.email;
         this.tempName = response?.nickname; // should always be defined 
         this.getUserInfo(this.currentPlayer.email!);
-
-
       }
-
     );
-    if(this.currentPlayer.playerName){
-    this.socketService.SetUsername(this.currentPlayer.playerName)
-    }
-      
-
 
   }
 
-  
+
   getUserInfo(p_email: string) {
     this.profApi.getUserInfo(p_email).subscribe(
       (response) => {
@@ -60,22 +52,19 @@ export class ProfileComponent implements OnInit {
         this.currentPlayer.currentScore = response.currentScore;
         this.currentPlayer.playerScore = response.playerScore;
         this.currentPlayer.customWords = response.customWords;
-        if(response.playerName){
-        this.socketService.SetUsername(response.playerName)}
+        if (response.playerName) {
+          this.socketService.SetUsername(response.playerName)
+        }
       }, (error) => {
         //If the backend is unable to find the profile from the email then
         //it throws an error, when it does it creates the player profile
-      this.currentPlayer.playerName = this.tempName;
-      this.profApi.addPlayerProfile(this.currentPlayer).subscribe(
-        (response) => {
-          this.currentPlayer.id = response.id;
-        }
-      );
-    }
-
-
-
-
+        this.currentPlayer.playerName = this.tempName;
+        this.profApi.addPlayerProfile(this.currentPlayer).subscribe(
+          (response) => {
+            this.currentPlayer.id = response.id;
+          }
+        );
+      }
     );
   }
   // I think having the parameter is irrelevant since the current profile is the only
@@ -93,29 +82,60 @@ export class ProfileComponent implements OnInit {
       alert("Please enter a word");
       return;
     }
+    this.profApi.getUserInfo(this.currentPlayer.email!).subscribe(
+      (response) => {
+        this.currentPlayer.id = response.id;
+        this.currentPlayer.playerName = response.playerName;
+        this.currentPlayer.gamesPlayed = response.gamesPlayed;
+        this.currentPlayer.currentScore = response.currentScore;
+        this.currentPlayer.playerScore = response.playerScore;
+        this.currentPlayer.customWords = response.customWords;
 
-    this.currentPlayer.customWords.push(this.newWord);
-    this.currentPlayer.currentScore += this.wordAddCost;
-    this.newWord = "";
-    this.updatePlayerProfile(this.currentPlayer);
+        this.currentPlayer.customWords.push(this.newWord);
+        this.currentPlayer.currentScore += this.wordAddCost;
+        this.newWord = "";
+        this.updatePlayerProfile(this.currentPlayer);
+      });
+
   }
   removeWord(wordToRemove: string) {
-    let index = this.currentPlayer.customWords.indexOf(wordToRemove);
-    if (index > -1) // if index is >= to len of arr then it is -1 
-    {
-      this.currentPlayer.customWords.splice(index, 1); //removes the word to be removed
-    }
-    this.updatePlayerProfile(this.currentPlayer); //update player profile with new list
+
+
+    this.profApi.getUserInfo(this.currentPlayer.email!).subscribe(
+      (response) => {
+        this.currentPlayer.id = response.id;
+        this.currentPlayer.playerName = response.playerName;
+        this.currentPlayer.gamesPlayed = response.gamesPlayed;
+        this.currentPlayer.currentScore = response.currentScore;
+        this.currentPlayer.playerScore = response.playerScore;
+        this.currentPlayer.customWords = response.customWords;
+        let index = this.currentPlayer.customWords.indexOf(wordToRemove);
+        if (index > -1) // if index is >= to len of arr then it is -1 
+        {
+          this.currentPlayer.customWords.splice(index, 1); //removes the word to be removed
+        }
+        this.updatePlayerProfile(this.currentPlayer); //update player profile with new list
+      });
   }
   changeUserName() {
-    if (!this.newName || this.newName == this.currentPlayer.playerName) {
-      alert("Please enter a new usename");
-      return;
-    }
-    this.currentPlayer.playerName = this.newName;
-    this.socketService.SetUsername(this.currentPlayer.playerName);
-    this.updatePlayerProfile(this.currentPlayer);
-    this.newName = "";
+
+    this.profApi.getUserInfo(this.currentPlayer.email!).subscribe(
+      (response) => {
+        this.currentPlayer.id = response.id;
+        this.currentPlayer.playerName = response.playerName;
+        this.currentPlayer.gamesPlayed = response.gamesPlayed;
+        this.currentPlayer.currentScore = response.currentScore;
+        this.currentPlayer.playerScore = response.playerScore;
+        this.currentPlayer.customWords = response.customWords;
+        if (!this.newName || this.newName == this.currentPlayer.playerName) {
+          alert("Please enter a new usename");
+          return;
+        }
+        this.currentPlayer.playerName = this.newName;
+        this.socketService.SetUsername(this.currentPlayer.playerName);
+        this.updatePlayerProfile(this.currentPlayer);
+        this.newName = "";
+      });
   }
 
 }

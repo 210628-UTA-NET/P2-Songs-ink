@@ -12,18 +12,18 @@ import { User } from '@auth0/auth0-spa-js';
   styleUrls: ['./jukebox.component.css']
 })
 export class JukeboxComponent implements OnInit {
-  audioVolume:number = 0.05;
+  audioVolume: number = 0.05;
   Songs: Song[] = [];
   songUrl: string;
-  song1: string ="song1";
-  song2: string ="song2";
-  song3: string ="song3";
-  songIndex: number =1;
+  song1: string = "song1";
+  song2: string = "song2";
+  song3: string = "song3";
+  songIndex: number = 1;
   changeSongsCost: number = -10;
   skipSongCost: number = -25;
-  currentSongTime: number =0;
+  currentSongTime: number = 0;
   totalSongTime: number = 123;
-  currentPlayer: Profile= {
+  currentPlayer: Profile = {
     currentScore: 0,
     email: "",
     playerScore: 0,
@@ -36,23 +36,19 @@ export class JukeboxComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSongs();
-    if(this.auth.isAuthenticated$)
-    {
-      console.log("isloggedin")
+    if (this.auth.isAuthenticated$) {
       this.auth.user$.subscribe(
-        (response) =>{
+        (response) => {
           this.currentPlayer.email = response?.email;
           console.log(this.currentPlayer.email);
           this.getUserInfo(this.currentPlayer.email!);
-          console.log("does this fail");
           this.getSongs();
         }
       );
     }
   }
 
-  getSongs()
-  {
+  getSongs() {
     this.musicApi.getAllSongs().subscribe((response) => {
       this.Songs = response;
       //randomize list of songs with Durstenfeld shuffle
@@ -65,57 +61,69 @@ export class JukeboxComponent implements OnInit {
     this.profApi.getUserInfo(p_email).subscribe(
       (response) => {
         this.currentPlayer.id = response.id;
+        this.currentPlayer.playerName = response.playerName;
         this.currentPlayer.gamesPlayed = response.gamesPlayed;
         this.currentPlayer.currentScore = response.currentScore;
+        this.currentPlayer.playerScore = response.playerScore;
+        this.currentPlayer.customWords = response.customWords;
       });
   }
 
   updatePlayerProfile(profile: Profile) {
-    this.profApi.updatePlayerProfile(profile).subscribe(
-      (response) =>
-      { //after updating profile retrieve it
-        this.getUserInfo(this.currentPlayer.email!);
-      }
-    );
+    this.profApi.updatePlayerProfile(profile).subscribe();
   }
 
-  randomizeSongs()
-  {
-    
+  randomizeSongs() {
+
     for (let i = this.Songs.length - 1; i > 0; i--) {
       let j = Math.floor(Math.random() * (i + 1));
       [this.Songs[i], this.Songs[j]] = [this.Songs[j], this.Songs[i]];
     }
     this.nextSong();
   }
-  changeSongs()
-  {
-    this.getUserInfo(this.currentPlayer.email!);
-    if(this.currentPlayer.currentScore < Math.abs(this.changeSongsCost))
-    {
+  changeSongs() {
+    if (this.currentPlayer.currentScore < Math.abs(this.changeSongsCost)) {
       return;
     }
-    this.currentPlayer.currentScore += this.changeSongsCost;
-    this.updatePlayerProfile(this.currentPlayer);
-    this.randomizeSongs();
+    this.profApi.getUserInfo(this.currentPlayer.email!).subscribe(
+      (response) => {
+        this.currentPlayer.id = response.id;
+        this.currentPlayer.playerName = response.playerName;
+        this.currentPlayer.gamesPlayed = response.gamesPlayed;
+        this.currentPlayer.currentScore = response.currentScore;
+        this.currentPlayer.playerScore = response.playerScore;
+        this.currentPlayer.customWords = response.customWords;
+        this.currentPlayer.currentScore += this.changeSongsCost;
+        this.updatePlayerProfile(this.currentPlayer);
+        this.randomizeSongs();
+      }
+    );
   }
-  skipSong()
-  {
-    this.getUserInfo(this.currentPlayer.email!);
-    if(this.currentPlayer.currentScore < Math.abs(this.skipSongCost))
-    {
+
+  skipSong() {
+    if (this.currentPlayer.currentScore < Math.abs(this.skipSongCost)) {
       return;
     }
-    this.currentPlayer.currentScore += this.skipSongCost;
-    this.updatePlayerProfile(this.currentPlayer);
-    this.nextSong();
+    this.profApi.getUserInfo(this.currentPlayer.email!).subscribe(
+      (response) => {
+        this.currentPlayer.id = response.id;
+        this.currentPlayer.playerName = response.playerName;
+        this.currentPlayer.gamesPlayed = response.gamesPlayed;
+        this.currentPlayer.currentScore = response.currentScore;
+        this.currentPlayer.playerScore = response.playerScore;
+        this.currentPlayer.customWords = response.customWords;
+        this.currentPlayer.currentScore += this.skipSongCost;
+        this.updatePlayerProfile(this.currentPlayer);
+        this.nextSong();
+      });
+
   }
   nextSong() {
     //Shift the array is probably inefficient but its also easy
-    let temp = this.Songs.shift()! 
+    let temp = this.Songs.shift()!
     this.Songs.push(temp);
     let audio = <HTMLAudioElement>document.getElementById('audio');
-    
+
     this.song1 = this.Songs[0].songName;
     this.song2 = this.Songs[1].songName;
     this.song3 = this.Songs[2].songName;
@@ -124,15 +132,15 @@ export class JukeboxComponent implements OnInit {
     audio.load();
     audio.play();
   }
-  updateSongTime()
-  {
+  updateSongTime() {
     let audio = <HTMLAudioElement>document.getElementById('audio');
-    this.currentSongTime= audio.currentTime;
-    this.totalSongTime =audio.duration;
+    this.currentSongTime = audio.currentTime;
+    this.totalSongTime = audio.duration;
   }
 
-  onVolumeChange(e: any)
-  {
-    this.audioVolume = e.target.value /200;
+  onVolumeChange(e: any) {
+    this.audioVolume = e.target.value / 200;
+    let audio = <HTMLAudioElement>document.getElementById('audio');
+    audio.volume = this.audioVolume;
   }
 }

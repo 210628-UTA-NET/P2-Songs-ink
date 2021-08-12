@@ -9,7 +9,7 @@
             <p>Username: {{currentPlayer.playerName}}</p>
             <form (ngSubmit)="changeUserName()">
                 <div class="form-control">
-                    <label for="text">Update username</label>
+                    <label for="text">Update username: </label>
                     <input type="text" name="text" id="newName" [(ngModel)]="newName">
                     <input type="submit" value="Update" class="btn btn-primary">
                 </div>
