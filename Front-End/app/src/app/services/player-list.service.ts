@@ -14,7 +14,7 @@ const httpOptions = {
 })
 export class PlayerListService {
   
-  private apiURL = 'http://localhost:3000/players'
+  private apiURL = 'http://localhost:3004/players'
 
   constructor(private http: HttpClient) { }
 

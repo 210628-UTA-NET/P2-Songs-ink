@@ -10,7 +10,7 @@
             <a class="nav-link active" aria-current="page" routerLink = "/lobby">Lobby</a>
           </li>
           <li class="nav-item" >
-            <a class="nav-link active" aria-current="page" routerLink = "/profile" *ngIf="auth.isAuthenticated$ | async">Profile</a>
+            <a class="nav-link active" aria-current="page" routerLink = "/profile" routerLinkActive="active" *ngIf="auth.isAuthenticated$ | async">Profile</a>
           </li>
           <li class="nav-item">
             <app-login></app-login>
