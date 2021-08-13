@@ -1,5 +1,5 @@
 
-<table mat-table [dataSource]="playerlist">
+<table id="table" mat-table [dataSource]="playerlist">
 
   <ng-container matColumnDef="gamename">
     <th mat-header-cell *matHeaderCellDef> Name </th>
@@ -16,18 +16,4 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-
-
-<!-- <table>
-  <thead>
-    <th> Name </th>
-    <th> Score </th>
-  </thead>
-  <tbody>
-    <tr *ngFor = "let player of playerlist">
-    <td> {{player.name}} </td>
-    <td> {{player.score}} </td>
-  </tr>
-  </tbody>
-</table> -->
 

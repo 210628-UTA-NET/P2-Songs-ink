@@ -1,43 +1,57 @@
-<canvas id="drawing" style="pointer-events: all;"></canvas>
+<div id="canvas-element">
+    <canvas id="drawing" style="pointer-events: all;"></canvas>
+    <div id='draw-options'>
+        <mat-grid-list cols="2" rowHeight="2:1" id="draw-options-list">
+            <mat-grid-tile>
+                <input id="color-selector" type="color" [value]='lineColor'>
+            </mat-grid-tile>
 
-<input id="color-selector" type="color" [value]='lineColor'>
+            <mat-grid-tile>
+                <button (click)="changeColor('red')" mat-icon-button id="button-red">
+                    <mat-icon>palette</mat-icon>
+                </button>
+            
+                <button (click)="changeColor('blue')"mat-icon-button id="button-blue">
+                    <mat-icon>palette</mat-icon>
+                </button>
 
-<button (click)="changeColor('red')" mat-icon-button id="button-red">
-    <mat-icon>palette</mat-icon>
-</button>
+                <button (click)="changeColor('green')"mat-icon-button id="button-green">
+                    <mat-icon>palette</mat-icon>
+                </button>
 
-<button (click)="changeColor('blue')"mat-icon-button id="button-blue">
-    <mat-icon>palette</mat-icon>
-</button>
-
-<button (click)="changeColor('yellow')"mat-icon-button id="button-yellow">
-    <mat-icon>palette</mat-icon>
-</button>
-
-<button (click)="changeColor('green')"mat-icon-button id="button-green">
-    <mat-icon>palette</mat-icon>
-</button>
-
-<button (click)="changeColor('black')" mat-icon-button id="button-black">
-    <mat-icon>palette</mat-icon>
-</button>
-
-<button (click)="changeWidth('small')" mat-icon-button id="button-thickness-small">
-    <mat-icon id="brush-small">brush</mat-icon>
-</button>
-
-<button (click)="changeWidth('medium')" mat-icon-button id="button-thickness-medium">
-    <mat-icon id="brush-medium">brush</mat-icon>
-</button>
-
-<button (click)="changeWidth('large')" mat-icon-button id="button-thickness-large">
-    <mat-icon id="brush-large">brush</mat-icon>
-</button>
-
-<button (click)="Undo()" mat-icon-button id="button-thickness-medium">
-    <mat-icon>undo</mat-icon>
-</button>
-
-<button (click)="Clear()" mat-icon-button id="button-clear">
-    <mat-icon>clear</mat-icon>
-</button>
+                <button (click)="changeColor('yellow')"mat-icon-button id="button-yellow">
+                    <mat-icon>palette</mat-icon>
+                </button>
+                <button (click)="changeColor('brown')"mat-icon-button id="button-brown">
+                    <mat-icon>palette</mat-icon>
+                </button>    
+                
+                <button (click)="changeColor('black')" mat-icon-button id="button-black">
+                    <mat-icon>palette</mat-icon>
+                </button>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <button (click)="changeWidth('small')" mat-icon-button id="button-thickness-small">
+                    <mat-icon id="brush-small">brush</mat-icon>
+                </button>
+            
+                <button (click)="changeWidth('medium')" mat-icon-button id="button-thickness-medium">
+                    <mat-icon id="brush-medium">brush</mat-icon>
+                </button>
+            
+                <button (click)="changeWidth('large')" mat-icon-button id="button-thickness-large">
+                    <mat-icon id="brush-large">brush</mat-icon>
+                </button>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <button (click)="Undo()" mat-icon-button id="button-thickness-medium">
+                    <mat-icon>undo</mat-icon>
+                </button>
+            
+                <button (click)="Clear()" mat-icon-button id="button-clear">
+                    <mat-icon>clear</mat-icon>
+                </button>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </div>
+</div>

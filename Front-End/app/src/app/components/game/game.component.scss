@@ -1,26 +1,27 @@
 // The margin between two sections
 @import '../../mat-vars';
 
-.container {
+
+#wrapper {
     display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-}
-.player-list-content {
-    flex-basis: 100px;
-    padding: 0px;
-}
- .player-chat-content {
-     padding: 0px;
-    flex-basis: 200px;
-
-}
-.canvas-content {
-    padding: 0px;
-   flex-basis: 800px;
-   height: 700px;
-   
-
+    margin-top: 50px;
+    margin-left: 100px;
 }
 
+#item {
+    padding-right: 50px;
+    padding-left: 50px;
+}
+
+#word-wrapper {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#app-chat {
+    padding-left: 25px;
+}
+#player-list {
+    width: 100px;
+}
 
