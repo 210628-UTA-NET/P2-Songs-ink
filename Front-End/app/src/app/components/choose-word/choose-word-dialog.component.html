@@ -1,4 +1,4 @@
-<h1> {{data.category}} </h1>
-<div *ngFor='let word of data.words'>
-    <button mat-button [mat-dialog-close]="word.name"> {{word.name}} </button>
+<h1> Words </h1>
+<div *ngFor='let word of data'>
+    <button mat-button [mat-dialog-close]="word"> {{word}} </button>
 </div>
