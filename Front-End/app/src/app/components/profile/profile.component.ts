@@ -60,9 +60,13 @@ export class ProfileComponent implements OnInit {
         //If the backend is unable to find the profile from the email then
         //it throws an error, when it does it creates the player profile
         this.currentPlayer.playerName = this.tempName;
+        
         this.profApi.addPlayerProfile(this.currentPlayer).subscribe(
           (response) => {
             this.currentPlayer.id = response.id;
+            if (response.playerName) {
+              this.socketService.SetUsername(this.tempName!)
+            }
           }
         );
       }

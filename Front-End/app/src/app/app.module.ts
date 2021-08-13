@@ -21,6 +21,7 @@ import {MatIconModule} from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { SocketIoService } from './services/socketio.service';
 import {MatTableModule} from '@angular/material/table'; 
+import {MatGridListModule} from '@angular/material/grid-list'; 
 // import { SocketioService } from './services/socketio.service';
 import { ChatComponent } from './components/chat/chat.component';
 import { RoomListComponent, ChooseCategoryDialogComponent } from './components/room-list/room-list.component';
@@ -63,7 +64,7 @@ import { JukeboxComponent } from './components/jukebox/jukebox.component';
     ChooseWordComponent,
     ChooseWordDialogComponent,
     TimerComponent,
-    ChooseCategoryDialogComponent
+    ChooseCategoryDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -92,7 +93,8 @@ import { JukeboxComponent } from './components/jukebox/jukebox.component';
     FontAwesomeModule,
     FormsModule,
     MatDialogModule,
-    CommonModule
+    CommonModule,
+    MatGridListModule
   ],
   providers: [SocketIoService, ProfileComponent],
   bootstrap: [AppComponent]

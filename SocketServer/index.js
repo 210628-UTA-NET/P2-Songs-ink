@@ -13,6 +13,7 @@ const io = require("socket.io")(server, {
   allowEIO3: true
 });
 let rooms = [];
+const categoryMap = new Map();
 const chatMap = new Map();
 const userMap = new Map();
 const drawMap = new Map();
@@ -66,6 +67,7 @@ io.on('connection', (socket) => {
       console.log(`Socket ${username} joined room ${roomId}`);
       previousId = roomId;
       socket.emit("room", roomId);
+      socket.emit('room-category', categoryMap.get(previousId));
       if(userMap.get(previousId)){
         while (test) {
           let userCheck=[];
@@ -142,6 +144,7 @@ io.on('connection', (socket) => {
     let room = data.room;
     rooms.push(room);
     console.log(room + " Created");
+    categoryMap.set(room, category);
     chatMap.set(room, [room+" Created"]);
     // drawMap.set(room,["a"]);
     io.emit("room list", rooms);

@@ -20,6 +20,9 @@ canvas {
 #button-black {
     background-color: black;
 }
+#button-brown {
+    background-color: #521515;
+}
 
 #brush-small {
     font-size: large;
@@ -33,9 +36,6 @@ canvas {
     font-size: xx-large;
 }
 
-#button-thickness-medium {
-    background-color: $myAccentColor;
-}
 
 #button-clear {
     background-color: red;
@@ -56,5 +56,16 @@ display: block;
 
 .hidden{
 display:none;
+}
 
+#draw-options {
+    margin-left: 20px;
+    background-color: $myAccentColor;
+    border: $myPrimaryColor solid 6px;
+    width: 500px;
+    height: 220px;
+}
+
+#canvas-element {
+    display: flex;
 }
