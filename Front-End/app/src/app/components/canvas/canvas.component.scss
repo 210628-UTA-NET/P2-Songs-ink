@@ -40,3 +40,21 @@ canvas {
 #button-clear {
     background-color: red;
 }
+
+.active{
+pointer-events: all;
+}
+
+.inactive{
+pointer-events: none;
+
+}
+
+.shown{
+display: block;
+}
+
+.hidden{
+display:none;
+
+}

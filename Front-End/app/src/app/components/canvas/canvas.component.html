@@ -1,5 +1,6 @@
-<canvas id="drawing" style="pointer-events: all;"></canvas>
 
+<canvas id="drawing" [ngClass]="{'active': activeDrawer, 'inactive': !activeDrawer}"></canvas>
+<div [ngClass]="{'shown': activeDrawer, 'hidden': !activeDrawer}">
 <input id="color-selector" type="color" [value]='lineColor'>
 
 <button (click)="changeColor('red')" mat-icon-button id="button-red">
@@ -41,3 +42,4 @@
 <button (click)="Clear()" mat-icon-button id="button-clear">
     <mat-icon>clear</mat-icon>
 </button>
+</div>

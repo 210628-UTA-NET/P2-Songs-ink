@@ -36,6 +36,7 @@ io.on('connection', (socket) => {
   
   socket.on('setWord', function (word) {
     io.to(previousId).emit('getWord', word);
+    io.to(previousId).emit('goal word',word);
   });
  
   socket.on('Undo', function () {
@@ -80,10 +81,13 @@ io.on('connection', (socket) => {
           }
         }
         userMap[previousId]=userMap.get(previousId).push({name:username,score:0,socket:socket.id,gamename:tempusernamer,ActiveDrawer:false});
+        socket.emit('active drawer',false);
         console.log(userMap.get(previousId));
       }
       else{
         userMap.set(previousId,[{name:username,score:0,socket:socket.id,gamename:username,ActiveDrawer:true}]);
+        socket.emit('active drawer',true);
+        console.log(userMap.get(previousId));
       }
       socket.emit('update name',tempusernamer)
       // for (var i in userMap.get(previousId)){
@@ -109,23 +113,27 @@ io.on('connection', (socket) => {
   });
 
   socket.on('times up', () => {
+    if(userMap.get(previousId)){
     let currentDrawerIndex;
     let currentUserList=userMap.get(previousId);
+    io.to(previousId).emit('goal word',"");
     io.to(previousId).emit('time left',"Time's Up!");
     io.to(previousId).emit('first right',true);
+    io.to(previousId).emit('able to score',true);
     socket.emit('active drawer', false);
-    currentDrawerIndex=userMap.get(previousId).findIndex(scan => scan.ActiveDrawer=true);
+    currentDrawerIndex=userMap.get(previousId).findIndex(scan => scan.ActiveDrawer==true);
     currentUserList[currentDrawerIndex].ActiveDrawer=false;
-    if(currentDrawerIndex+1==userMap.get(previousId.length)){
+    if(currentDrawerIndex+1==userMap.get(previousId).length){
       currentUserList[0].ActiveDrawer=true;
-      io.to(currentUserList[currentDrawerIndex].socket).emit('active drawer',true);
+      console.log("End of List");
+      io.to(currentUserList[0].socket).emit('active drawer',true);
     }else{
       currentUserList[currentDrawerIndex+1].ActiveDrawer=true;
-      io.to(currentUserList[currentDrawerIndex].socket).emit('active drawer',true)
+      io.to(currentUserList[currentDrawerIndex+1].socket).emit('active drawer',true)
     }
     userMap[previousId]=currentUserList;
     io.to(previousId).emit('players',userMap.get(previousId));
-  })
+  }})
 
 
   socket.on('addRoom', data => {
@@ -194,7 +202,9 @@ io.on('connection', (socket) => {
     if(points==100){
     io.to(previousId).emit('first right', false);
     }
+    socket.emit('able to score',false);
     socket.emit('add points', points);
+    socket.emit('update total points',points);
   })
 
   io.emit("Rooms", Object.keys(rooms));
@@ -202,24 +212,29 @@ io.on('connection', (socket) => {
 
   console.log(`Socket ${socket.id} has connected`);
 
+  socket.on('setWord', data=> {
+    io.to(previousId).emit('goal word',data.name);
+    io.to(previousId).emit('goal cat',data.category);
+    io.to(previousId).emit('first right',true);
+  });
 
-  // socket.on("disconnect", () => {
-  //   console.log(`Socket ${username} has disconnected`)
-  //   if(userMap.get(previousId!=[])){
-  //   socket.leave(previousId);
-  //   let users=[];
-  //   users=userMap.get(previousId);
-  //   users=users.filter(user=>user!=tempusernamer);
-  //   userMap.set(previousId,users);
-  //     io.to(previousId).emit('players',userMap.get(previousId));
-  //   // io.to(previousId).emit("players", {name:userMap.get(previousId),score:0});
-  //     if(users.length==0){
-  //       rooms=rooms.filter(place => place != previousId);
-  //       console.log(rooms);
-//   //     }
-//   //     io.emit('room list', rooms);
-//   // }
-// });
+
+  socket.on("disconnect", () => {
+    console.log(`Socket ${socket.id} has disconnected`)
+    if(userMap.get(previousId)){
+    socket.leave(previousId);
+    let users=[];
+    users=userMap.get(previousId);
+    users=users.filter(user=>user.socket!=socket.id);
+    userMap.set(previousId,users);
+      io.to(previousId).emit('players',userMap.get(previousId));
+      if(users.length==0){
+        rooms=rooms.filter(place => place != previousId);
+        console.log(rooms);
+        io.emit('room list', rooms);
+      }
+  }
+});
 });
 
 server.listen(process.env.PORT||3000, () => {

@@ -10,7 +10,7 @@ import { SocketIoService } from 'src/app/services/socketio.service';
 export class TimerComponent implements OnInit {
 
   timeRemaining = 0;
-  timeLine:string = "Click the button to start the timer";
+  timeLine:string;
   currentTime=0;
   timerId:any;
   numberInRoom:number;
@@ -22,7 +22,7 @@ export class TimerComponent implements OnInit {
 
   ngOnInit(): void {
     this._timesub = this.socketService.timeRemaining.subscribe(time=>this.timeLine=time)
-    if (this.timeLine!="Click the button to start the timer") {
+    if (this.timeLine!="") {
       this.readyToStart=false;
     }
     this._timesub = this.socketService.usersInRoom.subscribe(numb => this.numberInRoom=numb.length);
@@ -35,7 +35,7 @@ export class TimerComponent implements OnInit {
     this.currentTime = 35;
     this.timerId = setInterval(() =>{
       if(this.currentTime==0){
-        this.timeLine = "Click the button to start the timer";
+        this.timeLine = "";
         this.socketService.TimeUp();
         this.readyToStart = true;
         clearTimeout(this.timerId);

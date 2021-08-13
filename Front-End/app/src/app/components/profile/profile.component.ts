@@ -52,6 +52,7 @@ export class ProfileComponent implements OnInit {
         this.currentPlayer.currentScore = response.currentScore;
         this.currentPlayer.playerScore = response.playerScore;
         this.currentPlayer.customWords = response.customWords;
+        this.socketService.currentLoggedIn = response;
         if (response.playerName) {
           this.socketService.SetUsername(response.playerName)
         }

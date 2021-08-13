@@ -6,6 +6,8 @@ import { Room } from 'src/app/models/room';
 import { ProfileComponent } from '../components/profile/profile.component';
 import { Chatline } from '../models/chatline';
 import { Player } from '../models/Player';
+import { Profile } from '../models/Profile';
+import { PointsService } from './points.service';
 import { ProfileService } from './profile.service';
 
 @Injectable({
@@ -22,12 +24,16 @@ export class SocketIoService {
   timeRemaining = this.socket.fromEvent<string>('time left');
   usersInRoom = this.socket.fromEvent<Player[]>('players');
   goalWord = this.socket.fromEvent<string>('goal word');
+  goalCat = this.socket.fromEvent<string>('goal cat');
   maxPoints = this.socket.fromEvent<boolean>('first right');
   activeDrawer = this.socket.fromEvent<boolean>('active drawer');
   roundPoints = this.socket.fromEvent<number>('add points');
+  ableToScore = this.socket.fromEvent<boolean>('able to score');
+  currentLoggedIn:Profile;
+  tempCurrentLoggedIn:Profile;
   
 
-  constructor(private socket: Socket) { this.RunOnConnect();  }
+  constructor(private profApi: ProfileService, private socket: Socket, private pointApi: PointsService) { this.RunOnConnect();  }
 
     RunOnConnect(){
     if(!this.userName){
@@ -84,6 +90,18 @@ export class SocketIoService {
   AddPoints(points:number){
     
     this.socket.emit('add points', {tempuser:this.gameUserName,points:points});
+    this.socket.on('update total points',(points:number)=>this.UpdateTotalPoints(points));
+  }
+
+
+  UpdateTotalPoints(add:number){
+    console.log(this.currentLoggedIn);
+    if(this.currentLoggedIn){
+    this.tempCurrentLoggedIn=this.currentLoggedIn;
+    console.log(this.tempCurrentLoggedIn);
+    this.tempCurrentLoggedIn.currentScore=this.tempCurrentLoggedIn.currentScore+add;
+    this.pointApi.updateScoreOfPlayer(this.tempCurrentLoggedIn.id,this.tempCurrentLoggedIn.playerScore);
+    }
   }
 
 

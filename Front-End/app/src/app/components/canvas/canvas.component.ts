@@ -1,6 +1,7 @@
 import { Component, Injectable, OnInit} from '@angular/core';
 import { SocketIoService } from 'src/app/services/socketio.service';
 import { Socket } from 'ngx-socket-io';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -20,9 +21,11 @@ export class CanvasComponent implements OnInit {
   height: number;
   lineColor: string;
   lineWidth: number;
+  activeDrawer: boolean;
+  private _roomsub:Subscription;
 
-  constructor(private socket: Socket)  { }
-    
+  constructor(private socket: Socket, private socketService:SocketIoService)  { }
+
   ngOnInit() {
     this.mouse = {
       click: false,
@@ -30,6 +33,8 @@ export class CanvasComponent implements OnInit {
       pos: {x: 0, y: 0},
       pos_prev: false
     };
+
+    this._roomsub = this.socketService.activeDrawer.subscribe(drawer=>this.activeDrawer=drawer);
 
     this.canvas = <HTMLCanvasElement> document.getElementById('drawing');
     this.context =  <CanvasRenderingContext2D>this.canvas.getContext('2d');

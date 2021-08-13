@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit, Input } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Socket } from 'ngx-socket-io';
+import { Subscription } from 'rxjs';
 import { Word } from 'src/app/models/Word';
 import { ChooseWordService } from 'src/app/services/choose-word.service';
 import { SocketIoService } from 'src/app/services/socketio.service';
@@ -20,6 +21,8 @@ export class ChooseWordComponent implements OnInit {
   category: string;
   
   chosenWord: Word;
+  activeDrawer: boolean;
+  private _roomsub:Subscription;
 
   constructor(public dialog: MatDialog, private socket: Socket, private wordService: ChooseWordService, private socketService:SocketIoService) { }
 
@@ -30,6 +33,7 @@ export class ChooseWordComponent implements OnInit {
     };
     this.words = [];
     this.category = 'placeholder';
+    this._roomsub = this.socketService.activeDrawer.subscribe(draw=>this.activeDrawer=draw);
     
   }
 
