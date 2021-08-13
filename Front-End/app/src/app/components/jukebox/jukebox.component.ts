@@ -125,9 +125,9 @@ export class JukeboxComponent implements OnInit {
     let temp = this.Songs.shift()!
     this.Songs.push(temp);
     let audio = <HTMLAudioElement>document.getElementById('audio');
-    this.song1 = this.Songs[0].songName;
-    this.song2 = this.Songs[1].songName;
-    this.song3 = this.Songs[2].songName;
+    this.song1 = this.Songs[0].songName +" - Kevin MacLeod";
+    this.song2 = this.Songs[1].songName +" - Kevin MacLeod";
+    this.song3 = this.Songs[2].songName +" - Kevin MacLeod";
     audio.src = this.Songs[0].songURL;
     audio.volume = this.audioVolume;
     audio.load();
