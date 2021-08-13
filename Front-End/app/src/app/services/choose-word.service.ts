@@ -7,13 +7,11 @@ import { Word } from '../models/Word';
 })
 export class ChooseWordService {
 
-  private apiURL = 'http://localhost:3004/words'
+  private url = "https://songsinkbackend.azurewebsites.net/api/Main/get4RandomWordsOfACategoryWithCategoryName";
 
   constructor(private http: HttpClient) { }
 
-  getWords(): Observable<Word[]> {
-    return this.http.get<Word[]>(this.apiURL);
+  getWords(category: string) {
+    return this.http.get<any>(`${this.url}/${category}`);
   }
-
-
 }

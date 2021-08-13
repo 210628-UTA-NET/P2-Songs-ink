@@ -27,6 +27,7 @@ export class RoomListComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   ngOnInit(): void {
+    this.categories = [];
     let rooms2:string[];
     this._roomsub = this.SocketService.currentRoom.subscribe(room => this.currentRoom = room);
     // this.SocketService.getRooms().subscribe((room:string)=> {
@@ -37,8 +38,6 @@ export class RoomListComponent implements OnInit, OnDestroy, AfterViewChecked {
     if (!this.rooms) {
       this.rooms=this.SocketService.roomListstatic;
     }
-    this.categoryService.getDefaultCategories().subscribe(categories => this.categories = categories);
-
   }
 
   ngAfterViewChecked(){
@@ -48,10 +47,12 @@ export class RoomListComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.SocketService.getRoom(id);
   }
   addRoom() {
-    console.log(this.categories);
-    // this.openDialog();
-    //add this to openDialog
-    this.SocketService.addRoom("Test");
+    this.categoryService.getDefaultCategories().subscribe(categories => {
+      for(let i = 0; i < categories.length; i++) {
+        this.categories[i] = categories[i].categoryName;
+      }
+    });
+    this.openDialog();
   }
 
   getRooms(){
@@ -77,7 +78,7 @@ export class RoomListComponent implements OnInit, OnDestroy, AfterViewChecked {
       data: this.categories
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.chosenCategory = result.name;
+      this.chosenCategory = result;
       this.SocketService.addRoom(this.chosenCategory);
       // emit
     })
