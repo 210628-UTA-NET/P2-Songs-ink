@@ -66,6 +66,9 @@ export class ChatComponent implements OnInit, OnDestroy {
       } else{
         this.socketService.AddPoints(50);
       }
+      }
+      else if(message){
+        this.socketService.editChat(message);
     }
     }else if(message){
       console.log("inside else");
