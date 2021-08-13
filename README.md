@@ -29,7 +29,10 @@ The Songs-ink App is a web application to join multiplayer rooms, play a drawing
 15. As an admin, I should be able to assign words to various categories
 16. As an admin, I should be able to see a picture reported and take action on the drawer
 17. As an admin, I should be able to manage banned accounts
-
+18. As a user, I want to draw a picture when it's my turn.
+19. As a user, I want to see a list of players in my lobby.
+20. As a user, I want to choose a category when making a game.
+21. As a user, I want to choose a word when it's my turn to draw.
 
 ## ER Diagram
 ![ERD](https://user-images.githubusercontent.com/86570189/127560995-bfa763aa-37e5-409f-b17d-c61d31176edf.png)
