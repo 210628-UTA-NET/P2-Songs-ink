@@ -1,3 +1,10 @@
 .hoverable{
     cursor: pointer;
 }
+div {
+    width: 10%;
+    outline-style: solid;
+    margin:0 auto;
+    word-wrap: break-word;
+    /* overflow: hidden; */
+}
