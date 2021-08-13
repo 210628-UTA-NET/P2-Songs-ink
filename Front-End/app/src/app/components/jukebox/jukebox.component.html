@@ -1,6 +1,6 @@
 <div style="text-align: center;">
     <div class="song">
-        <p>Spendable Score: {{currentPlayer.currentScore}}</p>
+        <p *ngIf="auth.isAuthenticated$ | async">Spendable Score: {{currentPlayer.currentScore}}</p>
         <p>Coming Up: {{song3}}</p>
         <p>Up Next: {{song2}}</p>
         <p>Current Song: {{song1}}</p>
@@ -12,6 +12,8 @@
     <div *ngIf="auth.isAuthenticated$ | async">
         <button  class="btn btn-info" (click)="changeSongs()">Random Songs({{changeSongsCost * -1}} points)</button>
         <button  class="btn btn-success" (click)="skipSong()">Next Song({{skipSongCost *-1}} points)</button>
-    </div>
-    
+    </div> 
+    <div *ngIf="isPaused">
+        <button (click)="onResetPlayer()">Reset Audio Player</button>
+    </div>  
 </div>

@@ -32,6 +32,7 @@ export class JukeboxComponent implements OnInit {
     id: 0,
     customWords: []
   };
+  isPaused: boolean = true;
   constructor(private profApi: ProfileService, private musicApi: MusicService, public auth: AuthService) { }
 
   ngOnInit(): void {
@@ -123,7 +124,6 @@ export class JukeboxComponent implements OnInit {
     let temp = this.Songs.shift()!
     this.Songs.push(temp);
     let audio = <HTMLAudioElement>document.getElementById('audio');
-
     this.song1 = this.Songs[0].songName;
     this.song2 = this.Songs[1].songName;
     this.song3 = this.Songs[2].songName;
@@ -143,4 +143,10 @@ export class JukeboxComponent implements OnInit {
     let audio = <HTMLAudioElement>document.getElementById('audio');
     audio.volume = this.audioVolume;
   }
+  onResetPlayer()
+  {
+    this.isPaused = !this.isPaused;
+    this.nextSong();
+  }
+
 }

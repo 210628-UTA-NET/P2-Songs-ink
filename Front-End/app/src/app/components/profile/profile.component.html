@@ -1,5 +1,4 @@
-<h3>Player Profile</h3>
-<div>
+<div style="text-align: center;">
     <span>
         <h4>Player Info</h4>
         <div>
@@ -8,8 +7,8 @@
         <div>
             <p>Username: {{currentPlayer.playerName}}</p>
             <form (ngSubmit)="changeUserName()">
-                <div class="form-control">
-                    <label for="text">Update username: </label>
+                <div>
+                    <label for="text"><b>Update username:  </b></label>
                     <input type="text" name="text" id="newName" [(ngModel)]="newName">
                     <input type="submit" value="Update" class="btn btn-primary">
                 </div>
@@ -32,8 +31,8 @@
         <div>
 
             <form (ngSubmit)="addWord()">
-                <div class="form-control">
-                    <label for="text">Add a word (cost {{wordAddCost * -1}} points)</label>
+                <div >
+                    <label for="text"><b>Add a word</b> ({{wordAddCost * -1}} points)</label>
                     <input type="text" name="text" id="newWord" [(ngModel)]="newWord">
                     <input type="submit" value="Add Word" class="btn btn-primary">
                 </div>
