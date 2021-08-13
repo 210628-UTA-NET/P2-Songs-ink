@@ -14,7 +14,7 @@ import { TimerComponent } from '../timer/timer.component';
 export class ChooseWordComponent implements OnInit {
 
   @Input()
-  words: Word[] = [];
+  words: string[];
 
   @Input()
   category: string;
@@ -28,15 +28,21 @@ export class ChooseWordComponent implements OnInit {
       name: '',
       category: ''
     };
+    this.words = [];
     this.category = 'placeholder';
-    // retrieve category from user and pass to getWords()
-    this.wordService.getWords().subscribe(words => (this.words = words));
+    
   }
 
   openDialog(): void {
-    
+
+    this.wordService.getWords('animals').subscribe(wordList => {
+      for (let i = 0; i < wordList.length; i++) {
+        this.words[i] = wordList[i].wordName;
+      }
+      console.log(this.words);
+    });
     const dialogRef = this.dialog.open(ChooseWordDialogComponent, {
-      data: {words: this.words, category: this.category }
+      data: this.words
     });
     dialogRef.afterClosed().subscribe(result => {
       this.chosenWord.name = result;
