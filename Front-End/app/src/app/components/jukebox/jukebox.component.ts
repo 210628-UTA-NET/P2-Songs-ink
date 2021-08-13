@@ -120,6 +120,7 @@ export class JukeboxComponent implements OnInit {
 
   }
   nextSong() {
+    this.isPaused=false;
     //Shift the array is probably inefficient but its also easy
     let temp = this.Songs.shift()!
     this.Songs.push(temp);
