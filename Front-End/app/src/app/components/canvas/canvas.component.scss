@@ -41,6 +41,23 @@ canvas {
     background-color: red;
 }
 
+.active{
+pointer-events: all;
+}
+
+.inactive{
+pointer-events: none;
+
+}
+
+.shown{
+display: block;
+}
+
+.hidden{
+display:none;
+}
+
 #draw-options {
     margin-left: 20px;
     background-color: $myAccentColor;

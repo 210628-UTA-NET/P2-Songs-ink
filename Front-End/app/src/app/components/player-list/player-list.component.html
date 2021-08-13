@@ -3,13 +3,15 @@
 
   <ng-container matColumnDef="gamename">
     <th mat-header-cell *matHeaderCellDef> Name </th>
-    <td mat-cell *matCellDef="let element"> {{element.gamename}} </td>
-
+    <td mat-cell *matCellDef="let element" [ngClass]="{'active': element.ActiveDrawer,'inactive': !element.ActiveDrawer}"> {{element.gamename}} </td>
   </ng-container>
+
 
   <ng-container matColumnDef="score">
     <th mat-header-cell *matHeaderCellDef> Score </th>
-    <td mat-cell *matCellDef="let element"> {{element.score}} </td>
+    <td mat-cell *matCellDef="let element" [ngClass]="{'active': element.ActiveDrawer,'inactive': !element.ActiveDrawer}"> {{element.score}} </td>
+
+
 
   </ng-container>
 

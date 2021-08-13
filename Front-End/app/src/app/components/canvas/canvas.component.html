@@ -1,6 +1,6 @@
 <div id="canvas-element">
-    <canvas id="drawing" style="pointer-events: all;"></canvas>
-    <div id='draw-options'>
+    <canvas id="drawing" [ngClass]="{'active': activeDrawer, 'inactive': !activeDrawer}"></canvas>
+    <div id='draw-options' [ngClass]="{'shown': activeDrawer, 'hidden': !activeDrawer}">
         <mat-grid-list cols="2" rowHeight="2:1" id="draw-options-list">
             <mat-grid-tile>
                 <input id="color-selector" type="color" [value]='lineColor'>

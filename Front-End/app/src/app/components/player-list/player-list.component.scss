@@ -16,3 +16,12 @@ td {
     color: $myPrimaryColor;
 }
 
+.active{
+    background-color: $myPrimaryColor;
+    color:$myAccentColor;
+}
+
+.inactive{
+    background-color: $myAccentColor;
+    color:$myPrimaryColor;
+}

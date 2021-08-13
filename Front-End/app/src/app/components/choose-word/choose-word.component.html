@@ -1,1 +1,1 @@
-<button mat-button (click)="openDialog()">Choose Word</button>
+<button mat-button (click)="openDialog()" [ngClass]="{'shown': activeDrawer, 'hidden': !activeDrawer}">Choose Word</button>

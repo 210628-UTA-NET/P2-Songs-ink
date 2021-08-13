@@ -25,6 +25,8 @@ export class ChatComponent implements OnInit, OnDestroy {
   playerTest:string[];
   private _roomsub: Subscription;
   firstCorrect:boolean;
+  ableToScore:boolean=true;
+  activeDrawer:boolean;
   
 
   title = 'socketio-angular';
@@ -46,27 +48,30 @@ export class ChatComponent implements OnInit, OnDestroy {
       this._roomsub = this.socketService.newMessage.subscribe((message:string)=> {
         this.chatlines.unshift(message);
       })
+      this._roomsub= this.socketService.maxPoints.subscribe(test => this.firstCorrect=test);
+      this._roomsub=this.socketService.ableToScore.subscribe(test=>this.ableToScore=test);
+      this._roomsub=this.socketService.activeDrawer.subscribe(test=>this.activeDrawer=test);
 
   }
 
   AddChat(message:string) {
-    if(message&&this.goal){
-      if(message.toLowerCase==this.goal.toLowerCase){
-      this.socketService.editChat(this.currentUsername+" guessed correctly!");
+    console.log(message);
+    console.log(this.goal);
+    console.log(this.ableToScore);
+    if(message&&this.goal&&this.ableToScore&&!this.activeDrawer){
+      if(message==this.goal){
+      this.socketService.editChat(" guessed correctly!");
       if(this.firstCorrect){
         this.socketService.AddPoints(100);
-        this.firstCorrect=false;
       } else{
         this.socketService.AddPoints(50);
       }
-      
     }
     }else if(message){
       console.log("inside else");
     this.socketService.editChat(message);
   }
 }
-
 
 
   // updateChat(){
