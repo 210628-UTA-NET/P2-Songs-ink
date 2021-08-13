@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit, Input } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Socket } from 'ngx-socket-io';
+import { Observable } from 'rxjs';
 import { Word } from 'src/app/models/Word';
 import { ChooseWordService } from 'src/app/services/choose-word.service';
 import { SocketIoService } from 'src/app/services/socketio.service';
@@ -16,10 +17,10 @@ export class ChooseWordComponent implements OnInit {
   @Input()
   words: string[];
 
-  @Input()
-  category: string;
+  category = this.socket.fromEvent<string>('room-category');
   
   chosenWord: Word;
+  chosenCategory: string;
 
   constructor(public dialog: MatDialog, private socket: Socket, private wordService: ChooseWordService, private socketService:SocketIoService) { }
 
@@ -29,24 +30,21 @@ export class ChooseWordComponent implements OnInit {
       category: ''
     };
     this.words = [];
-    this.category = 'placeholder';
-    
+    this.category.subscribe(cat => this.chosenCategory = cat);
   }
 
   openDialog(): void {
-
-    this.wordService.getWords('animals').subscribe(wordList => {
+    this.wordService.getWords(this.chosenCategory).subscribe(wordList => {
       for (let i = 0; i < wordList.length; i++) {
         this.words[i] = wordList[i].wordName;
       }
-      console.log(this.words);
     });
     const dialogRef = this.dialog.open(ChooseWordDialogComponent, {
       data: this.words
     });
     dialogRef.afterClosed().subscribe(result => {
       this.chosenWord.name = result;
-      this.socket.emit('setWord', {name: this.chosenWord.name, category: this.category});
+      this.socket.emit('setWord', {name: this.chosenWord.name, category: this.chosenCategory});
       this.socketService.StartRound();
     });
   }
