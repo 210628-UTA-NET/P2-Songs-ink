@@ -77,7 +77,6 @@ export class CanvasComponent implements OnInit {
   ngAfterViewInit() {
   }
   ngOnDestroy() {  
-    // unsubscribe here
   }
 
   draw(data: any) {

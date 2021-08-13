@@ -20,6 +20,9 @@ canvas {
 #button-black {
     background-color: black;
 }
+#button-brown {
+    background-color: #521515;
+}
 
 #brush-small {
     font-size: large;
@@ -36,4 +39,16 @@ canvas {
 
 #button-clear {
     background-color: red;
+}
+
+#draw-options {
+    margin-left: 20px;
+    background-color: $myAccentColor;
+    border: $myPrimaryColor solid 6px;
+    width: 500px;
+    height: 220px;
+}
+
+#canvas-element {
+    display: flex;
 }
