@@ -49,9 +49,9 @@ export class RoomListComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
   addRoom() {
     console.log(this.categories);
-    this.openDialog();
+    // this.openDialog();
     //add this to openDialog
-    //this.SocketService.addRoom();
+    this.SocketService.addRoom("Test");
   }
 
   getRooms(){

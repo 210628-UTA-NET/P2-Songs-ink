@@ -109,7 +109,22 @@ io.on('connection', (socket) => {
   });
 
   socket.on('times up', () => {
+    let currentDrawerIndex;
+    let currentUserList=userMap.get(previousId);
     io.to(previousId).emit('time left',"Time's Up!");
+    io.to(previousId).emit('first right',true);
+    socket.emit('active drawer', false);
+    currentDrawerIndex=userMap.get(previousId).findIndex(scan => scan.ActiveDrawer=true);
+    currentUserList[currentDrawerIndex].ActiveDrawer=false;
+    if(currentDrawerIndex+1==userMap.get(previousId.length)){
+      currentUserList[0].ActiveDrawer=true;
+      io.to(currentUserList[currentDrawerIndex].socket).emit('active drawer',true);
+    }else{
+      currentUserList[currentDrawerIndex+1].ActiveDrawer=true;
+      io.to(currentUserList[currentDrawerIndex].socket).emit('active drawer',true)
+    }
+    userMap[previousId]=currentUserList;
+    io.to(previousId).emit('players',userMap.get(previousId));
   })
 
 
@@ -164,6 +179,23 @@ io.on('connection', (socket) => {
       // socket.removeAllListeners(previousId + 'message');
   }});
 
+  socket.on('add points', data => {
+    let tempuser = data.tempuser;
+    let points = data.points;
+    let pointuser;
+    let indexof;
+    let supertemp=userMap.get(previousId);
+    pointuser = userMap.get(previousId).find(screen => screen.gamename==tempuser);
+    indexof=userMap.get(previousId).findIndex(screen => screen == pointuser);
+    pointuser.score=pointuser.score+points;
+    supertemp[indexof]=pointuser;
+    userMap[previousId]=supertemp;
+    io.to(previousId).emit('players',userMap.get(previousId));
+    if(points==100){
+    io.to(previousId).emit('first right', false);
+    }
+    socket.emit('add points', points);
+  })
 
   io.emit("Rooms", Object.keys(rooms));
 

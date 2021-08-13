@@ -46,7 +46,12 @@ export class ChatComponent implements OnInit, OnDestroy {
       this._roomsub = this.socketService.newMessage.subscribe((message:string)=> {
         this.chatlines.unshift(message);
       })
+      this._roomsub= this.socketService.maxPoints.subscribe(test => this.firstCorrect=test);
 
+  }
+
+  PointTest(){
+    this.socketService.AddPoints(100);
   }
 
   AddChat(message:string) {
@@ -55,7 +60,6 @@ export class ChatComponent implements OnInit, OnDestroy {
       this.socketService.editChat(this.currentUsername+" guessed correctly!");
       if(this.firstCorrect){
         this.socketService.AddPoints(100);
-        this.firstCorrect=false;
       } else{
         this.socketService.AddPoints(50);
       }

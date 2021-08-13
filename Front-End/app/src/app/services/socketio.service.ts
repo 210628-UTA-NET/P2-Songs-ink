@@ -22,7 +22,7 @@ export class SocketIoService {
   timeRemaining = this.socket.fromEvent<string>('time left');
   usersInRoom = this.socket.fromEvent<Player[]>('players');
   goalWord = this.socket.fromEvent<string>('goal word');
-  maxPoints = this.socket.fromEvent<boolean>('reset round');
+  maxPoints = this.socket.fromEvent<boolean>('first right');
   activeDrawer = this.socket.fromEvent<boolean>('active drawer');
   roundPoints = this.socket.fromEvent<number>('add points');
   
