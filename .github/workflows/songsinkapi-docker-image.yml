@@ -22,7 +22,7 @@ jobs:
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
     
     - name: Docker Build
-      run: docker build -t 210628utanet/songsinkapi:latest .
+      run: docker build --file Dockerfile -t 210628utanet/songsinkapi:latest .
       
     - name: Docker Push
       run: docker push 210628utanet/songsinkapi
